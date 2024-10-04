@@ -1,0 +1,11 @@
+/* For WebKit browsers (Chrome, Safari, etc.) */
+.custom-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* For Firefox */
+  .custom-scrollbar {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+  

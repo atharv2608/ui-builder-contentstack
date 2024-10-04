@@ -1,24 +1,34 @@
 import { Canvas, LeftSidebar, RightSidebar } from "./components";
+import { theme } from "./theme";
+import "./App.css"
 
-function App() {
+export default function App() {
   return (
-    <div className="flex h-screen">
-      {/* Left Sidebar - 30% width */}
-      <div className="w-3/10">
-        <LeftSidebar />
-      </div>
+    <>
+    <div className="flex flex-col h-screen">
+      {/* Header */}
+      <header className={` text-white p-4 bg-[${theme.primaryColor}]`}>
+        <h1 className="text-2xl font-bold text-center">UI Builder ContentStack</h1>
+      </header>
 
-      {/* Canvas - 50% width */}
-      <div className="flex-1">
-        <Canvas />
-      </div>
+      {/* Main content area */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Left Sidebar */}
+        <div className="w-64 overflow-y-auto bg-gray-100 border-r overflow-x-hidden custom-scrollbar">
+          <LeftSidebar />
+        </div>
 
-      {/* Right Sidebar - 20% width */}
-      <div className="w-2/10">
-        <RightSidebar />
+        {/* Canvas */}
+        <div className="flex-1 overflow-y-auto custom-scrollbar">
+          <Canvas />
+        </div>
+
+        {/* Right Sidebar */}
+        <div className="w-64 overflow-y-auto bg-gray-100 border-l overflow-x-hidden custom-scrollbar">
+          <RightSidebar />
+        </div>
       </div>
     </div>
+    </>
   );
 }
-
-export default App;
