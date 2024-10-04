@@ -37,7 +37,7 @@ export default function LeftSidebar() {
     };
     fetchContent();
   }, []);
-
+  console.log(selectedContentType)
   return (
     <div className="w-64 h-screen bg-gray-100 border-r p-4 flex flex-col">
       <div className="mb-6">

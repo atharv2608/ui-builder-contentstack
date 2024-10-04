@@ -11,7 +11,7 @@ interface BlockProps {
 }
 
 function Block({ block }: BlockProps) {
-  const [{ isDragging }, drag] = useDrag(() => ({
+  const [{}, drag] = useDrag(() => ({
     type: "component",
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
