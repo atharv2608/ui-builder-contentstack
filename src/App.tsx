@@ -3,10 +3,18 @@ import { theme } from "./theme";
 import "./App.css";
 import { Button } from "./components/ui/button";
 import { SquareArrowOutUpRightIcon } from "lucide-react";
-
+import { useDispatch } from "react-redux";
+import { fetchContentTypes } from "@/redux/slices/contentTypesSlice";
+import { AppDispatch } from "@/redux/store";
+import { useEffect, useState } from "react";
 export default function App() {
-  const currentUrl = window.location.href;
+  const dispatch: AppDispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchContentTypes());
+  }, [dispatch]);
 
+  const [selectedContentType, setSelectedContentType] = useState("");
+  
   return (
     <>
       <div className="flex flex-col h-screen">
@@ -15,9 +23,11 @@ export default function App() {
           <h1 className="text-2xl font-bold mr-auto">
             UI Builder ContentStack
           </h1>
-          <Button className={` bg-white text-[#6c5ce7] flex space-x-2 hover:bg-gray-200`}>
-            <a href={currentUrl} target="_blank">
-              New Tab 
+          <Button
+            className={` bg-white text-[#6c5ce7] flex space-x-2 hover:bg-gray-200`}
+          >
+            <a href={window.location.href} target="_blank">
+              New Tab
             </a>
             <SquareArrowOutUpRightIcon size={15} />
           </Button>
@@ -27,7 +37,7 @@ export default function App() {
         <div className="flex flex-1 overflow-hidden">
           {/* Left Sidebar */}
           <div className="w-64 overflow-y-auto bg-gray-100 border-r overflow-x-hidden custom-scrollbar">
-            <LeftSidebar />
+            <LeftSidebar setSelectedContentType={setSelectedContentType} />
           </div>
 
           {/* Canvas */}

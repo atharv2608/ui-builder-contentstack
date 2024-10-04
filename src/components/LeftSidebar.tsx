@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import {
   Image as ImageIcon,
   Heading1,
@@ -7,7 +7,6 @@ import {
   Text,
   LayoutPanelTop,
 } from "lucide-react";
-import { fetchContentType, ContentType } from "@/services/fetchContentType";
 import {
   Select,
   SelectContent,
@@ -18,6 +17,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Block from "./Block";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { ContentType } from "@/types";
 const blocks = [
   { id: 1, icon: Heading1, label: "Heading" },
   { id: 2, icon: Heading2, label: "Subheading" },
@@ -27,17 +29,15 @@ const blocks = [
   { id: 6, icon: LayoutPanelTop, label: "Section" },
 ];
 
-export default function LeftSidebar() {
-  const [selectedContentType, setSelectedContentType] = useState("");
-  const [contentTypesArray, setContentTypesArray] = useState<ContentType[]>([]);
-  useEffect(() => {
-    const fetchContent = async () => {
-      const response = await fetchContentType();
-      setContentTypesArray(response?.content_types ?? []);
-    };
-    fetchContent();
-  }, []);
-  console.log(selectedContentType)
+interface PropTypes {
+  setSelectedContentType: Dispatch<SetStateAction<string>>;
+}
+export default function LeftSidebar({setSelectedContentType}: PropTypes) {
+
+  const contentTypesArray = useSelector(
+    (state: RootState) => state.contentTypes.contentTypes
+  );
+
   return (
     <div className="w-64 h-screen bg-gray-100 border-r p-4 flex flex-col">
       <div className="mb-6">
@@ -55,7 +55,7 @@ export default function LeftSidebar() {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Content Type</SelectLabel>
-                {contentTypesArray.map((contentType) => (
+                {contentTypesArray.map((contentType: ContentType) => (
                   <SelectItem key={contentType.uid} value={contentType.uid}>
                     {contentType.title}
                   </SelectItem>

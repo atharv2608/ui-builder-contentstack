@@ -6,3 +6,10 @@ export interface DraggableComponent {
   content: string;
   styles: React.CSSProperties;
 }
+
+export interface ContentType {
+  title: string;
+  uid: string;
+  [key: string]: unknown;
+}
+
