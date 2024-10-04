@@ -17,13 +17,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Block from "./Block";
 const blocks = [
-  { icon: Heading1, label: "Heading" },
-  { icon: Heading2, label: "Subheading" },
-  { icon: Text, label: "Textbox" },
-  { icon: LetterText, label: "Textarea" },
-  { icon: ImageIcon, label: "Image" },
-  { icon: LayoutPanelTop, label: "Section" },
+  { id: 1, icon: Heading1, label: "Heading" },
+  { id: 2, icon: Heading2, label: "Subheading" },
+  { id: 3, icon: Text, label: "Textbox" },
+  { id: 4, icon: LetterText, label: "Textarea" },
+  { id: 5, icon: ImageIcon, label: "Image" },
+  { id: 6, icon: LayoutPanelTop, label: "Section" },
 ];
 
 export default function LeftSidebar() {
@@ -54,29 +55,22 @@ export default function LeftSidebar() {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Content Type</SelectLabel>
-                {contentTypesArray.map(contentType =>
-                  <SelectItem key={contentType.uid} value={contentType.uid}>{contentType.title}</SelectItem>
-                )}
-    
+                {contentTypesArray.map((contentType) => (
+                  <SelectItem key={contentType.uid} value={contentType.uid}>
+                    {contentType.title}
+                  </SelectItem>
+                ))}
               </SelectGroup>
             </SelectContent>
           </Select>
-          
+
           <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"></div>
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         {blocks.map((block, index) => (
-          <div
-            key={index}
-            className="flex flex-col items-center justify-center p-4 bg-white rounded-lg hover:bg-gray-50 transition-colors shadow-sm"
-          >
-            <block.icon className="w-8 h-8 mb-2 text-indigo-600" />
-            <span className="text-sm font-medium text-center text-gray-900">
-              {block.label}
-            </span>
-          </div>
+          <Block block={block} key={index} />
         ))}
       </div>
     </div>
