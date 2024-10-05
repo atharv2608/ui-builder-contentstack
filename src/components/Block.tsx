@@ -13,6 +13,7 @@ interface BlockProps {
 function Block({ block }: BlockProps) {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "component",
+    item: {id: block.id},
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),

@@ -19,7 +19,7 @@ export default function App() {
     <>
       <div className="flex flex-col h-screen">
         {/* Header */}
-        <header className={` text-white p-4 bg-[${theme.primaryColor}] flex`}>
+        <header className={` text-white p-4 bg-[#6c5ce7] flex`}>
           <h1 className="text-2xl font-bold mr-auto">
             UI Builder ContentStack
           </h1>

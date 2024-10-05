@@ -21,12 +21,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { ContentType } from "@/types";
 const blocks = [
-  { id: 1, icon: Heading1, label: "Heading" },
-  { id: 2, icon: Heading2, label: "Subheading" },
-  { id: 3, icon: Text, label: "Textbox" },
-  { id: 4, icon: LetterText, label: "Textarea" },
-  { id: 5, icon: ImageIcon, label: "Image" },
-  { id: 6, icon: LayoutPanelTop, label: "Section" },
+  { id: 1, icon: Heading1, label: "Heading", type: "h1" },
+  { id: 2, icon: Heading2, label: "Subheading", type: "h2" },
+  { id: 3, icon: Text, label: "Textbox", type: "p" },
+  { id: 4, icon: LetterText, label: "Textarea", type: "p" },
+  { id: 5, icon: ImageIcon, label: "Image", type: "img" },
+  { id: 6, icon: LayoutPanelTop, label: "Section", type: "section" },
 ];
 
 interface PropTypes {
