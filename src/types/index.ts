@@ -7,9 +7,17 @@ export interface DraggableComponent {
   styles: React.CSSProperties;
 }
 
+export interface Schema{
+  data_type: File,
+  display_name: string,
+  uid: string,
+  mandatory: Boolean
+}
+
 export interface ContentType {
   title: string;
   uid: string;
+  schema: Schema[]
   [key: string]: unknown;
 }
 

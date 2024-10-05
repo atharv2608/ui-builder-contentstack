@@ -14,7 +14,7 @@ export default function App() {
   }, [dispatch]);
 
   const [selectedContentType, setSelectedContentType] = useState("");
-  
+  console.log("Selected Content type: ",selectedContentType)
   return (
     <>
       <div className="flex flex-col h-screen">
@@ -47,7 +47,7 @@ export default function App() {
 
           {/* Right Sidebar */}
           <div className="w-64 overflow-y-auto bg-gray-100 border-l overflow-x-hidden hide-scrollbar">
-            <RightSidebar />
+            <RightSidebar selectedContentType={selectedContentType} />
           </div>
         </div>
       </div>

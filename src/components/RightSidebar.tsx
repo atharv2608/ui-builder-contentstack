@@ -1,17 +1,27 @@
 import { useState } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { ContentType } from '@/types';
 
-export default function RightSidebar() {
+interface PropTypes{
+  selectedContentType: string,
+}
+export default function RightSidebar({selectedContentType}: PropTypes) {
   const [selectedComponent, setSelectedComponent] = useState('button');
   const [fontSize, setFontSize] = useState('16');
   const [color, setColor] = useState('#000000');
   const [height, setHeight] = useState('40');
   const [width, setWidth] = useState('100');
 
+  const contentType: ContentType | undefined= useSelector(
+    (state: RootState) => state.contentTypes.contentTypes
+  ).find(contentType => contentType.uid === selectedContentType);
+  
   const handleSave = () => {
     // Implement save functionality
     console.log('Saving...');
@@ -47,16 +57,19 @@ export default function RightSidebar() {
             <Label htmlFor="component-select" className="text-sm font-medium text-gray-700 mb-2 block">
               Link To
             </Label>
-            <Select value={selectedComponent} onValueChange={setSelectedComponent}>
-              <SelectTrigger id="component-select">
-                <SelectValue placeholder="Select component" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="button">Button</SelectItem>
-                <SelectItem value="input">Input</SelectItem>
-                <SelectItem value="select">Select</SelectItem>
-              </SelectContent>
-            </Select>
+            <Select>
+            <SelectTrigger >
+              <SelectValue placeholder="Select a schema" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Schemas</SelectLabel>
+                {contentType?.schema?.map(s =>
+                  <SelectItem value={s.uid} key={s.uid}>{s.uid}</SelectItem>
+                )}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
           </div>
         </div>
 

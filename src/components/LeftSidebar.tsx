@@ -38,6 +38,8 @@ export default function LeftSidebar({setSelectedContentType}: PropTypes) {
     (state: RootState) => state.contentTypes.contentTypes
   );
 
+  console.log("Content type array: ", contentTypesArray)
+
   return (
     <div className="w-64 h-screen bg-gray-100 border-r p-4 flex flex-col">
       <div className="mb-6">
