@@ -1,57 +1,54 @@
 import { useState } from "react";
-import { useDrop } from "react-dnd";
+import { useDrop, useDrag } from "react-dnd";
+import { ComponentItemType, CanvasComponent } from "@/types";
+import CanvasItem from "./CanvasItem";
 
-type ItemType = {
-  id: number
-}
-
-type canvasComponent = {
-  id: number,
-  name: string, 
-  type: string
-}
+// Main Canvas component with drag and drop reordering
 function Canvas() {
-  const[{isOver}, drop] = useDrop(()=>({
+  const [{ isOver }, drop] = useDrop(() => ({
     accept: "component",
-    drop: (item: ItemType) => addComponentToCanvas(item.id),
+    drop: (item: ComponentItemType) => addComponentToCanvas(item.id),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
-  }))
-  const components: canvasComponent[] = [
+  }));
+
+  const components: CanvasComponent[] = [
     { id: 1, name: "Heading", type: "h1" },
     { id: 2, name: "Subheading", type: "h2" },
+    { id: 3, name: "Textbox", type: "span" },
+    { id: 4, name: "Textarea", type: "p" },
     { id: 5, name: "Image", type: "img" },
   ];
 
-  
-  const [componentsOnCanvas, setComponentsOnCanvas] = useState<canvasComponent[]>([])
-  
-  
-  const addComponentToCanvas = (id: number)=>{
-    const component = components.find(component => component.id === id);
-    setComponentsOnCanvas((prev)=> [...prev, component as canvasComponent])
-  }
+  const [componentsOnCanvas, setComponentsOnCanvas] = useState<CanvasComponent[]>([]);
+
+  const addComponentToCanvas = (id: number) => {
+    const component = components.find((component) => component.id === id);
+    setComponentsOnCanvas((prev) => [...prev, component as CanvasComponent]);
+  };
+
+  const removeComponentFromCanvas = (id: number) => {
+    setComponentsOnCanvas((prev) => prev.filter((component) => component.id !== id));
+  };
+
+  const moveComponent = (dragIndex: number, hoverIndex: number) => {
+    const updatedComponents = [...componentsOnCanvas];
+    const [draggedComponent] = updatedComponents.splice(dragIndex, 1);
+    updatedComponents.splice(hoverIndex, 0, draggedComponent);
+    setComponentsOnCanvas(updatedComponents);
+  };
 
   return (
     <div className="min-h-screen width-[50%] bg-gray-200 p-5 space-y-4" ref={drop}>
-      {componentsOnCanvas.map((component) => (
-        <div key={component.id} className="border-2 border-gray-400 p-2">
-          {component.type === "h1" && (
-            <h1 className="text-4xl">This is heading tag</h1>
-          )}
-          {component.type === "h2" && (
-            <h2 className="text-2xl">This is sub heading tag</h2>
-          )}
-          {component.type === "img" && (
-            <img
-              src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg"
-              alt="Placeholder"
-              className="w-full h-[400px]"
-              // width="1000px" height={"500px"}
-            />
-          )}
-        </div>
+      {componentsOnCanvas.map((component, index) => (
+        <CanvasItem
+          key={component.id}
+          component={component}
+          index={index}
+          moveComponent={moveComponent}
+          removeComponent={removeComponentFromCanvas}
+        />
       ))}
     </div>
   );

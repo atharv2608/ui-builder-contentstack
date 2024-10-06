@@ -1,12 +1,3 @@
-export type ComponentType = 'heading' | 'subheading' | 'image' | 'textbox';
-
-export interface DraggableComponent {
-  id: number;
-  type: ComponentType;
-  content: string;
-  styles: React.CSSProperties;
-}
-
 export interface Schema{
   data_type: File,
   display_name: string,
@@ -21,3 +12,12 @@ export interface ContentType {
   [key: string]: unknown;
 }
 
+export type ComponentItemType = {
+  id: number
+}
+
+export type CanvasComponent = {
+  id: number,
+  name: string, 
+  type: string
+}

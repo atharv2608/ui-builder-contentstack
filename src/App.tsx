@@ -1,5 +1,4 @@
 import { Canvas, LeftSidebar, RightSidebar } from "./components";
-import { theme } from "./theme";
 import "./App.css";
 import { Button } from "./components/ui/button";
 import { SquareArrowOutUpRightIcon } from "lucide-react";
