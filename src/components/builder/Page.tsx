@@ -1,7 +1,6 @@
-import Layout from "./layout";
-import LeftSidebar from "./LeftSidebar";
+import Layout from "./Layout";
 import Canvas from "./Canvas";
-import RightSidebar from "./RightSidebar";
+import DragOverlayWrapper from "./DragOverlayWrapper";
 import { Button } from "../ui/button";
 import { Save } from "lucide-react";
 import { ResetIcon } from "@radix-ui/react-icons";
@@ -30,6 +29,7 @@ function Page() {
               <Canvas />
           </div>
         </main>
+        <DragOverlayWrapper />
       </DndContext>
     </Layout>
   );
