@@ -9,7 +9,9 @@ export type UIElement = {
         icon: React.ElementType,
         label: string
     }
-    canvasComponent: React.FC;
+    canvasComponent: React.FC<{
+        elementInstance: UIElementInstance;
+    }>;
     UIComponent:  React.FC
     propertiesComponent: React.FC;
 }
