@@ -14,15 +14,15 @@ function SidebarButtonElement({ uiElement }: { uiElement: UIElement }) {
   return (
     <Button
       className={cn(
-        "flex flex-col gap-2 h-[120px] w-[120px] cursor-grab",
-        draggable.isDragging && "ring-2 ring-primary"
+        "flex flex-col gap-2 h-[100px] w-[100px] cursor-grab bg-white border border-black",
+        draggable.isDragging && "ring-2 ring-primary border-none"
       )}
       ref={draggable.setNodeRef}
       {...draggable.listeners}
       {...draggable.attributes}
     >
       <Icon className="h-8 w-8 text-indigo-500 cursor-grab" />
-      <p className="text-xs">{label}</p>
+      <p className="text-xs text-indigo-500">{label}</p>
     </Button>
   );
 }
@@ -41,7 +41,7 @@ export function SidebarButtonElementDragOverlay({
     },
   });
   return (
-    <Button className="flex flex-col gap-2 h-[120px] w-[120px] cursor-grab">
+    <Button className="flex flex-col gap-2 h-[100px] w-[100px] cursor-grab">
       <Icon className="h-8 w-8 text-indigo-500 cursor-grab" />
       <p className="text-xs">{label}</p>
     </Button>
