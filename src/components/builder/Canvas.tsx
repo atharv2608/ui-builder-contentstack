@@ -13,7 +13,7 @@ function Canvas({
   elements: UIElementInstance[];
   setElements: React.Dispatch<React.SetStateAction<UIElementInstance[]>>;
 }) {
-  // const [elements, setElements] = useState<UIElementInstance[]>([]);
+
   const addElement = (index: number, element: UIElementInstance) => {
     setElements((prev) => {
       const newElements = [...prev];
@@ -35,15 +35,65 @@ function Canvas({
 
       const isCanvasButtonElement =
         active?.data?.current?.isCanvasButtonElement;
-      if (isCanvasButtonElement) {
+
+      const isDroppingOverCanvasArea = over?.data?.current?.isCanvasDropArea;
+      if (isCanvasButtonElement && isDroppingOverCanvasArea) {
         const type = active?.data?.current?.type;
         const newElement = UIElements[type as ElementsType].construct(
           Math.floor(Math.random() * 10001).toString()
         );
-        addElement(0, newElement);
-        // console.log("New element: ", newElement);
+        addElement(elements.length, newElement);
+        return;
       }
-      // console.log("Drag End: ", event);
+      const isDroppingOverCanvasElementTopHalf =
+        over?.data?.current?.isTopHalfCanvasElement;
+      const isDroppingOverCanvasElementBottomHalf =
+        over?.data?.current?.isBottomHalfCanvasElement;
+      const isDroppingOverCanvasElement =
+        isDroppingOverCanvasElementTopHalf ||
+        isDroppingOverCanvasElementBottomHalf;
+      const droppingSidebarButtonOverCanvasElement =
+        isCanvasButtonElement && isDroppingOverCanvasElement;
+      if (droppingSidebarButtonOverCanvasElement) {
+        const type = active?.data?.current?.type;
+        const newElement = UIElements[type as ElementsType].construct(
+          Math.floor(Math.random() * 10001).toString()
+        );
+        const overId = over?.data?.current?.elementId;
+        const overElementIndex = elements.findIndex((el) => el.id === overId);
+        if (overElementIndex === -1) {
+          throw new Error("Element not found");
+        }
+        let indexForNewElement = overElementIndex;
+        if(isDroppingOverCanvasElementBottomHalf){
+          indexForNewElement = overElementIndex+1;
+        } 
+        addElement(indexForNewElement, newElement);
+        return;
+      }
+
+      const isDraggingCanvasElement = active?.data?.current?.isCanvasElement;
+      const draggingCanvasElementOverAnotherCanvasElement = isDroppingOverCanvasElement && isDraggingCanvasElement;
+
+      if(draggingCanvasElementOverAnotherCanvasElement){
+        const activeId = active?.data?.current?.elementId;
+        const overId = over?.data?.current?.elementId;
+
+        const activeElementIndex = elements.findIndex((el) => el.id === activeId);
+        const overElementIndex = elements.findIndex((el) => el.id === overId);
+
+        if(activeElementIndex === -1 || overElementIndex === -1){
+          throw new Error("Element not found")
+        }
+
+        const activeElement = {...elements[activeElementIndex]};
+        removeElement(activeId);
+        let newIndex = overElementIndex;
+        if(isDroppingOverCanvasElementBottomHalf){
+          newIndex = overElementIndex+1;
+        } 
+        addElement(newIndex, activeElement);
+      }
     },
   });
 
@@ -136,9 +186,11 @@ function CanvasElementWrapper({
       className="relative h-[120px] flex flex-col text-foreground hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset"
       onMouseEnter={() => {
         setMouseIsOver(true);
+        console.log("Mouse entering: ", mouseIsOver)
       }}
       onMouseLeave={() => {
         setMouseIsOver(false);
+        console.log("Mouse Leaving: ", mouseIsOver)
       }}
     >
       <div
