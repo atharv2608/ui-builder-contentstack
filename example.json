@@ -1,0 +1,51 @@
+{
+    "layout": {
+      "sections": [
+        {
+          "type": "header",
+          "content": {
+            "title": "Welcome to Our Website",
+            "navigation": ["Home", "About Us", "Services", "Blog"]
+          }
+        },
+        {
+          "type": "main",
+          "columns": [
+            {
+              "width": 8,
+              "content": [
+                {
+                  "type": "text",
+                  "text": "We offer a range of services to help you succeed."
+                },
+                {
+                  "type": "image",
+                  "src": "services.jpg",
+                  "alt": "Our Services"
+                }
+              ]
+            },
+            {
+              "width": 4,
+              "content": [
+                {
+                  "type": "button",
+                  "text": "Get Started",
+                  "action": "link",
+                  "href": "/get-started"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "footer",
+          "content": {
+            "text": "© 2024 Our Company. All rights reserved.",
+            "links": ["Privacy Policy", "Terms of Service"]
+          }
+        }
+      ]
+    }
+  }
+  
