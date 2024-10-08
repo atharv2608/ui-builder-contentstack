@@ -1,7 +1,8 @@
 import { HeadingUIElement } from "./fields/Heading";
+import { ImageUIElement } from "./fields/Image";
 import { TextFieldUIElement } from "./fields/TextField";
 
-export type ElementsType = "TextField" | "Heading";
+export type ElementsType = "TextField" | "Heading" | "Image";
 
 export type UIElement = {
     type: ElementsType,
@@ -23,7 +24,8 @@ type UIElementsTypes = {
 
 export const UIElements: UIElementsTypes = {
     TextField: TextFieldUIElement,
-    Heading: HeadingUIElement
+    Heading: HeadingUIElement,
+    Image: ImageUIElement
 }
 
 export type UIElementInstance = {

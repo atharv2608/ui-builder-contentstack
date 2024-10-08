@@ -14,6 +14,7 @@ function Canvas({
   setElements: React.Dispatch<React.SetStateAction<UIElementInstance[]>>;
 }) {
 
+  const [selectedContentType,setSelectedContentType] = useState("");
   const addElement = (index: number, element: UIElementInstance) => {
     setElements((prev) => {
       const newElements = [...prev];
@@ -65,33 +66,36 @@ function Canvas({
           throw new Error("Element not found");
         }
         let indexForNewElement = overElementIndex;
-        if(isDroppingOverCanvasElementBottomHalf){
-          indexForNewElement = overElementIndex+1;
-        } 
+        if (isDroppingOverCanvasElementBottomHalf) {
+          indexForNewElement = overElementIndex + 1;
+        }
         addElement(indexForNewElement, newElement);
         return;
       }
 
       const isDraggingCanvasElement = active?.data?.current?.isCanvasElement;
-      const draggingCanvasElementOverAnotherCanvasElement = isDroppingOverCanvasElement && isDraggingCanvasElement;
+      const draggingCanvasElementOverAnotherCanvasElement =
+        isDroppingOverCanvasElement && isDraggingCanvasElement;
 
-      if(draggingCanvasElementOverAnotherCanvasElement){
+      if (draggingCanvasElementOverAnotherCanvasElement) {
         const activeId = active?.data?.current?.elementId;
         const overId = over?.data?.current?.elementId;
 
-        const activeElementIndex = elements.findIndex((el) => el.id === activeId);
+        const activeElementIndex = elements.findIndex(
+          (el) => el.id === activeId
+        );
         const overElementIndex = elements.findIndex((el) => el.id === overId);
 
-        if(activeElementIndex === -1 || overElementIndex === -1){
-          throw new Error("Element not found")
+        if (activeElementIndex === -1 || overElementIndex === -1) {
+          throw new Error("Element not found");
         }
 
-        const activeElement = {...elements[activeElementIndex]};
+        const activeElement = { ...elements[activeElementIndex] };
         removeElement(activeId);
         let newIndex = overElementIndex;
-        if(isDroppingOverCanvasElementBottomHalf){
-          newIndex = overElementIndex+1;
-        } 
+        if (isDroppingOverCanvasElementBottomHalf) {
+          newIndex = overElementIndex + 1;
+        }
         addElement(newIndex, activeElement);
       }
     },
@@ -103,7 +107,7 @@ function Canvas({
   };
   return (
     <div className="flex w-full h-full">
-      <LeftSidebar />
+      <LeftSidebar setSelectedContentType={setSelectedContentType} />
       <div className="p-4 w-full">
         <div
           ref={droppable.setNodeRef}
@@ -128,14 +132,14 @@ function Canvas({
               ))}
             </div>
           )}
-          {droppable.isOver && elements.length === 0 && (
+          {droppable.isOver && (
             <div className="p-4 w-full">
               <div className="h-[120px] rounded-md bg-gray-400"></div>
             </div>
           )}
         </div>
       </div>
-      <RightSidebar />
+      <RightSidebar selectedContentType={selectedContentType}/>
     </div>
   );
 }
@@ -186,11 +190,11 @@ function CanvasElementWrapper({
       className="relative h-[120px] flex flex-col text-foreground hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset"
       onMouseEnter={() => {
         setMouseIsOver(true);
-        console.log("Mouse entering: ", mouseIsOver)
+        console.log("Mouse entering: ", mouseIsOver);
       }}
       onMouseLeave={() => {
         setMouseIsOver(false);
-        console.log("Mouse Leaving: ", mouseIsOver)
+        console.log("Mouse Leaving: ", mouseIsOver);
       }}
     >
       <div
