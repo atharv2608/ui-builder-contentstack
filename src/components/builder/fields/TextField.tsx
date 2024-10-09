@@ -37,6 +37,7 @@ function CanvasComponent({
   const element = elementInstance as CustomeInstance;
   return (
     <div className="flex flex-col gap-2 w-full">
+      <span className="absolute bottom-0 text-sm right-5 opacity-40">Component ID: {element.id}</span>
       <Label>{element.extraAttributes?.label}</Label>
       <Input readOnly disabled placeholder={"Placeholder here"}/>
     </div>

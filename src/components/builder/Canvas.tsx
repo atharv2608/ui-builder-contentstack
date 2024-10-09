@@ -6,15 +6,18 @@ import { useState } from "react";
 import { ElementsType, UIElementInstance, UIElements } from "./UIElements";
 import { Button } from "../ui/button";
 import { Trash } from "lucide-react";
-function Canvas({
-  elements,
-  setElements,
-}: {
+
+type CanvasPropsType = {
   elements: UIElementInstance[];
   setElements: React.Dispatch<React.SetStateAction<UIElementInstance[]>>;
-}) {
+};
 
-  const [selectedContentType,setSelectedContentType] = useState("");
+function Canvas({ elements, setElements }: CanvasPropsType) {
+
+  const [selectedContentType, setSelectedContentType] = useState("");
+  const [selectedComponent, setSelectedComponent] = useState("");
+
+
   const addElement = (index: number, element: UIElementInstance) => {
     setElements((prev) => {
       const newElements = [...prev];
@@ -22,6 +25,7 @@ function Canvas({
       return newElements;
     });
   };
+
   const droppable = useDroppable({
     id: "canvas-drop-area",
     data: {
@@ -127,6 +131,7 @@ function Canvas({
                 <CanvasElementWrapper
                   key={element.id}
                   element={element}
+                  onClickEvent={() => setSelectedComponent(element.id)}
                   removeElement={removeElement}
                 />
               ))}
@@ -139,7 +144,8 @@ function Canvas({
           )}
         </div>
       </div>
-      <RightSidebar selectedContentType={selectedContentType}/>
+      <RightSidebar selectedContentType={selectedContentType} elements={elements}  
+      setElements={setElements} selectedComponent={selectedComponent} setSelectedComponent={setSelectedComponent}/>
     </div>
   );
 }
@@ -147,9 +153,11 @@ function Canvas({
 function CanvasElementWrapper({
   element,
   removeElement,
+  onClickEvent,
 }: {
   element: UIElementInstance;
   removeElement: (id: string) => void;
+  onClickEvent: () => void;
 }) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
 
@@ -187,14 +195,13 @@ function CanvasElementWrapper({
       ref={draggable.setNodeRef}
       {...draggable.listeners}
       {...draggable.attributes}
+      onClick={onClickEvent}
       className="relative min-h-[120px] flex flex-col text-foreground hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset"
       onMouseEnter={() => {
         setMouseIsOver(true);
-        console.log("Mouse entering: ", mouseIsOver);
       }}
       onMouseLeave={() => {
         setMouseIsOver(false);
-        console.log("Mouse Leaving: ", mouseIsOver);
       }}
     >
       <div
@@ -211,8 +218,8 @@ function CanvasElementWrapper({
             <Button
               className="flex justify-center h-full border rounded-md rounded-l-none bg-red-500"
               variant={"outline"}
-              onClick={() => {
-                console.log("called");
+              onClick={(e) => {
+                e.stopPropagation();
                 removeElement(element.id);
               }}
             >
