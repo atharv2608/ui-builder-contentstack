@@ -34,8 +34,8 @@ function CanvasComponent({
   const element = elementInstance as CustomeInstance;
   return (
     
-      <div >
-        <img src="/public/default.jpg" alt={element?.extraAttributes?.altText} />
+      <div className="w-full h-[400px]">
+        <img src="/public/default.jpg" alt={element?.extraAttributes?.altText} height={"400px"} className="h-[400px]"/>
       </div>
     
   );

@@ -34,7 +34,7 @@ function DragOverlayWrapper({elements} : {elements: UIElementInstance[]}) {
       const CanvasElementComponent = UIElements[element.type].canvasComponent;
 
       node =(
-      <div className="bg-gray-400 flex border rounded-md h-[120px] w-full py-2 px-4 opacity-80 pointer-events-none">
+      <div className="bg-gray-400 flex border rounded-md  w-full py-2 px-4 opacity-80 pointer-events-none">
 
         <CanvasElementComponent  elementInstance={element} />
       </div> )

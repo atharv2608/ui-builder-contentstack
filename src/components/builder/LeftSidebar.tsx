@@ -6,7 +6,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@radix-ui/react-select";
+} from "../ui/select";
 import SidebarButtonElement from "./SidebarButtonElement";
 import { UIElements } from "./UIElements";
 
