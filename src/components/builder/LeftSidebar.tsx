@@ -9,17 +9,16 @@ import {
 } from "../ui/select";
 import SidebarButtonElement from "./SidebarButtonElement";
 import { UIElements } from "./UIElements";
-
-import { Dispatch, SetStateAction } from "react";
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
-interface PropTypes {
-  setSelectedContentType: Dispatch<SetStateAction<string>>;
-}
-function LeftSidebar({ setSelectedContentType }: PropTypes) {
+import useBuilder from "@/hooks/useBuilder";
+
+function LeftSidebar() {
   const contentTypesArray = useSelector(
     (state: RootState) => state.contentTypes.contentTypes
   );
+
+  const {setSelectedContentType} = useBuilder();
   return (
     <aside className="w-[400px] max-w-[400px] flex flex-col flex-grow gap-2 border-l-2 border-muted p-4 bg-white overflow-y-auto h-full">
       <div className="mb-6">

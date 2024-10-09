@@ -2,8 +2,10 @@ import { Active, DragOverlay, useDndMonitor } from "@dnd-kit/core";
 import { useState } from "react";
 import { SidebarButtonElementDragOverlay } from "./SidebarButtonElement";
 import { ElementsType, UIElementInstance, UIElements } from "./UIElements";
+import useBuilder from "@/hooks/useBuilder";
 
-function DragOverlayWrapper({elements} : {elements: UIElementInstance[]}) {
+function DragOverlayWrapper() {
+  const {elements} = useBuilder();
   const [draggedItem, setDraggedItem] = useState<Active | null>(null);
   useDndMonitor({
     onDragStart: (event) => {

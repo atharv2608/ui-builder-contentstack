@@ -1,30 +1,14 @@
 import { cn } from "@/lib/utils";
-import LeftSidebar from "./LeftSidebar";
-import RightSidebar from "./RightSidebar";
 import { useDndMonitor, useDraggable, useDroppable } from "@dnd-kit/core";
 import { useState } from "react";
 import { ElementsType, UIElementInstance, UIElements } from "./UIElements";
 import { Button } from "../ui/button";
 import { Trash } from "lucide-react";
+import useBuilder from "@/hooks/useBuilder";
 
-type CanvasPropsType = {
-  elements: UIElementInstance[];
-  setElements: React.Dispatch<React.SetStateAction<UIElementInstance[]>>;
-};
-
-function Canvas({ elements, setElements }: CanvasPropsType) {
-
-  const [selectedContentType, setSelectedContentType] = useState("");
-  const [selectedComponent, setSelectedComponent] = useState("");
-
-
-  const addElement = (index: number, element: UIElementInstance) => {
-    setElements((prev) => {
-      const newElements = [...prev];
-      newElements.splice(index, 0, element);
-      return newElements;
-    });
-  };
+function Canvas() {
+  const { setSelectedComponent, addElement, setElements, elements } =
+    useBuilder();
 
   const droppable = useDroppable({
     id: "canvas-drop-area",
@@ -106,12 +90,11 @@ function Canvas({ elements, setElements }: CanvasPropsType) {
   });
 
   const removeElement = (id: string) => {
-    console.log("remove");
     setElements((prev) => prev.filter((element) => element.id !== id));
   };
   return (
     <div className="flex w-full h-full">
-      <LeftSidebar setSelectedContentType={setSelectedContentType} />
+
       <div className="p-4 w-full">
         <div
           ref={droppable.setNodeRef}
@@ -144,8 +127,7 @@ function Canvas({ elements, setElements }: CanvasPropsType) {
           )}
         </div>
       </div>
-      <RightSidebar selectedContentType={selectedContentType} elements={elements}  
-      setElements={setElements} selectedComponent={selectedComponent} setSelectedComponent={setSelectedComponent}/>
+      {/* <RightSidebar /> */}
     </div>
   );
 }

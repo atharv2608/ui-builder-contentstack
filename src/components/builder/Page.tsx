@@ -11,12 +11,11 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { UIElementInstance } from "./UIElements";
-import { useState } from "react";
-import BuilderContentProvider from "@/context/BuilderContext";
+
 import BuilderContextProvider from "@/context/BuilderContext";
+import LeftSidebar from "./LeftSidebar";
+import RightSidebar from "./RightSidebar";
 function Page() {
-  const [elements, setElements] = useState<UIElementInstance[]>([]);
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
       distance: 10, //in px
@@ -55,10 +54,12 @@ function Page() {
               </div>
             </nav>
             <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto min-h-screen bg-accent">
-              <Canvas elements={elements} setElements={setElements} />
+              <LeftSidebar />
+              <Canvas />
+              <RightSidebar />
             </div>
           </main>
-          <DragOverlayWrapper elements={elements} />
+          <DragOverlayWrapper />
         </DndContext>
       </BuilderContextProvider>
     </Layout>
