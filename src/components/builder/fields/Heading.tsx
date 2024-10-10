@@ -32,15 +32,17 @@ function CanvasComponent({
 }) {
   const element = elementInstance as CustomeInstance;
   return (
-    <div className={`flex flex-col gap-2 w-full ${element.extraAttributes?.className}`}>
-      <span className="absolute bottom-0 text-sm right-5 opacity-40">Component ID: {element.id}</span>
-      <h1 
-        className={`text-3xl ${element.extraAttributes?.className}`} 
-        style={{ 
-                  color: element?.extraAttributes?.color || "black" ,
-                  fontSize: element.extraAttributes?.fontSize || "32px",
-                  backgroundColor: element?.extraAttributes?.backgroundColor || "#fff"
-              }} // Apply color from extraAttributes
+    <div className={`flex flex-col gap-2 w-full`}>
+      <span className="absolute bottom-0 text-sm right-5 opacity-40">
+        Component ID: {element.id}
+      </span>
+      <h1
+        className={`text-3xl ${element.extraAttributes?.className}`}
+        style={{
+          color: element?.extraAttributes?.color || "black",
+          fontSize: element.extraAttributes?.fontSize || "32px",
+          fontWeight: element?.extraAttributes?.fontWeight || "400",
+        }}
       >
         {element?.extraAttributes?.label}
       </h1>

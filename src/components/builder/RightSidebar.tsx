@@ -30,6 +30,7 @@ export default function RightSidebar() {
   );
 
   const [fontSize, setFontSize] = useState("16"); // initialize with a default value
+  const [fontWeight, setFontWeight] = useState("100");
 
   useEffect(() => {
     if (selectedCanvasComponent?.type === "Heading") {
@@ -39,6 +40,7 @@ export default function RightSidebar() {
     }
   }, [selectedCanvasComponent]);
   const [color, setColor] = useState("#000000");
+  const [backgroundColor, setBackgroundColor] = useState("#000000");
   const [height, setHeight] = useState("40");
   const [width, setWidth] = useState("100");
 
@@ -200,6 +202,54 @@ export default function RightSidebar() {
                 </div>
                 <div>
                   <Label
+                    htmlFor="font-size"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Font Weight
+                  </Label>
+                  <Input
+                    id="font-weight"
+                    type="number"
+                    max={900}
+                    min={100}
+                    step={100}
+                    value={fontWeight}
+                    onChange={(e) => {
+                      setFontWeight(e.target.value);
+                      if (
+                        selectedCanvasComponent &&
+                        selectedCanvasComponent.extraAttributes
+                      ) {
+                        const selectedElement = elements.find(
+                          (element) => element.id === selectedCanvasComponent.id
+                        );
+                        if (
+                          selectedElement &&
+                          selectedElement.extraAttributes
+                        ) {
+                          const newExtraAttributes = {
+                            ...selectedElement.extraAttributes,
+                            fontWeight: `${e.target.value}`,
+                          };
+                          const newElement = {
+                            ...selectedElement,
+                            extraAttributes: newExtraAttributes,
+                          };
+                          const newElements = elements.map((element) =>
+                            element.id === selectedCanvasComponent.id
+                              ? newElement
+                              : element
+                          );
+                          setElements(newElements);
+                        }
+                      }
+                    }}
+                    className="mt-1"
+                  />
+                </div>
+               
+                <div>
+                  <Label
                     htmlFor="color"
                     className="text-sm font-medium text-gray-700"
                   >
@@ -254,9 +304,9 @@ export default function RightSidebar() {
                   <Input
                     id="color"
                     type="color"
-                    value={color}
+                    value={backgroundColor}
                     onChange={(e) => {
-                      setColor(e.target.value);
+                      setBackgroundColor(e.target.value);
                       if (
                         selectedCanvasComponent &&
                         selectedCanvasComponent.extraAttributes

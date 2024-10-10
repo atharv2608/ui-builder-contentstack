@@ -219,10 +219,13 @@ function CanvasElementWrapper({
 
       <div
         className={cn(
-          "flex w-full min-h-[120px]   items-center rounded-md bg-white  px-4 py-2 pointer-events-none opacity-100 shadow-lg",
+          "flex w-full min-h-[120px]   items-center rounded-md  px-4 py-2 pointer-events-none opacity-100 shadow-lg",
           mouseIsOver && "opacity-30"
         )}
-      >
+        style={{
+          backgroundColor: element?.extraAttributes?.backgroundColor || "#fff"
+        }}
+      > 
         <CanvasElement elementInstance={element} />
       </div>
       {bottomHalf.isOver && (
