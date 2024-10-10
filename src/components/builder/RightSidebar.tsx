@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -17,7 +17,6 @@ import { RootState } from "@/redux/store";
 import { ContentType } from "@/types";
 import useBuilder from "@/hooks/useBuilder";
 
-
 export default function RightSidebar() {
   const {
     selectedContentType,
@@ -26,7 +25,19 @@ export default function RightSidebar() {
     setSelectedComponent,
     setElements,
   } = useBuilder();
-  const [fontSize, setFontSize] = useState("16");
+  const selectedCanvasComponent = elements.find(
+    (element) => element.id === selectedComponent
+  );
+
+  const [fontSize, setFontSize] = useState("16"); // initialize with a default value
+
+  useEffect(() => {
+    if (selectedCanvasComponent?.type === "Heading") {
+      setFontSize("32");
+    } else {
+      setFontSize("16");
+    }
+  }, [selectedCanvasComponent]);
   const [color, setColor] = useState("#000000");
   const [height, setHeight] = useState("40");
   const [width, setWidth] = useState("100");
@@ -35,10 +46,6 @@ export default function RightSidebar() {
     (state: RootState) => state.contentTypes.contentTypes
   ).find((contentType) => contentType.uid === selectedContentType);
 
-  const selectedCanvasComponent = elements.find(
-    (element) => element.id === selectedComponent
-  );
-
   const handleSave = () => {
     // Implement save functionality
     console.log("Saving...");
@@ -46,10 +53,35 @@ export default function RightSidebar() {
 
   const handleReset = () => {
     // Implement reset functionality
-    setFontSize("16");
+    setFontSize(
+      `${selectedCanvasComponent?.type === "Heading" ? "32" : "16"}px`
+    );
     setColor("#000000");
     setHeight("40");
     setWidth("100");
+    if (selectedCanvasComponent && selectedCanvasComponent.extraAttributes) {
+      // Dynamically update the color
+      const selectedElement = elements.find(
+        (element) => element.id === selectedCanvasComponent.id
+      );
+      if (selectedElement && selectedElement.extraAttributes) {
+        const newExtraAttributes = {
+          ...selectedElement.extraAttributes,
+          color: "#000000",
+          fontSize: `${
+            selectedCanvasComponent.type === "Heading" ? "32" : "16"
+          }px`,
+        };
+        const newElement = {
+          ...selectedElement,
+          extraAttributes: newExtraAttributes,
+        };
+        const newElements = elements.map((element) =>
+          element.id === selectedCanvasComponent.id ? newElement : element
+        );
+        setElements(newElements);
+      }
+    }
   };
 
   return (
@@ -68,7 +100,7 @@ export default function RightSidebar() {
               value={selectedComponent}
               onValueChange={setSelectedComponent}
             >
-              <SelectTrigger className="w-[220px]">
+              <SelectTrigger className="w-[200px]">
                 <SelectValue placeholder="Select a content type" />
               </SelectTrigger>
               <SelectContent>
@@ -129,8 +161,40 @@ export default function RightSidebar() {
                   <Input
                     id="font-size"
                     type="number"
+                    max={80}
+                    min={1}
                     value={fontSize}
-                    onChange={(e) => setFontSize(e.target.value)}
+                    onChange={(e) => {
+                      setFontSize(e.target.value);
+                      if (
+                        selectedCanvasComponent &&
+                        selectedCanvasComponent.extraAttributes
+                      ) {
+                        // Dynamically update the color
+                        const selectedElement = elements.find(
+                          (element) => element.id === selectedCanvasComponent.id
+                        );
+                        if (
+                          selectedElement &&
+                          selectedElement.extraAttributes
+                        ) {
+                          const newExtraAttributes = {
+                            ...selectedElement.extraAttributes,
+                            fontSize: `${e.target.value}px`,
+                          };
+                          const newElement = {
+                            ...selectedElement,
+                            extraAttributes: newExtraAttributes,
+                          };
+                          const newElements = elements.map((element) =>
+                            element.id === selectedCanvasComponent.id
+                              ? newElement
+                              : element
+                          );
+                          setElements(newElements);
+                        }
+                      }
+                    }}
                     className="mt-1"
                   />
                 </div>
@@ -152,14 +216,74 @@ export default function RightSidebar() {
                         selectedCanvasComponent.extraAttributes
                       ) {
                         // Dynamically update the color
-                        selectedCanvasComponent.extraAttributes.color =
-                          e.target.value;
-
-                        // Optionally update the class if necessary, or use only inline style
-                        // selectedCanvasComponent.extraAttributes.className = "";
-
-                        // Trigger state update
-                        setElements([...elements]); // To trigger re-render
+                        const selectedElement = elements.find(
+                          (element) => element.id === selectedCanvasComponent.id
+                        );
+                        console.log("Selected Element: ", selectedElement);
+                        if (
+                          selectedElement &&
+                          selectedElement.extraAttributes
+                        ) {
+                          const newExtraAttributes = {
+                            ...selectedElement.extraAttributes,
+                            color: e.target.value,
+                          };
+                          const newElement = {
+                            ...selectedElement,
+                            extraAttributes: newExtraAttributes,
+                          };
+                          const newElements = elements.map((element) =>
+                            element.id === selectedCanvasComponent.id
+                              ? newElement
+                              : element
+                          );
+                          setElements(newElements);
+                        }
+                      }
+                    }}
+                    className="mt-1 h-10"
+                  />
+                </div>
+                <div>
+                  <Label
+                    htmlFor="color"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Background Color
+                  </Label>
+                  <Input
+                    id="color"
+                    type="color"
+                    value={color}
+                    onChange={(e) => {
+                      setColor(e.target.value);
+                      if (
+                        selectedCanvasComponent &&
+                        selectedCanvasComponent.extraAttributes
+                      ) {
+                        // Dynamically update the color
+                        const selectedElement = elements.find(
+                          (element) => element.id === selectedCanvasComponent.id
+                        );
+                        if (
+                          selectedElement &&
+                          selectedElement.extraAttributes
+                        ) {
+                          const newExtraAttributes = {
+                            ...selectedElement.extraAttributes,
+                            backgroundColor: e.target.value,
+                          };
+                          const newElement = {
+                            ...selectedElement,
+                            extraAttributes: newExtraAttributes,
+                          };
+                          const newElements = elements.map((element) =>
+                            element.id === selectedCanvasComponent.id
+                              ? newElement
+                              : element
+                          );
+                          setElements(newElements);
+                        }
                       }
                     }}
                     className="mt-1 h-10"
@@ -219,7 +343,6 @@ export default function RightSidebar() {
           Reset
         </Button>
       </div>
-      
     </div>
   );
 }

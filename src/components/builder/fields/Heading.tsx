@@ -2,9 +2,7 @@ import { Heading } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
 let extraAttributes = {
   label: "Heading",
-  helperText: "Helper Text",
   required: false,
-  placeHolder: "Value",
 };
 const type: ElementsType = "Heading";
 export const HeadingUIElement: UIElement = {
@@ -38,7 +36,11 @@ function CanvasComponent({
       <span className="absolute bottom-0 text-sm right-5 opacity-40">Component ID: {element.id}</span>
       <h1 
         className={`text-3xl ${element.extraAttributes?.className}`} 
-        style={{ color: element?.extraAttributes?.color || "black" }} // Apply color from extraAttributes
+        style={{ 
+                  color: element?.extraAttributes?.color || "black" ,
+                  fontSize: element.extraAttributes?.fontSize || "32px",
+                  backgroundColor: element?.extraAttributes?.backgroundColor || "#fff"
+              }} // Apply color from extraAttributes
       >
         {element?.extraAttributes?.label}
       </h1>
