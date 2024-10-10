@@ -25,7 +25,7 @@ export type ProductEntry = {
 export type Entry = HomePageEntry | ProductEntry;
 
 type EntryResponse = {
-    entries: Entry[];  // Use an array of entries, since the API returns multiple entries
+    entries: Entry[];
 };
 
 export const fetchEntry = async (contentType: ContentTypeNames): Promise<EntryResponse | undefined> => {
