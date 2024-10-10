@@ -4,6 +4,7 @@ import DragOverlayWrapper from "./DragOverlayWrapper";
 import { Button } from "../ui/button";
 import { Save } from "lucide-react";
 import { ResetIcon } from "@radix-ui/react-icons";
+import "./../../App.css"
 import {
   DndContext,
   MouseSensor,
@@ -33,7 +34,7 @@ function Page() {
     <Layout>
       <BuilderContextProvider>
         <DndContext sensors={sensors}>
-          <main className="flex flex-col w-full">
+          <main className="flex flex-col w-full " >
             <nav className="flex justify-between border-b-2 p-4 gap-3 items-center bg-indigo-500">
               <h2 className="truncate font-bold text-2xl text-white">
                 <span className=" mr-2">UI Builder Contentstack</span>
@@ -54,9 +55,15 @@ function Page() {
               </div>
             </nav>
             <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto min-h-screen bg-accent">
-              <LeftSidebar />
-              <Canvas />
-              <RightSidebar />
+              <div className="w-64 overflow-y-auto h-screen">
+                <LeftSidebar />
+              </div>
+              <div className="flex-grow overflow-y-auto h-screen">
+                <Canvas />
+              </div>
+              <div className="w-64 overflow-y-auto h-screen">
+                <RightSidebar />
+              </div>
             </div>
           </main>
           <DragOverlayWrapper />

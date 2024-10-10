@@ -20,7 +20,7 @@ function LeftSidebar() {
 
   const {setSelectedContentType} = useBuilder();
   return (
-    <aside className="w-[400px] max-w-[400px] flex flex-col flex-grow gap-2 border-l-2 border-muted p-4 bg-white overflow-y-auto h-full">
+    <div className="min-w-64 flex flex-col flex-grow gap-2 border-l-2 border-muted p-4 bg-white overflow-y-auto h-full">
       <div className="mb-6">
         <label
           htmlFor="content-type"
@@ -36,7 +36,7 @@ function LeftSidebar() {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Content Type</SelectLabel>
-                {contentTypesArray.map((contentType: any) => (
+                {contentTypesArray.map((contentType) => (
                   <SelectItem key={contentType.uid} value={contentType.uid}>
                     {contentType.title}
                   </SelectItem>
@@ -48,12 +48,13 @@ function LeftSidebar() {
           <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"></div>
         </div>
       </div>
-      <div className="flex flex-wrap gap-5 justify-center ">
-        <SidebarButtonElement uiElement={UIElements.TextField} />
+
+      <div className="grid grid-cols-2 gap-4">
+      <SidebarButtonElement uiElement={UIElements.TextField} />
         <SidebarButtonElement uiElement={UIElements.Heading} />
         <SidebarButtonElement uiElement={UIElements.Image} />
       </div>
-    </aside>
+    </div>
   );
 }
 

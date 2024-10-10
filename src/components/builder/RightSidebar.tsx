@@ -85,7 +85,7 @@ export default function RightSidebar() {
   };
 
   return (
-    <div className="w-[400px]  flex flex-col flex-grow gap-2 border-l-2 border-muted p-4  overflow-y-auto h-full">
+    <div className="w-full  flex flex-col flex-grow gap-2 border-l-2 border-muted p-4  overflow-y-auto h-full">
       <div className="">
         <div className="mb-6">
           <h2 className="text-lg font-semibold mb-2">Data Link Tab</h2>
@@ -100,7 +100,7 @@ export default function RightSidebar() {
               value={selectedComponent}
               onValueChange={setSelectedComponent}
             >
-              <SelectTrigger className="w-[200px]">
+              <SelectTrigger className="">
                 <SelectValue placeholder="Select a content type" />
               </SelectTrigger>
               <SelectContent>

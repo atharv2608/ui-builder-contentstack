@@ -1,44 +1,18 @@
-/* For WebKit browsers (Chrome, Safari, etc.) */
-.hide-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  
-  /* For Firefox */
-  .hide-scrollbar {
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
-  }
-  
-
-  /* For WebKit browsers (Chrome, Safari, etc.) */
-.custom-scrollbar::-webkit-scrollbar {
-    width: 4px; /* Make scrollbar thinner */
+/* Global styles for scrollbars */
+::-webkit-scrollbar {
+  width: 8px; /* Adjust the width of the scrollbar */
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #D3D3D3; /* Scrollbar thumb color */
-    border-radius: 10px; /* Rounded corners */
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); /* Light color for the thumb */
+  border-radius: 10px; /* Rounded edges */
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-    background-color: #f1f1f1; /* Scrollbar track color */
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3); /* Darker on hover */
 }
 
-/* For Firefox */
-.custom-scrollbar {
-    scrollbar-width: thin; /* Make scrollbar thinner */
-    scrollbar-color: #D3D3D3 #f1f1f1; /* thumb color #6c5ce7, track color #f1f1f1 */
-}
-
-/* Resetting scrollbars for the main window to default */
-body::-webkit-scrollbar {
-    width: initial;
-}
-
-body::-webkit-scrollbar-thumb {
-    background-color: initial;
-}
-
-body::-webkit-scrollbar-track {
-    background-color: initial;
+::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, 0.1); /* Light color for the track */
+  border-radius: 10px;
 }
