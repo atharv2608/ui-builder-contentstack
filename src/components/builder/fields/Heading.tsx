@@ -1,7 +1,6 @@
 import { Heading } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
 let extraAttributes = {
-  label: "Heading",
   required: false,
 };
 const type: ElementsType = "Heading";
@@ -44,7 +43,7 @@ function CanvasComponent({
           fontWeight: element?.extraAttributes?.fontWeight || "400",
         }}
       >
-        {element?.extraAttributes?.label}
+        {element?.extraAttributes?.label || "Heading"}
       </h1>
     </div>
   );

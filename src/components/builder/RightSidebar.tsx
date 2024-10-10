@@ -14,8 +14,10 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { ContentTypeNames } from "@/services/fetchEntry";
 import { ContentType } from "@/types";
 import useBuilder from "@/hooks/useBuilder";
+import { fetchEntry } from "@/services/fetchEntry";
 
 export default function RightSidebar() {
   const {
@@ -46,7 +48,7 @@ export default function RightSidebar() {
 
   const contentType: ContentType | undefined = useSelector(
     (state: RootState) => state.contentTypes.contentTypes
-  ).find((contentType) => contentType.uid === selectedContentType);
+  ).find((contentType: ContentType) => contentType.uid === selectedContentType);
 
   const handleSave = () => {
     // Implement save functionality
@@ -122,7 +124,54 @@ export default function RightSidebar() {
             >
               Link To
             </Label>
-            <Select>
+            <Select
+              onValueChange={async(value) => {
+                console.log("Value: ", value);
+                const entries = await fetchEntry(selectedContentType as ContentTypeNames);
+                const entry = entries?.entries[0];
+                if (!entry) {
+                  console.warn("Entry is undefined");
+                  return;
+                }
+                if (
+                  selectedCanvasComponent &&
+                  selectedCanvasComponent.extraAttributes
+                ) {
+                  // Dynamically update the color
+                  const selectedElement = elements.find(
+                    (element) => element.id === selectedCanvasComponent.id
+                  );
+                  if (
+                    selectedElement &&
+                    selectedElement.extraAttributes
+                  ) {
+                    const newExtraAttributes = {
+                      ...selectedElement.extraAttributes,
+                       label: entry[value as keyof typeof entry] || ""
+
+                    };
+                    const newElement = {
+                      ...selectedElement,
+                      extraAttributes: newExtraAttributes,
+                    };
+                    const newElements = elements.map((element) =>
+                      element.id === selectedCanvasComponent.id
+                        ? newElement
+                        : element
+                    );
+                    setElements(newElements);
+                  }
+                }
+
+
+
+
+
+
+
+                
+              }}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Select a schema" />
               </SelectTrigger>
