@@ -36,13 +36,17 @@ function Canvas() {
       }
       const isDroppingOverCanvasElementTopHalf =
         over?.data?.current?.isTopHalfCanvasElement;
+
       const isDroppingOverCanvasElementBottomHalf =
         over?.data?.current?.isBottomHalfCanvasElement;
+
       const isDroppingOverCanvasElement =
         isDroppingOverCanvasElementTopHalf ||
         isDroppingOverCanvasElementBottomHalf;
+
       const droppingSidebarButtonOverCanvasElement =
         isCanvasButtonElement && isDroppingOverCanvasElement;
+
       if (droppingSidebarButtonOverCanvasElement) {
         const type = active?.data?.current?.type;
         const newElement = UIElements[type as ElementsType].construct(
@@ -219,7 +223,7 @@ function CanvasElementWrapper({
 
       <div
         className={cn(
-          "flex w-full min-h-[120px]   items-center rounded-md  px-4 py-2 pointer-events-none opacity-100 shadow-lg",
+          "flex w-full min-h-[120px] items-center rounded-md  px-4 py-2 pointer-events-none opacity-100 shadow-lg",
           mouseIsOver && "opacity-30"
         )}
         style={{

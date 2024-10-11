@@ -3,6 +3,7 @@ import { useState } from "react";
 import { SidebarButtonElementDragOverlay } from "./SidebarButtonElement";
 import { ElementsType, UIElementInstance, UIElements } from "./UIElements";
 import useBuilder from "@/hooks/useBuilder";
+import { ImageDragOverlay } from "./fields/Image";
 
 function DragOverlayWrapper() {
   const {elements} = useBuilder();
@@ -28,7 +29,13 @@ function DragOverlayWrapper() {
     node = <SidebarButtonElementDragOverlay uiElement={UIElements[type]} />;
   }
   const isCanvasElement = draggedItem.data?.current?.isCanvasElement;
-  if(isCanvasElement){
+  const type = draggedItem?.data?.current?.type
+  if (isCanvasElement && type === "Image") {
+    const elementId = draggedItem.data?.current?.elementId;
+    const element = elements.find((el) =>el.id === elementId) as UIElementInstance;
+    node = <ImageDragOverlay elementInstance={element} />
+  }
+  else if(isCanvasElement){
     const elementId = draggedItem.data?.current?.elementId;
     const element = elements.find((el) =>el.id === elementId);
     if(!element)node = <div>Element not found!</div>

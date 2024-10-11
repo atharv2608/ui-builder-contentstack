@@ -33,13 +33,6 @@ export function SidebarButtonElementDragOverlay({
   uiElement: UIElement;
 }) {
   const { label, icon: Icon } = uiElement.buttonElement;
-  const draggable = useDraggable({
-    id: `canvas-btn-${uiElement.type}`,
-    data: {
-      type: uiElement.type,
-      isCanvasButtonElement: true,
-    },
-  });
   return (
     <Button className="flex flex-col gap-2 h-[100px] w-[100px] cursor-grab">
       <Icon className="h-8 w-8 text-indigo-500 cursor-grab" />
