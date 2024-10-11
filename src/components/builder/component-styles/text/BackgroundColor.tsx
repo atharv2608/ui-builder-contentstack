@@ -1,14 +1,11 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dispatch, SetStateAction } from "react";
 import { UIElementInstance } from "../../UIElements";
 import useBuilder from "@/hooks/useBuilder";
 
 function BackgroundColor({
-  setBackgroundColor,
   selectedCanvasComponent,
 }: {
-  setBackgroundColor: Dispatch<SetStateAction<string>>;
   selectedCanvasComponent: UIElementInstance;
 }) {
 
@@ -25,7 +22,6 @@ function BackgroundColor({
     type="color"
     value={selectedCanvasComponent?.extraAttributes?.backgroundColor || "#ffffff"}
     onChange={(e) => {
-      setBackgroundColor(e.target.value);
       if (
         selectedCanvasComponent &&
         selectedCanvasComponent.extraAttributes

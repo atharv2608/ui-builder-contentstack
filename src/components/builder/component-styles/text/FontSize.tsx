@@ -5,10 +5,8 @@ import { UIElementInstance } from "../../UIElements";
 import useBuilder from "@/hooks/useBuilder";
 
 function FontSize({
-  setFontSize,
   selectedCanvasComponent,
 }: {
-  setFontSize: Dispatch<SetStateAction<string>>;
   selectedCanvasComponent: UIElementInstance;
 }) {
   const { elements, setElements } = useBuilder();
@@ -28,8 +26,6 @@ function FontSize({
           "16"
         }
         onChange={(e) => {
-          setFontSize(e.target.value);
-
           if (
             selectedCanvasComponent &&
             selectedCanvasComponent.extraAttributes

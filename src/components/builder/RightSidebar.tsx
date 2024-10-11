@@ -36,10 +36,6 @@ export default function RightSidebar() {
     (element) => element.id === selectedComponent
   );
 
-  const [fontSize, setFontSize] = useState("16"); // initialize with a default value
-  const [fontWeight, setFontWeight] = useState("100");
-  const [color, setColor] = useState("#000000");
-  const [backgroundColor, setBackgroundColor] = useState("#000000");
   const [height, setHeight] = useState("40");
   const [width, setWidth] = useState("100");
 
@@ -53,30 +49,52 @@ export default function RightSidebar() {
   };
 
   const handleReset = () => {
-    // Implement reset functionality
-    setFontSize(
-      `${selectedCanvasComponent?.type === "Heading" ? "32" : "16"}px`
-    );
-    setColor("#000000");
-    setHeight("40");
-    setWidth("100");
     if (selectedCanvasComponent && selectedCanvasComponent.extraAttributes) {
-      // Dynamically update the color
+      // Find the selected element
       const selectedElement = elements.find(
         (element) => element.id === selectedCanvasComponent.id
       );
+  
       if (selectedElement && selectedElement.extraAttributes) {
-        const newExtraAttributes = {
-          ...selectedElement.extraAttributes,
-          color: "#000000",
-          fontSize: `${
-            selectedCanvasComponent.type === "Heading" ? "32" : "16"
-          }px`,
-        };
+        console.log(selectedCanvasComponent.type)
+        let newExtraAttributes = {};
+  
+        // Reset styles based on the component type
+        switch (selectedCanvasComponent.type) {
+          case "Heading":
+          case "TextField":
+            newExtraAttributes = {
+              color: "#000000", // Default black color
+              fontSize: selectedCanvasComponent.type === "Heading" ? "32px" : "16px", // Adjust font size based on type
+              fontWeight: "400", // Default font weight
+              backgroundColor: "#ffffff", // Default white background
+            };
+            break;
+  
+          case "Image":
+            newExtraAttributes = {
+              height: "200px", // Reset height for image
+              width: "300px",  // Reset width for image
+            };
+            break;
+  
+          // Add more cases here if needed for other component types
+  
+          default:
+            // If no type matches, leave extraAttributes unchanged or add default reset behavior
+            break;
+        }
+  
+        // Create the new element with updated attributes
         const newElement = {
           ...selectedElement,
-          extraAttributes: newExtraAttributes,
+          extraAttributes: {
+            ...selectedElement.extraAttributes,
+            ...newExtraAttributes, // Merge with the existing attributes
+          },
         };
+  
+        // Update the elements array with the new element
         const newElements = elements.map((element) =>
           element.id === selectedCanvasComponent.id ? newElement : element
         );
@@ -84,6 +102,7 @@ export default function RightSidebar() {
       }
     }
   };
+  
 
   return (
     <div className="w-full  flex flex-col flex-grow gap-2 border-l-2 border-muted p-4  overflow-y-auto h-full">
@@ -218,15 +237,12 @@ export default function RightSidebar() {
             ) && (
               <div>
                 <FontSize
-                  setFontSize={setFontSize}
                   selectedCanvasComponent={
                     selectedCanvasComponent as UIElementInstance
                   }
                 />
 
                 <FontWeight
-                  fontWeight={fontWeight}
-                  setFontWeight={setFontWeight}
                   selectedCanvasComponent={
                     selectedCanvasComponent as UIElementInstance
                   }
@@ -239,7 +255,6 @@ export default function RightSidebar() {
                 />
 
                 <BackgroundColor
-                  setBackgroundColor={setBackgroundColor}
                   selectedCanvasComponent={
                     selectedCanvasComponent as UIElementInstance
                   }

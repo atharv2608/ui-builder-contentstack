@@ -1,16 +1,11 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dispatch, SetStateAction } from "react";
 import { UIElementInstance } from "../../UIElements";
 import useBuilder from "@/hooks/useBuilder";
 
 function FontWeight({
-  fontWeight,
-  setFontWeight,
   selectedCanvasComponent,
 }: {
-  fontWeight: string;
-  setFontWeight: Dispatch<SetStateAction<string>>;
   selectedCanvasComponent: UIElementInstance;
 }) {
   const { elements, setElements } = useBuilder();
@@ -30,7 +25,6 @@ function FontWeight({
         step={100}
         value={selectedCanvasComponent?.extraAttributes?.fontWeight || "100"}
         onChange={(e) => {
-          setFontWeight(e.target.value);
           if (
             selectedCanvasComponent &&
             selectedCanvasComponent.extraAttributes
