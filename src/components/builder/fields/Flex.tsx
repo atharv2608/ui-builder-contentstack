@@ -32,9 +32,9 @@ export const FlexUIElement: UIElement = {
   propertiesComponent: () => <div>Properties Component</div>,
 };
 
-type CustomInstance = UIElementInstance & {
-  extraAttributes: typeof extraAttributes;
-};
+// type CustomInstance = UIElementInstance & {
+//   extraAttributes: typeof extraAttributes;
+// };
 
 function CanvasComponent({
   elementInstance,
@@ -81,7 +81,7 @@ function CanvasComponent({
     },
   });
 
-  const element = elementInstance as CustomInstance;
+  // const element = elementInstance as CustomInstance;
 
   return (
     <div className="flex flex-col gap-2 w-full">
