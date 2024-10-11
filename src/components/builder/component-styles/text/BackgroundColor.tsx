@@ -1,4 +1,3 @@
-import React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dispatch, SetStateAction } from "react";
@@ -6,11 +5,9 @@ import { UIElementInstance } from "../../UIElements";
 import useBuilder from "@/hooks/useBuilder";
 
 function BackgroundColor({
-  backgroundColor,
   setBackgroundColor,
   selectedCanvasComponent,
 }: {
-  backgroundColor: string;
   setBackgroundColor: Dispatch<SetStateAction<string>>;
   selectedCanvasComponent: UIElementInstance;
 }) {

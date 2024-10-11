@@ -219,7 +219,6 @@ export default function RightSidebar() {
               <div>
                 <FontSize
                   setFontSize={setFontSize}
-                  fontSize={fontSize}
                   selectedCanvasComponent={
                     selectedCanvasComponent as UIElementInstance
                   }
@@ -234,15 +233,12 @@ export default function RightSidebar() {
                 />
 
                 <FontColor
-                  color={color}
-                  setColor={setColor}
                   selectedCanvasComponent={
                     selectedCanvasComponent as UIElementInstance
                   }
                 />
 
                 <BackgroundColor
-                  backgroundColor={backgroundColor}
                   setBackgroundColor={setBackgroundColor}
                   selectedCanvasComponent={
                     selectedCanvasComponent as UIElementInstance

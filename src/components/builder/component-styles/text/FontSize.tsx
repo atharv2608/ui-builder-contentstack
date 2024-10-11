@@ -5,11 +5,9 @@ import { UIElementInstance } from "../../UIElements";
 import useBuilder from "@/hooks/useBuilder";
 
 function FontSize({
-  fontSize,
   setFontSize,
   selectedCanvasComponent,
 }: {
-  fontSize: string;
   setFontSize: Dispatch<SetStateAction<string>>;
   selectedCanvasComponent: UIElementInstance;
 }) {
