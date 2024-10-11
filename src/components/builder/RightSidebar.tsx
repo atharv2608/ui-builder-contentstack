@@ -18,6 +18,11 @@ import { ContentTypeNames } from "@/services/fetchEntry";
 import { ContentType } from "@/types";
 import useBuilder from "@/hooks/useBuilder";
 import { fetchEntry } from "@/services/fetchEntry";
+import FontSize from "./component-styles/text/FontSize";
+import { UIElementInstance } from "./UIElements";
+import FontColor from "./component-styles/text/FontColor";
+import BackgroundColor from "./component-styles/text/BackgroundColor";
+import FontWeight from "./component-styles/text/FontWeight";
 
 export default function RightSidebar() {
   const {
@@ -33,14 +38,6 @@ export default function RightSidebar() {
 
   const [fontSize, setFontSize] = useState("16"); // initialize with a default value
   const [fontWeight, setFontWeight] = useState("100");
-
-  useEffect(() => {
-    if (selectedCanvasComponent?.type === "Heading") {
-      setFontSize("32");
-    } else {
-      setFontSize("16");
-    }
-  }, [selectedCanvasComponent]);
   const [color, setColor] = useState("#000000");
   const [backgroundColor, setBackgroundColor] = useState("#000000");
   const [height, setHeight] = useState("40");
@@ -220,192 +217,37 @@ export default function RightSidebar() {
               selectedCanvasComponent?.type as string
             ) && (
               <div>
-                <div>
-                  <Label
-                    htmlFor="font-size"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Font Size
-                  </Label>
-                  <Input
-                    id="font-size"
-                    type="number"
-                    max={80}
-                    min={1}
-                    value={fontSize}
-                    onChange={(e) => {
-                      setFontSize(e.target.value);
-                      if (
-                        selectedCanvasComponent &&
-                        selectedCanvasComponent.extraAttributes
-                      ) {
-                        // Dynamically update the color
-                        const selectedElement = elements.find(
-                          (element) => element.id === selectedCanvasComponent.id
-                        );
-                        if (
-                          selectedElement &&
-                          selectedElement.extraAttributes
-                        ) {
-                          const newExtraAttributes = {
-                            ...selectedElement.extraAttributes,
-                            fontSize: `${e.target.value}px`,
-                          };
-                          const newElement = {
-                            ...selectedElement,
-                            extraAttributes: newExtraAttributes,
-                          };
-                          const newElements = elements.map((element) =>
-                            element.id === selectedCanvasComponent.id
-                              ? newElement
-                              : element
-                          );
-                          setElements(newElements);
-                        }
-                      }
-                    }}
-                    className="mt-1"
-                  />
-                </div>
-                <div>
-                  <Label
-                    htmlFor="font-size"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Font Weight
-                  </Label>
-                  <Input
-                    id="font-weight"
-                    type="number"
-                    max={900}
-                    min={100}
-                    step={100}
-                    value={fontWeight}
-                    onChange={(e) => {
-                      setFontWeight(e.target.value);
-                      if (
-                        selectedCanvasComponent &&
-                        selectedCanvasComponent.extraAttributes
-                      ) {
-                        const selectedElement = elements.find(
-                          (element) => element.id === selectedCanvasComponent.id
-                        );
-                        if (
-                          selectedElement &&
-                          selectedElement.extraAttributes
-                        ) {
-                          const newExtraAttributes = {
-                            ...selectedElement.extraAttributes,
-                            fontWeight: `${e.target.value}`,
-                          };
-                          const newElement = {
-                            ...selectedElement,
-                            extraAttributes: newExtraAttributes,
-                          };
-                          const newElements = elements.map((element) =>
-                            element.id === selectedCanvasComponent.id
-                              ? newElement
-                              : element
-                          );
-                          setElements(newElements);
-                        }
-                      }
-                    }}
-                    className="mt-1"
-                  />
-                </div>
+                <FontSize
+                  setFontSize={setFontSize}
+                  fontSize={fontSize}
+                  selectedCanvasComponent={
+                    selectedCanvasComponent as UIElementInstance
+                  }
+                />
 
-                <div>
-                  <Label
-                    htmlFor="color"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Color
-                  </Label>
-                  <Input
-                    id="color"
-                    type="color"
-                    value={color}
-                    onChange={(e) => {
-                      setColor(e.target.value);
-                      if (
-                        selectedCanvasComponent &&
-                        selectedCanvasComponent.extraAttributes
-                      ) {
-                        // Dynamically update the color
-                        const selectedElement = elements.find(
-                          (element) => element.id === selectedCanvasComponent.id
-                        );
-                        console.log("Selected Element: ", selectedElement);
-                        if (
-                          selectedElement &&
-                          selectedElement.extraAttributes
-                        ) {
-                          const newExtraAttributes = {
-                            ...selectedElement.extraAttributes,
-                            color: e.target.value,
-                          };
-                          const newElement = {
-                            ...selectedElement,
-                            extraAttributes: newExtraAttributes,
-                          };
-                          const newElements = elements.map((element) =>
-                            element.id === selectedCanvasComponent.id
-                              ? newElement
-                              : element
-                          );
-                          setElements(newElements);
-                        }
-                      }
-                    }}
-                    className="mt-1 h-10"
-                  />
-                </div>
-                <div>
-                  <Label
-                    htmlFor="color"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Background Color
-                  </Label>
-                  <Input
-                    id="color"
-                    type="color"
-                    value={backgroundColor}
-                    onChange={(e) => {
-                      setBackgroundColor(e.target.value);
-                      if (
-                        selectedCanvasComponent &&
-                        selectedCanvasComponent.extraAttributes
-                      ) {
-                        // Dynamically update the color
-                        const selectedElement = elements.find(
-                          (element) => element.id === selectedCanvasComponent.id
-                        );
-                        if (
-                          selectedElement &&
-                          selectedElement.extraAttributes
-                        ) {
-                          const newExtraAttributes = {
-                            ...selectedElement.extraAttributes,
-                            backgroundColor: e.target.value,
-                          };
-                          const newElement = {
-                            ...selectedElement,
-                            extraAttributes: newExtraAttributes,
-                          };
-                          const newElements = elements.map((element) =>
-                            element.id === selectedCanvasComponent.id
-                              ? newElement
-                              : element
-                          );
-                          setElements(newElements);
-                        }
-                      }
-                    }}
-                    className="mt-1 h-10"
-                  />
-                </div>
+                <FontWeight
+                  fontWeight={fontWeight}
+                  setFontWeight={setFontWeight}
+                  selectedCanvasComponent={
+                    selectedCanvasComponent as UIElementInstance
+                  }
+                />
+
+                <FontColor
+                  color={color}
+                  setColor={setColor}
+                  selectedCanvasComponent={
+                    selectedCanvasComponent as UIElementInstance
+                  }
+                />
+
+                <BackgroundColor
+                  backgroundColor={backgroundColor}
+                  setBackgroundColor={setBackgroundColor}
+                  selectedCanvasComponent={
+                    selectedCanvasComponent as UIElementInstance
+                  }
+                />
               </div>
             )}
             {selectedCanvasComponent?.type === "Image" && (

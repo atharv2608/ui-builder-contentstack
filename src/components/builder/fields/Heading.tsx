@@ -39,7 +39,7 @@ function CanvasComponent({
         className={`text-3xl ${element.extraAttributes?.className}`}
         style={{
           color: element?.extraAttributes?.color || "black",
-          fontSize: element.extraAttributes?.fontSize || "32px",
+          fontSize: `${element.extraAttributes?.fontSize}px` || "32px",
           fontWeight: element?.extraAttributes?.fontWeight || "400",
         }}
       >
