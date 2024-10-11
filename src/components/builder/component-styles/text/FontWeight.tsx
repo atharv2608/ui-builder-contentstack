@@ -28,7 +28,7 @@ function FontWeight({
         max={900}
         min={100}
         step={100}
-        value={fontWeight}
+        value={selectedCanvasComponent?.extraAttributes?.fontWeight || "100"}
         onChange={(e) => {
           setFontWeight(e.target.value);
           if (
