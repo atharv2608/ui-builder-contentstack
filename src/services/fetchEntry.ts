@@ -5,7 +5,10 @@ export type ContentTypeNames = "home_page" | "product" | "about_us" | "blog_entr
 export type HomePageEntry = {
     uid: string;
     heading: string;
-    hero_image: string | null;
+    hero_image: {
+        title: string,
+        href:   string,
+    };
     highlights: string;
     overview: string;
     sub_heading: string;

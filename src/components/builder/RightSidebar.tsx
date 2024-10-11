@@ -125,9 +125,11 @@ export default function RightSidebar() {
               Link To
             </Label>
             <Select
-              onValueChange={async(value) => {
+              onValueChange={async (value) => {
                 console.log("Value: ", value);
-                const entries = await fetchEntry(selectedContentType as ContentTypeNames);
+                const entries = await fetchEntry(
+                  selectedContentType as ContentTypeNames
+                );
                 const entry = entries?.entries[0];
                 if (!entry) {
                   console.warn("Entry is undefined");
@@ -137,18 +139,42 @@ export default function RightSidebar() {
                   selectedCanvasComponent &&
                   selectedCanvasComponent.extraAttributes
                 ) {
-                  // Dynamically update the color
                   const selectedElement = elements.find(
                     (element) => element.id === selectedCanvasComponent.id
                   );
                   if (
+                    selectedElement?.type === "Image" &&
+                    selectedElement.extraAttributes
+                  ) {
+                    if (
+                      typeof entry[value as keyof typeof entry] === "object" &&
+                      entry[value as keyof typeof entry] !== null &&
+                      "href" in (entry[value as keyof typeof entry] as any)
+                    ) {
+                      const newExtraAttributes = {
+                        ...selectedElement.extraAttributes,
+                        src: (
+                          entry[value as keyof typeof entry] as { href: string }
+                        ).href, // Cast to ensure TypeScript knows it has 'href'
+                      };
+                      const newElement = {
+                        ...selectedElement,
+                        extraAttributes: newExtraAttributes,
+                      };
+                      const newElements = elements.map((element) =>
+                        element.id === selectedCanvasComponent.id
+                          ? newElement
+                          : element
+                      );
+                      setElements(newElements);
+                    }
+                  } else if (
                     selectedElement &&
                     selectedElement.extraAttributes
                   ) {
                     const newExtraAttributes = {
                       ...selectedElement.extraAttributes,
-                       label: entry[value as keyof typeof entry] || ""
-
+                      label: entry[value as keyof typeof entry] || "",
                     };
                     const newElement = {
                       ...selectedElement,
@@ -162,14 +188,6 @@ export default function RightSidebar() {
                     setElements(newElements);
                   }
                 }
-
-
-
-
-
-
-
-                
               }}
             >
               <SelectTrigger>
@@ -296,7 +314,7 @@ export default function RightSidebar() {
                     className="mt-1"
                   />
                 </div>
-               
+
                 <div>
                   <Label
                     htmlFor="color"

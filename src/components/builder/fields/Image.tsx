@@ -37,7 +37,7 @@ function CanvasComponent({
       <div className="w-full h-[400px]">
       <span className="absolute bottom-2 text-sm right-5 opacity-40">Component ID: {element.id}</span>
 
-        <img src="https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg" alt={element?.extraAttributes?.altText}  className="h-[400px] w-full"/>
+        <img src={element.extraAttributes?.src ||"https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg"} alt={element?.extraAttributes?.altText}  className="h-[400px] w-full"/>
       </div>
     
   );
@@ -51,7 +51,7 @@ const element = elementInstance as CustomeInstance;
       <div className="w-full h-[120px] bg-gray-400 opacity-80 rounded-md shadow-md flex justify-between p-2">
     
 
-        <img src="https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg" alt={element?.extraAttributes?.altText}  className="h-[100px]"/>
+        <img src={"https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg"} alt={element?.extraAttributes?.altText}  className="h-[100px]"/>
       </div>
     
   );
