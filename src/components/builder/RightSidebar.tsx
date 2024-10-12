@@ -44,6 +44,8 @@ export default function RightSidebar() {
     (state: RootState) => state.contentTypes.contentTypes
   ).find((contentType: ContentType) => contentType.uid === selectedContentType);
 
+  const type = selectedCanvasComponent?.type;
+  
   const handleSave = () => {
     // Implement save functionality
     console.log("Saving...");

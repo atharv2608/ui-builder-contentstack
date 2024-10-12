@@ -53,6 +53,8 @@ function LeftSidebar() {
       <SidebarButtonElement uiElement={UIElements.TextField} />
         <SidebarButtonElement uiElement={UIElements.Heading} />
         <SidebarButtonElement uiElement={UIElements.Image} />
+        <SidebarButtonElement uiElement={UIElements.Product} />
+        
       </div>
     </div>
   );
