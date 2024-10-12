@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -23,6 +23,7 @@ import { UIElementInstance } from "./UIElements";
 import FontColor from "./component-styles/text/FontColor";
 import BackgroundColor from "./component-styles/text/BackgroundColor";
 import FontWeight from "./component-styles/text/FontWeight";
+import Height from "./component-styles/image/Height";
 
 export default function RightSidebar() {
   const {
@@ -262,21 +263,7 @@ export default function RightSidebar() {
               </div>
             )}
             {selectedCanvasComponent?.type === "Image" && (
-              <div>
-                <Label
-                  htmlFor="height"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Height
-                </Label>
-                <Input
-                  id="height"
-                  type="number"
-                  value={height}
-                  onChange={(e) => setHeight(e.target.value)}
-                  className="mt-1"
-                />
-              </div>
+              <Height selectedCanvasComponent={selectedCanvasComponent}/>
             )}
             {selectedCanvasComponent?.type === "Image" && (
               <div>

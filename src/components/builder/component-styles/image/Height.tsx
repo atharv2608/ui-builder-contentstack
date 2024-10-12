@@ -3,40 +3,35 @@ import { Label } from "@/components/ui/label";
 import { UIElementInstance } from "../../UIElements";
 import useBuilder from "@/hooks/useBuilder";
 
-function FontSize({
-  selectedCanvasComponent,
-}: {
-  selectedCanvasComponent: UIElementInstance;
+function Height({
+    selectedCanvasComponent
+}:{
+    selectedCanvasComponent: UIElementInstance
 }) {
-  const { elements, setElements } = useBuilder();
+
+  const { elements, setElements} = useBuilder();
   return (
     <div>
-      <Label htmlFor="font-size" className="text-sm font-medium text-gray-700">
-        Font Size
+      <Label htmlFor="height" className="text-sm font-medium text-gray-700">
+        Height
       </Label>
       <Input
-        id="font-size"
+        id="height"
         type="number"
-        max={80}
-        min={1}
-        value={
-          selectedCanvasComponent?.extraAttributes?.fontSize ||
-          (selectedCanvasComponent?.type === "Heading" ? "32" : "16") ||
-          "16"
-        }
-        onChange={(e) => {
+        value={selectedCanvasComponent?.extraAttributes?.height || 300}
+        onChange={(e) =>{
           if (
             selectedCanvasComponent &&
             selectedCanvasComponent.extraAttributes
           ) {
-            // Dynamically update the font-size
+            // Dynamically update the height of the image
             const selectedElement = elements.find(
               (element) => element.id === selectedCanvasComponent.id
             );
             if (selectedElement && selectedElement.extraAttributes) {
               const newExtraAttributes = {
                 ...selectedElement.extraAttributes,
-                fontSize: `${e.target.value}`,
+                height: e.target.value,
               };
               const newElement = {
                 ...selectedElement,
@@ -55,4 +50,4 @@ function FontSize({
   );
 }
 
-export default FontSize;
+export default Height;
