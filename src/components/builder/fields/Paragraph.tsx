@@ -4,11 +4,7 @@ import { Parser } from "html-to-react";
 
 // Default attributes for the paragraph
 const extraAttributes = {
-  color: "#000000",
-  fontSize: "16",
-  fontWeight: "400",
-  backgroundColor: "#ffffff",
-  label: "This is a paragraph", // Default label for the paragraph
+  tag: "p"
 };
 
 const type: ElementsType = "Paragraph";

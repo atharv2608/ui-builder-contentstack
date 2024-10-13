@@ -1,10 +1,7 @@
 import { Heading } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
 let extraAttributes = {
-  color: "#000000",
-  fontSize: "32",
-  fontWeight: "400",
-  backgroundColor: "#ffffff",
+  tag: "h1"
 };
 const type: ElementsType = "Heading";
 export const HeadingUIElement: UIElement = {

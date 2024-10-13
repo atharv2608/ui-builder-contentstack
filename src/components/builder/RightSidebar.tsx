@@ -8,7 +8,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useSelector } from "react-redux";
@@ -26,6 +25,7 @@ import Height from "./component-styles/image/Height";
 import { fetchProducts } from "@/services/fetchProducts";
 import LinkToProduct from "./component-styles/product/LinkToProduct";
 import Width from "./component-styles/image/Width";
+import { Button } from "../ui/button";
 
 export default function RightSidebar() {
   const {
@@ -39,7 +39,6 @@ export default function RightSidebar() {
     (element) => element.id === selectedComponent
   );
   fetchProducts();
-  const [width, setWidth] = useState("100");
 
   const contentType: ContentType | undefined = useSelector(
     (state: RootState) => state.contentTypes.contentTypes
@@ -287,7 +286,11 @@ export default function RightSidebar() {
           
         </div>
       </div>
-
+      <div className="flex justify-between ">
+        <Button  onClick={handleReset} className="bg-indigo-500 text-white">
+          Reset styles
+        </Button>
+      </div>
       
     </div>
   );

@@ -2,10 +2,7 @@ import { Text } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
 import { Parser } from "html-to-react";
 const extraAttributes = {
-  color: "#000000",
-  fontSize: "16",
-  fontWeight: "400",
-  backgroundColor: "#ffffff",
+ tag: "span"
 };
 const type: ElementsType = "TextField";
 export const TextFieldUIElement: UIElement = {
