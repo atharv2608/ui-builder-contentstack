@@ -16,6 +16,7 @@ import {
 import BuilderContextProvider from "@/context/BuilderContext";
 import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
+import JSONDialog from "./JSONDialog";
 function Page() {
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
@@ -52,6 +53,8 @@ function Page() {
                 >
                   <ResetIcon className="h-4 w-4" /> Reset
                 </Button>
+
+                <JSONDialog />
               </div>
             </nav>
             <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto min-h-screen bg-accent">

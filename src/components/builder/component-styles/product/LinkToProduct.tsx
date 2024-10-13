@@ -19,7 +19,7 @@ function LinkToProduct({
 }) {
   const [products, setProducts] = useState<Product[]>([]);
   const { elements, setElements } = useBuilder();
-  const [selectedProductName, setSelectedProductName] = useState<string | undefined>(undefined); // Changed to undefined
+  const [selectedProductName, setSelectedProductName] = useState<string | undefined>(undefined); 
 
   const selectedElement = elements.find(
     (element) => element.id === selectedCanvasComponent.id
@@ -29,7 +29,7 @@ function LinkToProduct({
   const getProducts = async () => {
     try {
       const response = await fetchProducts();
-      setProducts(response || []); // Set to empty array if response is undefined
+      setProducts(response || []); 
     } catch (error) {
       console.error("Failed to fetch products:", error);
     }
@@ -39,6 +39,17 @@ function LinkToProduct({
   useEffect(() => {
     getProducts();
   }, []);
+
+  // Reset selectedProductName when selectedCanvasComponent changes
+  useEffect(() => {
+    if (selectedElement && selectedElement.extraAttributes) {
+      // If the selected element has a product linked, show that product
+      setSelectedProductName(selectedElement.extraAttributes.productName);
+    } else {
+      // Otherwise, reset to show the placeholder
+      setSelectedProductName(undefined);
+    }
+  }, [selectedCanvasComponent, selectedElement]);
 
   // Handle product selection
   const handleProductChange = useCallback((value: string) => {

@@ -1,10 +1,11 @@
 import { FlexUIElement } from "./fields/Flex";
 import { HeadingUIElement } from "./fields/Heading";
 import { ImageUIElement } from "./fields/Image";
+import { ParagraphUIElement } from "./fields/Paragraph";
 import { ProductUIElement } from "./fields/Product";
 import { TextFieldUIElement } from "./fields/TextField";
 
-export type ElementsType = "TextField" | "Heading" | "Image" | "Flex" | "Product";
+export type ElementsType = "TextField" | "Heading" | "Image" | "Flex" | "Product" | "Paragraph";
 
 export type UIElement = {
     type: ElementsType,
@@ -30,6 +31,7 @@ export const UIElements: UIElementsTypes = {
     Image: ImageUIElement,
     Flex: FlexUIElement,
     Product: ProductUIElement,
+    Paragraph: ParagraphUIElement
 }
 
 export type UIElementInstance = {

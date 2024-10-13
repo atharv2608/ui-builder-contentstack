@@ -160,6 +160,7 @@ export default function RightSidebar() {
                 const entry = entries?.entries[0];
                 if (!entry) {
                   console.warn("Entry is undefined");
+                  alert("No entry found")
                   return;
                 }
                 if (
