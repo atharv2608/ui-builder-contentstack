@@ -24,6 +24,8 @@ import FontColor from "./component-styles/text/FontColor";
 import BackgroundColor from "./component-styles/text/BackgroundColor";
 import FontWeight from "./component-styles/text/FontWeight";
 import Height from "./component-styles/image/Height";
+import { fetchProducts } from "@/services/fetchProducts";
+import LinkToProduct from "./component-styles/product/LinkToProduct";
 
 export default function RightSidebar() {
   const {
@@ -36,15 +38,13 @@ export default function RightSidebar() {
   const selectedCanvasComponent = elements.find(
     (element) => element.id === selectedComponent
   );
-
+  fetchProducts();
   const [height, setHeight] = useState("40");
   const [width, setWidth] = useState("100");
 
   const contentType: ContentType | undefined = useSelector(
     (state: RootState) => state.contentTypes.contentTypes
   ).find((contentType: ContentType) => contentType.uid === selectedContentType);
-
-  const type = selectedCanvasComponent?.type;
   
   const handleSave = () => {
     // Implement save functionality
@@ -144,6 +144,7 @@ export default function RightSidebar() {
               Link To
             </Label>
             <Select
+            disabled={selectedCanvasComponent?.type === "Product"}
               onValueChange={async (value) => {
                 console.log("Value: ", value);
                 const entries = await fetchEntry(
@@ -283,6 +284,9 @@ export default function RightSidebar() {
                   className="mt-1"
                 />
               </div>
+            )}
+            {selectedCanvasComponent?.type === "Product" && (
+              <LinkToProduct selectedCanvasComponent={selectedCanvasComponent}/>
             )}
           </div>
 

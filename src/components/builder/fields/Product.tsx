@@ -3,6 +3,10 @@ import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
 import { Card, CardContent } from "@/components/ui/card";
 let extraAttributes = {
   type: "product",
+  productName: "Product Name",
+  productDescription: "Product Description",
+  productImage: "https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg",
+  productPrice: "Price"
   
 };
 const type: ElementsType = "Product";
@@ -39,17 +43,17 @@ function CanvasComponent({
         <div className="flex flex-col sm:flex-row">
           <div className="w-full sm:w-1/3">
             <img
-              src={"https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg"}
+              src={element?.extraAttributes?.productImage}
               alt={"name"}
               className="w-full h-48 sm:h-full object-cover"
             />
           </div>
           <div className="w-full sm:w-2/3 p-4 flex flex-col justify-between">
             <div>
-              <h2 className="text-2xl font-bold mb-2">Product Name</h2>
-              <p className="text-muted-foreground mb-4">Description</p>
+              <h2 className="text-2xl font-bold mb-2">{element?.extraAttributes?.productName}</h2>
+              <p className="text-muted-foreground mb-4">{element?.extraAttributes?.productDescription}</p>
             </div>
-            <div className="text-xl font-semibold">1000</div>
+            <div className="text-xl font-semibold">{element?.extraAttributes?.productPrice}</div>
           </div>
         </div>
       </CardContent>
