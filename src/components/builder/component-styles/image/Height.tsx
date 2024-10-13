@@ -21,7 +21,7 @@ function Height({
     if (selectedCanvasComponent?.extraAttributes?.height) {
       setHeight(selectedCanvasComponent.extraAttributes.height);
     } else {
-      setHeight(300); // Default height
+      setHeight(400); // Default height
     }
   }, [selectedCanvasComponent]);
 

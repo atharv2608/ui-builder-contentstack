@@ -25,6 +25,7 @@ import FontWeight from "./component-styles/text/FontWeight";
 import Height from "./component-styles/image/Height";
 import { fetchProducts } from "@/services/fetchProducts";
 import LinkToProduct from "./component-styles/product/LinkToProduct";
+import Width from "./component-styles/image/Width";
 
 export default function RightSidebar() {
   const {
@@ -130,7 +131,7 @@ export default function RightSidebar() {
               value={selectedComponent}
               onValueChange={setSelectedComponent}
             >
-              <SelectTrigger className="">
+              <SelectTrigger className="border-black">
                 <SelectValue placeholder="Select a component" />
               </SelectTrigger>
               <SelectContent>
@@ -151,7 +152,7 @@ export default function RightSidebar() {
               Link To
             </Label>
             <Select
-            disabled={!selectedContentType ||selectedCanvasComponent?.type === "Product"}
+            disabled={!selectedContentType || elements.length === 0 ||selectedCanvasComponent?.type === "Product"}
               onValueChange={async (value) => {
                 const entries = await fetchEntry(
                   selectedContentType as ContentTypeNames
@@ -217,7 +218,7 @@ export default function RightSidebar() {
                 }
               }}
             >
-              <SelectTrigger>
+              <SelectTrigger className="border-black">
                 <SelectValue placeholder="Select a schema" />
               </SelectTrigger>
               <SelectContent>
@@ -243,7 +244,7 @@ export default function RightSidebar() {
           </p>
 
           <div className="space-y-4">
-            {["TextField", "Heading"].includes(
+            {["TextField", "Heading", "Paragraph"].includes(
               selectedCanvasComponent?.type as string
             ) && (
               <div>
@@ -273,24 +274,10 @@ export default function RightSidebar() {
               </div>
             )}
             {selectedCanvasComponent?.type === "Image" && (
+              <>
               <Height selectedCanvasComponent={selectedCanvasComponent}/>
-            )}
-            {selectedCanvasComponent?.type === "Image" && (
-              <div>
-                <Label
-                  htmlFor="width"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Width
-                </Label>
-                <Input
-                  id="width"
-                  type="number"
-                  value={width}
-                  onChange={(e) => setWidth(e.target.value)}
-                  className="mt-1"
-                />
-              </div>
+              <Width selectedCanvasComponent={selectedCanvasComponent} />
+              </>
             )}
             {selectedCanvasComponent?.type === "Product" && (
               <LinkToProduct selectedCanvasComponent={selectedCanvasComponent}/>

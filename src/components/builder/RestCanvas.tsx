@@ -38,7 +38,7 @@ function ResetCanvas() {
         </DialogHeader>
         
         <DialogFooter>
-          <Button type="submit" variant="outline" onClick={resetCanvas}> {/* Close dialog on click */}
+          <Button type="submit" variant="outline" className="text-white bg-red-500" onClick={resetCanvas}> {/* Close dialog on click */}
             Reset
           </Button>
           <Button variant="outline" onClick={() => setOpen(false)}> {/* Close dialog on click */}
