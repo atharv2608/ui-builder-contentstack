@@ -27,7 +27,7 @@ export default function BuilderContextProvider({
   children: ReactNode;
 }) {
   const [elements, setElements] = useState<UIElementInstance[]>([]);
-  const [selectedContentType, setSelectedContentType] = useState<string>("home_page");
+  const [selectedContentType, setSelectedContentType] = useState<string>("");
   const [selectedComponent, setSelectedComponent] = useState<string>("");
   const [generatedJson, setGeneratedJson] = useState<Record<string, any>>({});
 

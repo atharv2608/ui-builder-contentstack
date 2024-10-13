@@ -79,8 +79,17 @@ export default function RightSidebar() {
               width: "300px",  // Reset width for image
             };
             break;
+
+          case "Product":
+            newExtraAttributes = {
+              productName: "Product Name",
+              productDescription: "Product Description",
+              productImage: "https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg",
+              productPrice: "Price"
+            };
+            break;
   
-          // Add more cases here if needed for other component types
+        
   
           default:
             // If no type matches, leave extraAttributes unchanged or add default reset behavior
@@ -143,9 +152,8 @@ export default function RightSidebar() {
               Link To
             </Label>
             <Select
-            disabled={selectedCanvasComponent?.type === "Product"}
+            disabled={!selectedContentType ||selectedCanvasComponent?.type === "Product"}
               onValueChange={async (value) => {
-                console.log("Value: ", value);
                 const entries = await fetchEntry(
                   selectedContentType as ContentTypeNames
                 );

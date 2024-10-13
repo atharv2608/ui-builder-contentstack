@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import useBuilder from "@/hooks/useBuilder";
 import { fetchProducts, Product } from "@/services/fetchProducts";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { UIElementInstance } from "../../UIElements";
 
 function LinkToProduct({
@@ -19,46 +19,54 @@ function LinkToProduct({
 }) {
   const [products, setProducts] = useState<Product[]>([]);
   const { elements, setElements } = useBuilder();
+  const [selectedProductName, setSelectedProductName] = useState<string | undefined>(undefined); // Changed to undefined
 
   const selectedElement = elements.find(
     (element) => element.id === selectedCanvasComponent.id
-  ); 
-  async function getProducts() {
+  );
+
+  // Fetch products from the API
+  const getProducts = async () => {
     try {
       const response = await fetchProducts();
-      setProducts(response || []); // In case the response is undefined, set it to an empty array
+      setProducts(response || []); // Set to empty array if response is undefined
     } catch (error) {
       console.error("Failed to fetch products:", error);
     }
-  }
+  };
 
   // Fetch products when the component mounts
   useEffect(() => {
     getProducts();
   }, []);
 
+  // Handle product selection
+  const handleProductChange = useCallback((value: string) => {
+    const product = products.find(product => product.product_name === value);
+    setSelectedProductName(value); // Update local state
+
+    if (selectedElement && selectedElement.extraAttributes && product) {
+      const newExtraAttributes = {
+        ...selectedElement.extraAttributes,
+        productName: product.product_name,
+        productDescription: product.product_description,
+        productImage: product.product_image.href,
+        productPrice: product.product_price,
+      };
+      const newElement = {
+        ...selectedElement,
+        extraAttributes: newExtraAttributes,
+      };
+      const newElements = elements.map((element) =>
+        element.id === selectedCanvasComponent.id ? newElement : element
+      );
+      setElements(newElements);
+    }
+  }, [elements, selectedCanvasComponent.id, selectedElement, products, setElements]);
+
   return (
     <div>
-      <Select onValueChange={(value)=>{
-        const product = products.find(product => product.product_name === value);
-        if (selectedElement && selectedElement.extraAttributes && product) {
-          const newExtraAttributes = {
-            ...selectedElement.extraAttributes,
-            productName: product.product_name,
-            productDescription: product.product_description,
-            productImage: product.product_image.href,
-            productPrice: product.product_price
-          };
-          const newElement = {
-            ...selectedElement,
-            extraAttributes: newExtraAttributes,
-          };
-          const newElements = elements.map((element) =>
-            element.id === selectedCanvasComponent.id ? newElement : element
-          );
-          setElements(newElements);
-        }
-      }}>
+      <Select onValueChange={handleProductChange} value={selectedProductName}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Select a product" />
         </SelectTrigger>
