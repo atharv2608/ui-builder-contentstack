@@ -52,18 +52,13 @@ export default function RightSidebar() {
   const handleReset = () => {
     if (selectedCanvasComponent && selectedCanvasComponent.extraAttributes) {
       // Find the selected element
-      const selectedElement = elements.find(
-        (element) => element.id === selectedCanvasComponent.id
-      );
-  
-      if (selectedElement && selectedElement.extraAttributes) {
-        console.log(selectedCanvasComponent.type)
         let newExtraAttributes = {};
   
         // Reset styles based on the component type
         switch (selectedCanvasComponent.type) {
           case "Heading":
           case "TextField":
+          case "Paragraph":
             newExtraAttributes = {
               color: "#000000", // Default black color
               fontSize: selectedCanvasComponent.type === "Heading" ? "32" : "16", // Adjust font size based on type
@@ -97,9 +92,9 @@ export default function RightSidebar() {
   
         // Create the new element with updated attributes
         const newElement = {
-          ...selectedElement,
+          ...selectedCanvasComponent,
           extraAttributes: {
-            ...selectedElement.extraAttributes,
+            ...selectedCanvasComponent.extraAttributes,
             ...newExtraAttributes, // Merge with the existing attributes
           },
         };
@@ -109,7 +104,7 @@ export default function RightSidebar() {
           element.id === selectedCanvasComponent.id ? newElement : element
         );
         setElements(newElements);
-      }
+      
     }
   };
   
