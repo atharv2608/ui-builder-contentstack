@@ -37,7 +37,7 @@ function LeftSidebar() {
               <SelectGroup>
                 <SelectLabel>Content Type</SelectLabel>
                 {contentTypesArray.map((contentType: any) => (
-                  <SelectItem key={contentType.uid} value={contentType.uid}>
+                  <SelectItem disabled={contentType.uid === "visuals"} key={contentType.uid} value={contentType.uid}>
                     {contentType.title}
                   </SelectItem>
                 ))}

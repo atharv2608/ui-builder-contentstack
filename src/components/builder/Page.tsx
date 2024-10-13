@@ -17,6 +17,7 @@ import BuilderContextProvider from "@/context/BuilderContext";
 import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
 import JSONDialog from "./JSONDialog";
+import ResetCanvas from "./RestCanvas";
 function Page() {
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
@@ -47,12 +48,7 @@ function Page() {
                 >
                   <Save className="h-4 w-4" /> Save
                 </Button>
-                <Button
-                  variant={"outline"}
-                  className="gap-2 bg-white text-indigo-500"
-                >
-                  <ResetIcon className="h-4 w-4" /> Reset
-                </Button>
+                <ResetCanvas />
 
                 <JSONDialog />
               </div>

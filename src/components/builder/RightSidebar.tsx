@@ -10,7 +10,6 @@ import {
 } from "../ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -132,7 +131,7 @@ export default function RightSidebar() {
               onValueChange={setSelectedComponent}
             >
               <SelectTrigger className="">
-                <SelectValue placeholder="Select a content type" />
+                <SelectValue placeholder="Select a component" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -298,22 +297,11 @@ export default function RightSidebar() {
             )}
           </div>
 
-          <Button
-            variant="outline"
-            className="mt-4 w-full"
-            onClick={() => console.log("JSON Preview")}
-          >
-            JSON Preview
-          </Button>
+          
         </div>
       </div>
 
-      <div className="flex justify-between ">
-        <Button onClick={handleSave}>Save</Button>
-        <Button variant="outline" onClick={handleReset}>
-          Reset
-        </Button>
-      </div>
+      
     </div>
   );
 }
