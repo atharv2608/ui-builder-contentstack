@@ -39,7 +39,6 @@ export default function RightSidebar() {
     (element) => element.id === selectedComponent
   );
   fetchProducts();
-  const [height, setHeight] = useState("40");
   const [width, setWidth] = useState("100");
 
   const contentType: ContentType | undefined = useSelector(
@@ -68,7 +67,7 @@ export default function RightSidebar() {
           case "TextField":
             newExtraAttributes = {
               color: "#000000", // Default black color
-              fontSize: selectedCanvasComponent.type === "Heading" ? "32px" : "16px", // Adjust font size based on type
+              fontSize: selectedCanvasComponent.type === "Heading" ? "32" : "16", // Adjust font size based on type
               fontWeight: "400", // Default font weight
               backgroundColor: "#ffffff", // Default white background
             };

@@ -41,7 +41,7 @@ function CanvasComponent({
       <p
          style={{
           color: element?.extraAttributes?.color || "black",
-          fontSize: element.extraAttributes?.fontSize || "16px",
+          fontSize: `${element.extraAttributes?.fontSize}px` || "16px",
           fontWeight: element?.extraAttributes?.fontWeight || "400",
         }}
       >

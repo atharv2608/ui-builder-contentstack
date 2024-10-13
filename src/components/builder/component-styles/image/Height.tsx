@@ -2,14 +2,51 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UIElementInstance } from "../../UIElements";
 import useBuilder from "@/hooks/useBuilder";
+import { useState, useEffect, useCallback } from "react";
 
 function Height({
-    selectedCanvasComponent
-}:{
-    selectedCanvasComponent: UIElementInstance
+  selectedCanvasComponent,
+}: {
+  selectedCanvasComponent: UIElementInstance;
 }) {
+  const { elements, setElements } = useBuilder();
 
-  const { elements, setElements} = useBuilder();
+  // Local state for height
+  const [height, setHeight] = useState<number>(
+    selectedCanvasComponent?.extraAttributes?.height || 300
+  );
+
+  // Sync the local state with the selected component's height
+  useEffect(() => {
+    if (selectedCanvasComponent?.extraAttributes?.height) {
+      setHeight(selectedCanvasComponent.extraAttributes.height);
+    } else {
+      setHeight(300); // Default height
+    }
+  }, [selectedCanvasComponent]);
+
+  // Function to handle height changes
+  const handleHeightChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const newHeight = Number(e.target.value);
+    setHeight(newHeight); // Update local state
+
+    // Find the selected element and update its height
+    const updatedElements = elements.map((element) =>
+      element.id === selectedCanvasComponent.id
+        ? {
+            ...element,
+            extraAttributes: {
+              ...element.extraAttributes,
+              height: newHeight,
+            },
+          }
+        : element
+    );
+
+    // Update the elements in the global state
+    setElements(updatedElements);
+  }, [selectedCanvasComponent.id, elements, setElements]);
+
   return (
     <div>
       <Label htmlFor="height" className="text-sm font-medium text-gray-700">
@@ -18,32 +55,8 @@ function Height({
       <Input
         id="height"
         type="number"
-        value={selectedCanvasComponent?.extraAttributes?.height || 300}
-        onChange={(e) =>{
-          if (
-            selectedCanvasComponent &&
-            selectedCanvasComponent.extraAttributes
-          ) {
-            // Dynamically update the height of the image
-            const selectedElement = elements.find(
-              (element) => element.id === selectedCanvasComponent.id
-            );
-            if (selectedElement && selectedElement.extraAttributes) {
-              const newExtraAttributes = {
-                ...selectedElement.extraAttributes,
-                height: e.target.value,
-              };
-              const newElement = {
-                ...selectedElement,
-                extraAttributes: newExtraAttributes,
-              };
-              const newElements = elements.map((element) =>
-                element.id === selectedCanvasComponent.id ? newElement : element
-              );
-              setElements(newElements);
-            }
-          }
-        }}
+        value={height} // Use local state for value
+        onChange={handleHeightChange} // Handle changes using callback
         className="mt-1"
       />
     </div>
