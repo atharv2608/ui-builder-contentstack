@@ -19,6 +19,7 @@ import RightSidebar from "./RightSidebar";
 import JSONDialog from "./JSONDialog";
 import ResetCanvas from "./RestCanvas";
 import useBuilder from "@/hooks/useBuilder";
+import SaveButton from "./SaveButton";
 function Page() {
 
   const {elements} = useBuilder()
@@ -44,13 +45,7 @@ function Page() {
                 <span className=" mr-2">UI Builder Contentstack</span>
               </h2>
               <div className="flex items-center gap-2">
-                <Button
-                  variant={"outline"}
-                  className="gap-2 bg-white text-indigo-500"
-                  disabled={elements.length===0}
-                >
-                  <Save className="h-4 w-4" /> Save
-                </Button>
+                <SaveButton />
                 <ResetCanvas />
 
                 <JSONDialog />
