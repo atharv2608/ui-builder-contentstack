@@ -1,13 +1,14 @@
 import { cn } from "@/lib/utils";
 import { useDndMonitor, useDraggable, useDroppable } from "@dnd-kit/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ElementsType, UIElementInstance, UIElements } from "./UIElements";
 import { Button } from "../ui/button";
 import { Trash } from "lucide-react";
 import useBuilder from "@/hooks/useBuilder";
+import { fetchVisualEntries } from "@/services/fetchVisualsEntry";
 
 function Canvas() {
-  const { setSelectedComponent, addElement, setElements, elements, selectedComponent, setSelectedSchema, setVisualEntries, visualEntries } =
+  const { setSelectedComponent, addElement, setElements, elements, selectedComponent, setSelectedSchema, setVisualEntries, visualEntries , selectedContentType} =
     useBuilder();
 
   const droppable = useDroppable({
@@ -100,6 +101,54 @@ function Canvas() {
     }
     setElements((prev) => prev.filter((element) => element.id !== id));
   };
+
+    // Function to load elements based on selected content type and visual entries
+    const loadElementsFromVisualEntries = () => {
+      if (visualEntries && selectedContentType) {
+        const entry = visualEntries.entries.find(
+          (e) => e.title === selectedContentType
+        );
+        
+        // Check if entry and its ui_json exist, and if components is an array
+        if (entry && entry.ui_json && Array.isArray(entry.ui_json.components)) {
+          const parsedElements: UIElementInstance[] = entry.ui_json.components.map(
+            (jsonElement: any) => ({
+              id: jsonElement.id,
+              type: jsonElement.type,
+              extraAttributes: jsonElement.attributes,
+            })
+          );
+          setElements(parsedElements);
+        } else {
+          setElements([]); // No entry found or no UI JSON, set to empty
+        }
+      }
+    };
+    
+    
+  
+    // Fetch visual entries on load and when selectedContentType changes
+    useEffect(() => {
+      async function fetchData() {
+        try {
+          const fetchedResponse = await fetchVisualEntries(); // This returns the full Axios response
+          const fetchedEntries = fetchedResponse.data; // Extract the data from the response
+          setVisualEntries(fetchedEntries); // Now set the visual entries state
+        } catch (error) {
+          console.error("Error fetching visual entries:", error);
+          // Handle error accordingly
+          setVisualEntries(null); // Optionally set to null or handle as needed
+        }
+      }
+    
+      fetchData();
+    }, [setVisualEntries]);
+    
+  
+    // Populate elements when visual entries or selectedContentType changes
+    useEffect(() => {
+      loadElementsFromVisualEntries();
+    }, [visualEntries, selectedContentType]);
   return (
     <div className="flex w-full h-full">
 
@@ -179,7 +228,7 @@ function CanvasElementWrapper({
 
   if (draggable.isDragging) return null;
   const CanvasElement = UIElements[element.type].canvasComponent;
-
+  
   return (
     <div
       ref={draggable.setNodeRef}

@@ -9,18 +9,22 @@ function SaveButton() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const onSaveClick = async () => {
     setIsLoading(true);
-    const response = await createContentEntry(
-      selectedContentType,
-      generatedJson as UIJson
-    );
-    if (response.status === 201) {
-      alert("Entry saved successfully");
-      setIsLoading(false);
-    } else {
-      alert("Failed to save entry");
-      setIsLoading(false);
-    }
-    setIsLoading(false);
+   try {
+     const response = await createContentEntry(
+       selectedContentType,
+       generatedJson as UIJson
+     );
+     if (response.status === 201) {
+       alert("Entry saved successfully");
+     } 
+   } catch (error) {
+    alert("Failed to save entry");
+   } finally {
+     setIsLoading(false);
+   }
+    
+    
+   
   };
   return (
     <Button
