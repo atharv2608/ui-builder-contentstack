@@ -7,7 +7,7 @@ import { Trash } from "lucide-react";
 import useBuilder from "@/hooks/useBuilder";
 
 function Canvas() {
-  const { setSelectedComponent, addElement, setElements, elements, selectedComponent, setSelectedSchema } =
+  const { setSelectedComponent, addElement, setElements, elements, selectedComponent, setSelectedSchema, setVisualEntries, visualEntries } =
     useBuilder();
 
   const droppable = useDroppable({

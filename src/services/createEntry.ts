@@ -50,9 +50,6 @@ export const createContentEntry = async (
       }
     );
     // Check for successful creation (201)
-    if (response.status === 201) {
-      console.log("Entry created successfully:", response.data);
-    }
     return response;
   } catch (error) {
     console.error("Error creating entry:", error);

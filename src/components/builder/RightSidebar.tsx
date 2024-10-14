@@ -48,7 +48,6 @@ export default function RightSidebar() {
   
   const handleSave = () => {
     // Implement save functionality
-    console.log("Saving...");
   };
 
   const handleReset = () => {

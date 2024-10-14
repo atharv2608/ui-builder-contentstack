@@ -25,7 +25,6 @@ export const fetchProducts = async (): Promise<Product[] | undefined> => {
 
         // Assuming there is at least one entry, and 'products' is the array we need
         const products = response.data.entries.flatMap(entry => entry.products);
-        console.log("Products", products);
         return products;
     } catch (error) {
         console.error("Error while fetching the entries: ", error);

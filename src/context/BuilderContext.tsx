@@ -1,4 +1,5 @@
 import { UIElementInstance } from "@/components/builder/UIElements";
+import { VisualsEntryResponse } from "@/services/fetchVisualsEntry";
 import {
   createContext,
   Dispatch,
@@ -15,9 +16,13 @@ type BuilderContextType = {
   setSelectedContentType: Dispatch<SetStateAction<string>>;
   selectedComponent: string;
   setSelectedComponent: Dispatch<SetStateAction<string>>;
-
   selectedSchema: string;
   setSelectedSchema: Dispatch<SetStateAction<string>>;
+  
+  // Make visualEntries nullable
+  visualEntries: VisualsEntryResponse | null;
+  setVisualEntries: Dispatch<SetStateAction<VisualsEntryResponse | null>>;
+  
   generatedJson: Record<string, any>;
   addElement: (id: number, element: UIElementInstance) => void;
 };
@@ -34,8 +39,9 @@ export default function BuilderContextProvider({
   const [selectedComponent, setSelectedComponent] = useState<string>("");
   const [selectedSchema, setSelectedSchema] = useState<string>("");
   const [generatedJson, setGeneratedJson] = useState<Record<string, any>>({});
-
-  console.log("Elements: ", elements);
+  
+  // Initialize visualEntries as null, and make it nullable in state
+  const [visualEntries, setVisualEntries] = useState<VisualsEntryResponse | null>(null);
 
   // Function to add element at a specified index
   const addElement = (index: number, element: UIElementInstance) => {
@@ -78,6 +84,10 @@ export default function BuilderContextProvider({
         addElement,
         selectedSchema,
         setSelectedSchema,
+        
+        // Ensure visualEntries can be null
+        visualEntries,
+        setVisualEntries,
       }}
     >
       {children}

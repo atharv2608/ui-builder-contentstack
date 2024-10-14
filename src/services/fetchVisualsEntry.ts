@@ -11,7 +11,7 @@ type VisualEntry = {
         environment: string;
       }
 }
-type VisualsEntryResponse = {
+export type VisualsEntryResponse = {
     "entries": VisualEntry[]
 }
 
