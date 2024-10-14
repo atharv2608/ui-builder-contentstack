@@ -7,7 +7,7 @@ import { Trash } from "lucide-react";
 import useBuilder from "@/hooks/useBuilder";
 
 function Canvas() {
-  const { setSelectedComponent, addElement, setElements, elements, selectedComponent } =
+  const { setSelectedComponent, addElement, setElements, elements, selectedComponent, setSelectedSchema } =
     useBuilder();
 
   const droppable = useDroppable({
@@ -96,6 +96,7 @@ function Canvas() {
   const removeElement = (id: string) => {
     if(selectedComponent === id){
       setSelectedComponent("");
+      setSelectedSchema("");
     }
     setElements((prev) => prev.filter((element) => element.id !== id));
   };

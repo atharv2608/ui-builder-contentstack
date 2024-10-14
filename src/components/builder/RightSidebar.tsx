@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -34,6 +33,9 @@ export default function RightSidebar() {
     selectedComponent,
     setSelectedComponent,
     setElements,
+
+    selectedSchema,
+    setSelectedSchema
   } = useBuilder();
   const selectedCanvasComponent = elements.find(
     (element) => element.id === selectedComponent
@@ -146,8 +148,10 @@ export default function RightSidebar() {
               Link To
             </Label>
             <Select
+            value={selectedSchema}
             disabled={!selectedContentType || elements.length === 0 ||selectedCanvasComponent?.type === "Product"}
               onValueChange={async (value) => {
+                setSelectedSchema(value);
                 const entries = await fetchEntry(
                   selectedContentType as ContentTypeNames
                 );

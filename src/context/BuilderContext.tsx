@@ -15,6 +15,9 @@ type BuilderContextType = {
   setSelectedContentType: Dispatch<SetStateAction<string>>;
   selectedComponent: string;
   setSelectedComponent: Dispatch<SetStateAction<string>>;
+
+  selectedSchema: string;
+  setSelectedSchema: Dispatch<SetStateAction<string>>;
   generatedJson: Record<string, any>;
   addElement: (id: number, element: UIElementInstance) => void;
 };
@@ -29,6 +32,7 @@ export default function BuilderContextProvider({
   const [elements, setElements] = useState<UIElementInstance[]>([]);
   const [selectedContentType, setSelectedContentType] = useState<string>("");
   const [selectedComponent, setSelectedComponent] = useState<string>("");
+  const [selectedSchema, setSelectedSchema] = useState<string>("");
   const [generatedJson, setGeneratedJson] = useState<Record<string, any>>({});
 
   console.log("Elements: ", elements);
@@ -72,6 +76,8 @@ export default function BuilderContextProvider({
         setSelectedContentType,
         generatedJson,
         addElement,
+        selectedSchema,
+        setSelectedSchema,
       }}
     >
       {children}
