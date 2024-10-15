@@ -6,7 +6,7 @@ export interface UIJson {
   components: Array<{
     id: string;
     type: string;
-    attributes: Record<string, any>;
+    styles: Record<string, any>;
   }>;
 }
 

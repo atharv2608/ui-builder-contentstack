@@ -13,13 +13,13 @@ function BackgroundColor({
 
   // Local state for background color
   const [backgroundColor, setBackgroundColor] = useState<string>(
-    selectedCanvasComponent?.extraAttributes?.backgroundColor || "#ffffff"
+    selectedCanvasComponent?.styles?.backgroundColor || "#ffffff"
   );
 
   // Sync color state when the selected component changes
   useEffect(() => {
-    if (selectedCanvasComponent?.extraAttributes?.backgroundColor) {
-      setBackgroundColor(selectedCanvasComponent.extraAttributes.backgroundColor);
+    if (selectedCanvasComponent?.styles?.backgroundColor) {
+      setBackgroundColor(selectedCanvasComponent.styles.backgroundColor);
     } else {
       setBackgroundColor("#ffffff"); // Default color if no background color is set
     }
@@ -35,8 +35,8 @@ function BackgroundColor({
       element.id === selectedCanvasComponent.id
         ? {
             ...element,
-            extraAttributes: {
-              ...element.extraAttributes,
+            styles: {
+              ...element.styles,
               backgroundColor: newColor,
             },
           }

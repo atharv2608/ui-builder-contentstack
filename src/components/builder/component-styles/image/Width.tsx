@@ -13,13 +13,13 @@ function Width({
 
   // Local state for width
   const [width, setWidth] = useState<number>(
-    selectedCanvasComponent?.extraAttributes?.width || 300
+    selectedCanvasComponent?.styles?.width || 300
   );
 
   // Sync the local state with the selected component's width
   useEffect(() => {
-    if (selectedCanvasComponent?.extraAttributes?.width) {
-      setWidth(selectedCanvasComponent.extraAttributes.width);
+    if (selectedCanvasComponent?.styles?.width) {
+      setWidth(selectedCanvasComponent.styles.width);
     } else {
       setWidth(600); // Default width
     }
@@ -36,8 +36,8 @@ function Width({
         element.id === selectedCanvasComponent.id
           ? {
               ...element,
-              extraAttributes: {
-                ...element.extraAttributes,
+              styles: {
+                ...element.styles,
                 width: newWidth,
               },
             }

@@ -3,7 +3,7 @@ import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
 import { Parser } from "html-to-react";
 
 // Default attributes for the paragraph
-const extraAttributes = {
+const styles = {
   tag: "p"
 };
 
@@ -14,7 +14,7 @@ export const ParagraphUIElement: UIElement = {
   construct: (id: string) => ({
     id,
     type,
-    extraAttributes,
+    styles,
   }),
   buttonElement: {
     icon: Pilcrow, // Use an appropriate icon for paragraph if available
@@ -26,7 +26,7 @@ export const ParagraphUIElement: UIElement = {
 };
 
 type CustomInstance = UIElementInstance & {
-  extraAttributes: typeof extraAttributes;
+  styles: typeof styles;
 };
 
 function CanvasComponent({
@@ -44,12 +44,12 @@ function CanvasComponent({
       </span>
       <p
         style={{
-          color: element?.extraAttributes?.color || "black",
-          fontSize: `${element.extraAttributes?.fontSize}px` || "16px",
-          fontWeight: element?.extraAttributes?.fontWeight || "400",
+          color: element?.styles?.color || "black",
+          fontSize: `${element.styles?.fontSize}px` || "16px",
+          fontWeight: element?.styles?.fontWeight || "400",
         }}
       >
-        {htmlParser.parse(element?.extraAttributes?.label) || "Default paragraph text goes here."}
+        {htmlParser.parse(element?.styles?.label) || "Default paragraph text goes here."}
       </p>
     </div>
   );

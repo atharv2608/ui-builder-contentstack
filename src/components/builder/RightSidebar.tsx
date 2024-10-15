@@ -25,6 +25,7 @@ import { fetchProducts } from "@/services/fetchProducts";
 import LinkToProduct from "./component-styles/product/LinkToProduct";
 import Width from "./component-styles/image/Width";
 import { Button } from "../ui/button";
+import { toast } from "react-toastify";
 
 export default function RightSidebar() {
   const {
@@ -48,7 +49,7 @@ export default function RightSidebar() {
   
 
   const handleReset = () => {
-    if (selectedCanvasComponent && selectedCanvasComponent.extraAttributes) {
+    if (selectedCanvasComponent && selectedCanvasComponent.styles) {
       // Find the selected element
         let newExtraAttributes = {};
   
@@ -84,15 +85,15 @@ export default function RightSidebar() {
         
   
           default:
-            // If no type matches, leave extraAttributes unchanged or add default reset behavior
+            // If no type matches, leave styles unchanged or add default reset behavior
             break;
         }
   
         // Create the new element with updated attributes
         const newElement = {
           ...selectedCanvasComponent,
-          extraAttributes: {
-            ...selectedCanvasComponent.extraAttributes,
+          styles: {
+            ...selectedCanvasComponent.styles,
             ...newExtraAttributes, // Merge with the existing attributes
           },
         };
@@ -154,19 +155,19 @@ export default function RightSidebar() {
                 const entry = entries?.entries[0];
                 if (!entry) {
                   console.warn("Entry is undefined");
-                  alert("No entry found")
+                  toast.warn("No entry found")
                   return;
                 }
                 if (
                   selectedCanvasComponent &&
-                  selectedCanvasComponent.extraAttributes
+                  selectedCanvasComponent.styles
                 ) {
                   const selectedElement = elements.find(
                     (element) => element.id === selectedCanvasComponent.id
                   );
                   if (
                     selectedElement?.type === "Image" &&
-                    selectedElement.extraAttributes
+                    selectedElement.styles
                   ) {
                     if (
                       typeof entry[value as keyof typeof entry] === "object" &&
@@ -174,14 +175,14 @@ export default function RightSidebar() {
                       "href" in (entry[value as keyof typeof entry] as any)
                     ) {
                       const newExtraAttributes = {
-                        ...selectedElement.extraAttributes,
+                        ...selectedElement.styles,
                         src: (
                           entry[value as keyof typeof entry] as { href: string }
                         ).href, // Cast to ensure TypeScript knows it has 'href'
                       };
                       const newElement = {
                         ...selectedElement,
-                        extraAttributes: newExtraAttributes,
+                        styles: newExtraAttributes,
                       };
                       const newElements = elements.map((element) =>
                         element.id === selectedCanvasComponent.id
@@ -192,15 +193,15 @@ export default function RightSidebar() {
                     }
                   } else if (
                     selectedElement &&
-                    selectedElement.extraAttributes
+                    selectedElement.styles
                   ) {
                     const newExtraAttributes = {
-                      ...selectedElement.extraAttributes,
+                      ...selectedElement.styles,
                       label: entry[value as keyof typeof entry] || "",
                     };
                     const newElement = {
                       ...selectedElement,
-                      extraAttributes: newExtraAttributes,
+                      styles: newExtraAttributes,
                     };
                     const newElements = elements.map((element) =>
                       element.id === selectedCanvasComponent.id

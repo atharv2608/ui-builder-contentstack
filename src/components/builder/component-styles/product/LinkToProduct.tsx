@@ -42,9 +42,9 @@ function LinkToProduct({
 
   // Reset selectedProductName when selectedCanvasComponent changes
   useEffect(() => {
-    if (selectedElement && selectedElement.extraAttributes) {
+    if (selectedElement && selectedElement.styles) {
       // If the selected element has a product linked, show that product
-      setSelectedProductName(selectedElement.extraAttributes.productName);
+      setSelectedProductName(selectedElement.styles.productName);
     } else {
       // Otherwise, reset to show the placeholder
       setSelectedProductName(undefined);
@@ -56,9 +56,9 @@ function LinkToProduct({
     const product = products.find(product => product.product_name === value);
     setSelectedProductName(value); // Update local state
 
-    if (selectedElement && selectedElement.extraAttributes && product) {
+    if (selectedElement && selectedElement.styles && product) {
       const newExtraAttributes = {
-        ...selectedElement.extraAttributes,
+        ...selectedElement.styles,
         productName: product.product_name,
         productDescription: product.product_description,
         productImage: product.product_image.href,
@@ -66,7 +66,7 @@ function LinkToProduct({
       };
       const newElement = {
         ...selectedElement,
-        extraAttributes: newExtraAttributes,
+        styles: newExtraAttributes,
       };
       const newElements = elements.map((element) =>
         element.id === selectedCanvasComponent.id ? newElement : element

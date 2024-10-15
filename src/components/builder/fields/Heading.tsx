@@ -1,6 +1,6 @@
 import { Heading } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
-let extraAttributes = {
+let styles = {
   tag: "h1"
 };
 const type: ElementsType = "Heading";
@@ -9,7 +9,7 @@ export const HeadingUIElement: UIElement = {
   construct: (id: string) => ({
     id,
     type,
-    extraAttributes,
+    styles,
   }),
   buttonElement: {
     icon: Heading,
@@ -21,7 +21,7 @@ export const HeadingUIElement: UIElement = {
 };
 
 type CustomeInstance = UIElementInstance & {
-  extraAttributes: typeof extraAttributes;
+  styles: typeof styles;
 };
 
 function CanvasComponent({
@@ -36,14 +36,14 @@ function CanvasComponent({
         Component ID: {element.id}
       </span>
       <h1
-        className={`text-3xl ${element.extraAttributes?.className}`}
+        className={`text-3xl ${element.styles?.className}`}
         style={{
-          color: element?.extraAttributes?.color || "black",
-          fontSize: `${element.extraAttributes?.fontSize}px` || "32px",
-          fontWeight: element?.extraAttributes?.fontWeight || "400",
+          color: element?.styles?.color || "black",
+          fontSize: `${element.styles?.fontSize}px` || "32px",
+          fontWeight: element?.styles?.fontWeight || "400",
         }}
       >
-        {element?.extraAttributes?.label || "Heading"}
+        {element?.styles?.label || "Heading"}
       </h1>
     </div>
   );

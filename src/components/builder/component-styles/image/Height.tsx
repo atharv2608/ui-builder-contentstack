@@ -13,13 +13,13 @@ function Height({
 
   // Local state for height
   const [height, setHeight] = useState<number>(
-    selectedCanvasComponent?.extraAttributes?.height || 300
+    selectedCanvasComponent?.styles?.height || 300
   );
 
   // Sync the local state with the selected component's height
   useEffect(() => {
-    if (selectedCanvasComponent?.extraAttributes?.height) {
-      setHeight(selectedCanvasComponent.extraAttributes.height);
+    if (selectedCanvasComponent?.styles?.height) {
+      setHeight(selectedCanvasComponent.styles.height);
     } else {
       setHeight(400); // Default height
     }
@@ -35,8 +35,8 @@ function Height({
       element.id === selectedCanvasComponent.id
         ? {
             ...element,
-            extraAttributes: {
-              ...element.extraAttributes,
+            styles: {
+              ...element.styles,
               height: newHeight,
             },
           }

@@ -59,7 +59,7 @@ export default function BuilderContextProvider({
       components: elements.map((element) => ({
         id: element.id,
         type: element.type,
-        attributes: element.extraAttributes,
+        styles: element.styles,
       })),
     };
     return json;

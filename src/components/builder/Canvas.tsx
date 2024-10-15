@@ -115,7 +115,7 @@ function Canvas() {
             (jsonElement: any) => ({
               id: jsonElement.id,
               type: jsonElement.type,
-              extraAttributes: jsonElement.attributes,
+              styles: jsonElement.styles,
             })
           );
           setElements(parsedElements);
@@ -280,7 +280,7 @@ function CanvasElementWrapper({
           mouseIsOver && "opacity-30"
         )}
         style={{
-          backgroundColor: element?.extraAttributes?.backgroundColor || "#fff"
+          backgroundColor: element?.styles?.backgroundColor || "#fff"
         }}
       > 
         <CanvasElement elementInstance={element} />

@@ -13,13 +13,13 @@ function FontColor({
 
   // Initialize color state based on selected component's current color
   const [color, setColor] = useState<string>(
-    selectedCanvasComponent?.extraAttributes?.color || "#000000"
+    selectedCanvasComponent?.styles?.color || "#000000"
   );
 
   // Sync color state when the selected component changes
   useEffect(() => {
-    if (selectedCanvasComponent?.extraAttributes?.color) {
-      setColor(selectedCanvasComponent.extraAttributes.color);
+    if (selectedCanvasComponent?.styles?.color) {
+      setColor(selectedCanvasComponent.styles.color);
     } else {
       setColor("#000000"); // Default color if no color is set
     }
@@ -35,8 +35,8 @@ function FontColor({
       element.id === selectedCanvasComponent.id
         ? {
             ...element,
-            extraAttributes: {
-              ...element.extraAttributes,
+            styles: {
+              ...element.styles,
               color: newColor,
             },
           }

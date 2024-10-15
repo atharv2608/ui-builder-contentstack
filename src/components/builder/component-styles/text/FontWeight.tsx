@@ -13,13 +13,13 @@ function FontWeight({
 
   // Local state for font weight
   const [fontWeight, setFontWeight] = useState<string>(
-    selectedCanvasComponent?.extraAttributes?.fontWeight || "100"
+    selectedCanvasComponent?.styles?.fontWeight || "100"
   );
 
   // Sync the local state with the selected component's font weight
   useEffect(() => {
-    if (selectedCanvasComponent?.extraAttributes?.fontWeight) {
-      setFontWeight(selectedCanvasComponent.extraAttributes.fontWeight);
+    if (selectedCanvasComponent?.styles?.fontWeight) {
+      setFontWeight(selectedCanvasComponent.styles.fontWeight);
     } else {
       setFontWeight("100"); // Default to font-weight 100
     }
@@ -35,8 +35,8 @@ function FontWeight({
       element.id === selectedCanvasComponent.id
         ? {
             ...element,
-            extraAttributes: {
-              ...element.extraAttributes,
+            styles: {
+              ...element.styles,
               fontWeight: newFontWeight,
             },
           }

@@ -13,14 +13,14 @@ function FontSize({
 
   // Local state for font size
   const [fontSize, setFontSize] = useState<string>(
-    selectedCanvasComponent?.extraAttributes?.fontSize ||
+    selectedCanvasComponent?.styles?.fontSize ||
       (selectedCanvasComponent?.type === "Heading" ? "32" : "16")
   );
 
   // Sync the local state with the selected component's font size
   useEffect(() => {
-    if (selectedCanvasComponent?.extraAttributes?.fontSize) {
-      setFontSize(selectedCanvasComponent.extraAttributes.fontSize);
+    if (selectedCanvasComponent?.styles?.fontSize) {
+      setFontSize(selectedCanvasComponent.styles.fontSize);
     } else {
       setFontSize(
         selectedCanvasComponent?.type === "Heading" ? "32" : "16"
@@ -38,8 +38,8 @@ function FontSize({
       element.id === selectedCanvasComponent.id
         ? {
             ...element,
-            extraAttributes: {
-              ...element.extraAttributes,
+            styles: {
+              ...element.styles,
               fontSize: newFontSize,
             },
           }

@@ -1,7 +1,7 @@
 import { Box } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
 import { Card, CardContent } from "@/components/ui/card";
-let extraAttributes = {
+let styles = {
   type: "product",
   productName: "Product Name",
   productDescription: "Product Description",
@@ -15,7 +15,7 @@ export const ProductUIElement: UIElement = {
   construct: (id: string) => ({
     id,
     type,
-    extraAttributes,
+    styles,
   }),
   buttonElement: {
     icon: Box,
@@ -27,7 +27,7 @@ export const ProductUIElement: UIElement = {
 };
 
 type CustomeInstance = UIElementInstance & {
-  extraAttributes: typeof extraAttributes;
+  styles: typeof styles;
 };
 
 function CanvasComponent({
@@ -45,17 +45,17 @@ function CanvasComponent({
         <div className="flex flex-col sm:flex-row">
           <div className="w-full sm:w-1/3">
             <img
-              src={element?.extraAttributes?.productImage}
+              src={element?.styles?.productImage}
               alt={"name"}
               className="w-full h-48 sm:h-full object-cover"
             />
           </div>
           <div className="w-full sm:w-2/3 p-4 flex flex-col justify-between">
             <div>
-              <h2 className="text-2xl font-bold mb-2">{element?.extraAttributes?.productName}</h2>
-              <p className="text-muted-foreground mb-4">{element?.extraAttributes?.productDescription}</p>
+              <h2 className="text-2xl font-bold mb-2">{element?.styles?.productName}</h2>
+              <p className="text-muted-foreground mb-4">{element?.styles?.productDescription}</p>
             </div>
-            <div className="text-xl font-semibold">{element?.extraAttributes?.productPrice}</div>
+            <div className="text-xl font-semibold">{element?.styles?.productPrice}</div>
           </div>
         </div>
       </CardContent>

@@ -1,6 +1,6 @@
 import { Image } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
-const extraAttributes = {
+const styles = {
   tag: "img",
   label: "Image",
   altText: "Image",
@@ -14,7 +14,7 @@ export const ImageUIElement: UIElement = {
   construct: (id: string) => ({
     id,
     type,
-    extraAttributes,
+    styles,
   }),
   buttonElement: {
     icon: Image,
@@ -26,7 +26,7 @@ export const ImageUIElement: UIElement = {
 };
 
 type CustomeInstance = UIElementInstance & {
-  extraAttributes: typeof extraAttributes;
+  styles: typeof styles;
 };
 
 function CanvasComponent({
@@ -41,11 +41,11 @@ function CanvasComponent({
       <span className="absolute bottom-2 text-sm right-5 opacity-40">Component ID: {element.id}</span>
 
         <img 
-          src={element.extraAttributes?.src ||"https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg"} alt={element?.extraAttributes?.altText}  
+          src={element.styles?.src ||"https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg"} alt={element?.styles?.altText}  
 
           style={{ 
-                    height: `${element.extraAttributes?.height}px`,
-                    width: element.extraAttributes?.width ? `${element.extraAttributes?.width}px` : ""
+                    height: `${element.styles?.height}px`,
+                    width: element.styles?.width ? `${element.styles?.width}px` : ""
                 }}
         />
       </div>
@@ -61,7 +61,7 @@ const element = elementInstance as CustomeInstance;
       <div className="w-full h-[120px] bg-gray-400 opacity-80 rounded-md shadow-md flex justify-between p-2">
     
 
-        <img src={element?.extraAttributes?.src ||  "https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg"} alt={element?.extraAttributes?.altText}  className="h-[100px]"/>
+        <img src={element?.styles?.src ||  "https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg"} alt={element?.styles?.altText}  className="h-[100px]"/>
       </div>
     
   );

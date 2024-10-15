@@ -1,7 +1,7 @@
 import { Text } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
 import { Parser } from "html-to-react";
-const extraAttributes = {
+const styles = {
  tag: "span"
 };
 const type: ElementsType = "TextField";
@@ -10,7 +10,7 @@ export const TextFieldUIElement: UIElement = {
   construct: (id: string) => ({
     id,
     type,
-    extraAttributes,
+    styles,
   }),
   buttonElement: {
     icon: Text,
@@ -22,7 +22,7 @@ export const TextFieldUIElement: UIElement = {
 };
 
 type CustomeInstance = UIElementInstance & {
-  extraAttributes: typeof extraAttributes;
+  styles: typeof styles;
 };
 
 function CanvasComponent({
@@ -37,12 +37,12 @@ function CanvasComponent({
       <span className="absolute bottom-0 text-sm right-5 opacity-40">Component ID: {element.id}</span>
       <span
          style={{
-          color: element?.extraAttributes?.color || "black",
-          fontSize: `${element.extraAttributes?.fontSize}px` || "16px",
-          fontWeight: element?.extraAttributes?.fontWeight || "400",
+          color: element?.styles?.color || "black",
+          fontSize: `${element.styles?.fontSize}px` || "16px",
+          fontWeight: element?.styles?.fontWeight || "400",
         }}
       >
-        {htmlParser.parse(element?.extraAttributes?.label) || "Text Goes here"}
+        {htmlParser.parse(element?.styles?.label) || "Text Goes here"}
       </span>
     </div>
   );

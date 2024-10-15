@@ -35,5 +35,5 @@ export const UIElements: UIElementsTypes = {
 export type UIElementInstance = {
     id: string;
     type: ElementsType;
-    extraAttributes? : Record<string , any>
+    styles? : Record<string , any>
 }
