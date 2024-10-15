@@ -154,7 +154,6 @@ export default function RightSidebar() {
                 );
                 const entry = entries?.entries[0];
                 if (!entry) {
-                  console.warn("Entry is undefined");
                   toast.warn("No entry found")
                   return;
                 }
@@ -162,12 +161,10 @@ export default function RightSidebar() {
                   selectedCanvasComponent &&
                   selectedCanvasComponent.styles
                 ) {
-                  const selectedElement = elements.find(
-                    (element) => element.id === selectedCanvasComponent.id
-                  );
+                  
                   if (
-                    selectedElement?.type === "Image" &&
-                    selectedElement.styles
+                    selectedCanvasComponent?.type === "Image" &&
+                    selectedCanvasComponent.styles
                   ) {
                     if (
                       typeof entry[value as keyof typeof entry] === "object" &&
@@ -175,13 +172,13 @@ export default function RightSidebar() {
                       "href" in (entry[value as keyof typeof entry] as any)
                     ) {
                       const newStyles = {
-                        ...selectedElement.styles,
+                        ...selectedCanvasComponent.styles,
                         src: (
                           entry[value as keyof typeof entry] as { href: string }
                         ).href, // Cast to ensure TypeScript knows it has 'href'
                       };
                       const newElement = {
-                        ...selectedElement,
+                        ...selectedCanvasComponent,
                         styles: newStyles,
                       };
                       const newElements = elements.map((element) =>
@@ -189,18 +186,32 @@ export default function RightSidebar() {
                           ? newElement
                           : element
                       );
-                      setElements(newElements);
+                      setElements(newElements as UIElementInstance[]);
+                    } else{
+                      toast.error("No image URL found in entry");
+                      setSelectedSchema("")
+                      return;
                     }
                   } else if (
-                    selectedElement &&
-                    selectedElement.styles
+                    selectedCanvasComponent &&
+                    selectedCanvasComponent.styles
                   ) {
+
+                    if (
+                      typeof entry[value as keyof typeof entry] === "object" &&
+                      entry[value as keyof typeof entry] !== null &&
+                      "href" in (entry[value as keyof typeof entry] as any)
+                    ){
+                      toast.error("Cannot link image to this component");
+                      setSelectedSchema("")
+                      return;
+                    }
                     const newStyles = {
-                      ...selectedElement.styles,
+                      ...selectedCanvasComponent.styles,
                       label: entry[value as keyof typeof entry] || "",
                     };
                     const newElement = {
-                      ...selectedElement,
+                      ...selectedCanvasComponent,
                       styles: newStyles,
                     };
                     const newElements = elements.map((element) =>
@@ -220,7 +231,7 @@ export default function RightSidebar() {
                 <SelectGroup>
                   <SelectLabel>Schemas</SelectLabel>
                   {contentType?.schema?.map((s) => (
-                    <SelectItem value={s.uid} key={s.uid}>
+                    <SelectItem value={s.uid} key={s.uid} disabled={s.uid === "products" || s.uid === "blogs"} >
                       {s.uid}
                     </SelectItem>
                   ))}

@@ -15,11 +15,13 @@ function ResetCanvas() {
   
   // State to manage dialog open/close
   const [open, setOpen] = useState(false);
-  const {setElements} = useBuilder();
+  const {setElements, setSelectedComponent, setSelectedSchema} = useBuilder();
 
   const resetCanvas = ()=>{
     // Reset elements array to empty
     setElements([]);
+    setSelectedComponent("");
+    setSelectedSchema("");
     // Close dialog
     setOpen(false);
   }
