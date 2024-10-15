@@ -57,7 +57,7 @@ function LinkToProduct({
     setSelectedProductName(value); // Update local state
 
     if (selectedElement && selectedElement.styles && product) {
-      const newExtraAttributes = {
+      const newStyles = {
         ...selectedElement.styles,
         productName: product.product_name,
         productDescription: product.product_description,
@@ -66,7 +66,7 @@ function LinkToProduct({
       };
       const newElement = {
         ...selectedElement,
-        styles: newExtraAttributes,
+        styles: newStyles,
       };
       const newElements = elements.map((element) =>
         element.id === selectedCanvasComponent.id ? newElement : element

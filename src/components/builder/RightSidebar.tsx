@@ -51,14 +51,14 @@ export default function RightSidebar() {
   const handleReset = () => {
     if (selectedCanvasComponent && selectedCanvasComponent.styles) {
       // Find the selected element
-        let newExtraAttributes = {};
+        let newStyles = {};
   
         // Reset styles based on the component type
         switch (selectedCanvasComponent.type) {
           case "Heading":
           case "TextField":
           case "Paragraph":
-            newExtraAttributes = {
+            newStyles = {
               color: "#000000", // Default black color
               fontSize: selectedCanvasComponent.type === "Heading" ? "32" : "16", // Adjust font size based on type
               fontWeight: "400", // Default font weight
@@ -67,14 +67,14 @@ export default function RightSidebar() {
             break;
   
           case "Image":
-            newExtraAttributes = {
+            newStyles = {
               height: "200px", // Reset height for image
               width: "300px",  // Reset width for image
             };
             break;
 
           case "Product":
-            newExtraAttributes = {
+            newStyles = {
               productName: "Product Name",
               productDescription: "Product Description",
               productImage: "https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg",
@@ -94,7 +94,7 @@ export default function RightSidebar() {
           ...selectedCanvasComponent,
           styles: {
             ...selectedCanvasComponent.styles,
-            ...newExtraAttributes, // Merge with the existing attributes
+            ...newStyles, // Merge with the existing attributes
           },
         };
   
@@ -174,7 +174,7 @@ export default function RightSidebar() {
                       entry[value as keyof typeof entry] !== null &&
                       "href" in (entry[value as keyof typeof entry] as any)
                     ) {
-                      const newExtraAttributes = {
+                      const newStyles = {
                         ...selectedElement.styles,
                         src: (
                           entry[value as keyof typeof entry] as { href: string }
@@ -182,7 +182,7 @@ export default function RightSidebar() {
                       };
                       const newElement = {
                         ...selectedElement,
-                        styles: newExtraAttributes,
+                        styles: newStyles,
                       };
                       const newElements = elements.map((element) =>
                         element.id === selectedCanvasComponent.id
@@ -195,13 +195,13 @@ export default function RightSidebar() {
                     selectedElement &&
                     selectedElement.styles
                   ) {
-                    const newExtraAttributes = {
+                    const newStyles = {
                       ...selectedElement.styles,
                       label: entry[value as keyof typeof entry] || "",
                     };
                     const newElement = {
                       ...selectedElement,
-                      styles: newExtraAttributes,
+                      styles: newStyles,
                     };
                     const newElements = elements.map((element) =>
                       element.id === selectedCanvasComponent.id
