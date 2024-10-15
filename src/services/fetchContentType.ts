@@ -1,6 +1,6 @@
+//TODO: Delete this file later, It no use now
+
 import axios from "axios";
-
-
 export interface ContentType {
   title: string;  
   uid: string;   

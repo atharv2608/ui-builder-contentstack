@@ -13,7 +13,7 @@ import {
 import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
 import JSONDialog from "./JSONDialog";
-import ResetCanvas from "./RestCanvas";
+import ResetCanvas from "./ResetCanvas";
 import SaveButton from "./SaveButton";
 function Page() {
   const mouseSensor = useSensor(MouseSensor, {
