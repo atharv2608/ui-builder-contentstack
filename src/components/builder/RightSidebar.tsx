@@ -26,6 +26,8 @@ import LinkToProduct from "./component-styles/product/LinkToProduct";
 import Width from "./component-styles/image/Width";
 import { Button } from "../ui/button";
 import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { EntryResponse } from "@/services/fetchEntry";
 
 export default function RightSidebar() {
   const {
@@ -34,10 +36,27 @@ export default function RightSidebar() {
     selectedComponent,
     setSelectedComponent,
     setElements,
-
     selectedSchema,
-    setSelectedSchema
+    setSelectedSchema,
   } = useBuilder();
+
+  const [entries, setEntries] = useState<EntryResponse | undefined>(undefined);
+  useEffect(() => {
+    const fetchEntries = async () => {
+      const fetchedEntries = await fetchEntry(
+        selectedContentType as ContentTypeNames
+      );
+
+      setEntries(fetchedEntries as EntryResponse);
+    };
+
+    fetchEntries();
+  }, [selectedContentType]);
+
+  useEffect(()=>{
+    setSelectedComponent("");
+    setSelectedSchema("")
+  }, [selectedContentType]);
   const selectedCanvasComponent = elements.find(
     (element) => element.id === selectedComponent
   );
@@ -46,64 +65,61 @@ export default function RightSidebar() {
   const contentType: ContentType | undefined = useSelector(
     (state: RootState) => state.contentTypes.contentTypes
   ).find((contentType: ContentType) => contentType.uid === selectedContentType);
-  
 
   const handleReset = () => {
     if (selectedCanvasComponent && selectedCanvasComponent.styles) {
       // Find the selected element
-        let newStyles = {};
-  
-        // Reset styles based on the component type
-        switch (selectedCanvasComponent.type) {
-          case "Heading":
-          case "TextField":
-          case "Paragraph":
-            newStyles = {
-              color: "#000000", // Default black color
-              fontSize: selectedCanvasComponent.type === "Heading" ? "32" : "16", // Adjust font size based on type
-              fontWeight: "400", // Default font weight
-              backgroundColor: "#ffffff", // Default white background
-            };
-            break;
-  
-          case "Image":
-            newStyles = {
-              height: "200px", // Reset height for image
-              width: "300px",  // Reset width for image
-            };
-            break;
+      let newStyles = {};
 
-          case "Product":
-            newStyles = {
-              productName: "Product Name",
-              productDescription: "Product Description",
-              productImage: "https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg",
-              productPrice: "Price"
-            };
-            break;
-  
-        
-  
-          default:
-            // If no type matches, leave styles unchanged or add default reset behavior
-            break;
-        }
-  
-        // Create the new element with updated attributes
-        const newElement = {
-          ...selectedCanvasComponent,
-          styles: {
-            ...selectedCanvasComponent.styles,
-            ...newStyles, // Merge with the existing attributes
-          },
-        };
-  
-        // Update the elements array with the new element
-        const newElements = elements.map((element) =>
-          element.id === selectedCanvasComponent.id ? newElement : element
-        );
-        setElements(newElements);
-      
+      // Reset styles based on the component type
+      switch (selectedCanvasComponent.type) {
+        case "Heading":
+        case "TextField":
+        case "Paragraph":
+          newStyles = {
+            color: "#000000", // Default black color
+            fontSize: selectedCanvasComponent.type === "Heading" ? "32" : "16", // Adjust font size based on type
+            fontWeight: "400", // Default font weight
+            backgroundColor: "#ffffff", // Default white background
+          };
+          break;
+
+        case "Image":
+          newStyles = {
+            height: "200px", // Reset height for image
+            width: "300px", // Reset width for image
+          };
+          break;
+
+        case "Product":
+          newStyles = {
+            productName: "Product Name",
+            productDescription: "Product Description",
+            productImage:
+              "https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg",
+            productPrice: "Price",
+          };
+          break;
+
+        default:
+          // If no type matches, leave styles unchanged or add default reset behavior
+          break;
+      }
+
+      // Create the new element with updated attributes
+      const newElement = {
+        ...selectedCanvasComponent,
+        styles: {
+          ...selectedCanvasComponent.styles,
+          ...newStyles, // Merge with the existing attributes
+        },
+      };
+
+      // Update the elements array with the new element
+      const newElements = elements.map((element) =>
+        element.id === selectedCanvasComponent.id ? newElement : element
+      );
+      setElements(newElements);
     }
   };
   
@@ -145,23 +161,21 @@ export default function RightSidebar() {
               Link To
             </Label>
             <Select
-            value={selectedSchema}
-            disabled={!selectedContentType || elements.length === 0 ||selectedCanvasComponent?.type === "Product"}
+              value={selectedSchema}
+              disabled={
+                !selectedContentType ||
+                elements.length === 0 ||
+                selectedCanvasComponent?.type === "Product"
+              }
               onValueChange={async (value) => {
                 setSelectedSchema(value);
-                const entries = await fetchEntry(
-                  selectedContentType as ContentTypeNames
-                );
+
                 const entry = entries?.entries[0];
                 if (!entry) {
-                  toast.warn("No entry found")
+                  toast.warn("No entry found");
                   return;
                 }
-                if (
-                  selectedCanvasComponent &&
-                  selectedCanvasComponent.styles
-                ) {
-                  
+                if (selectedCanvasComponent && selectedCanvasComponent.styles) {
                   if (
                     selectedCanvasComponent?.type === "Image" &&
                     selectedCanvasComponent.styles
@@ -187,23 +201,22 @@ export default function RightSidebar() {
                           : element
                       );
                       setElements(newElements as UIElementInstance[]);
-                    } else{
+                    } else {
                       toast.error("No image URL found in entry");
-                      setSelectedSchema("")
+                      setSelectedSchema("");
                       return;
                     }
                   } else if (
                     selectedCanvasComponent &&
                     selectedCanvasComponent.styles
                   ) {
-
                     if (
                       typeof entry[value as keyof typeof entry] === "object" &&
                       entry[value as keyof typeof entry] !== null &&
                       "href" in (entry[value as keyof typeof entry] as any)
-                    ){
+                    ) {
                       toast.error("Cannot link image to this component");
-                      setSelectedSchema("")
+                      setSelectedSchema("");
                       return;
                     }
                     const newStyles = {
@@ -231,7 +244,11 @@ export default function RightSidebar() {
                 <SelectGroup>
                   <SelectLabel>Schemas</SelectLabel>
                   {contentType?.schema?.map((s) => (
-                    <SelectItem value={s.uid} key={s.uid} disabled={s.uid === "products" || s.uid === "blogs"} >
+                    <SelectItem
+                      value={s.uid}
+                      key={s.uid}
+                      disabled={s.uid === "products" || s.uid === "blogs"}
+                    >
                       {s.uid}
                     </SelectItem>
                   ))}
@@ -281,24 +298,23 @@ export default function RightSidebar() {
             )}
             {selectedCanvasComponent?.type === "Image" && (
               <>
-              <Height selectedCanvasComponent={selectedCanvasComponent}/>
-              <Width selectedCanvasComponent={selectedCanvasComponent} />
+                <Height selectedCanvasComponent={selectedCanvasComponent} />
+                <Width selectedCanvasComponent={selectedCanvasComponent} />
               </>
             )}
             {selectedCanvasComponent?.type === "Product" && (
-              <LinkToProduct selectedCanvasComponent={selectedCanvasComponent}/>
+              <LinkToProduct
+                selectedCanvasComponent={selectedCanvasComponent}
+              />
             )}
           </div>
-
-          
         </div>
       </div>
       <div className="flex justify-between ">
-        <Button  onClick={handleReset} className="bg-indigo-500 text-white">
+        <Button onClick={handleReset} className="bg-indigo-500 text-white">
           Reset styles
         </Button>
       </div>
-      
     </div>
   );
 }

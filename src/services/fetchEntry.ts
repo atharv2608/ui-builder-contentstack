@@ -27,7 +27,7 @@ export type ProductEntry = {
 
 export type Entry = HomePageEntry | ProductEntry;
 
-type EntryResponse = {
+export type EntryResponse = {
     entries: Entry[];
 };
 
