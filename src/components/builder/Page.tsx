@@ -1,9 +1,6 @@
 import Layout from "./Layout";
 import Canvas from "./Canvas";
 import DragOverlayWrapper from "./DragOverlayWrapper";
-import { Button } from "../ui/button";
-import { Save } from "lucide-react";
-import { ResetIcon } from "@radix-ui/react-icons";
 import "./../../App.css"
 import {
   DndContext,
@@ -13,16 +10,12 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 
-import BuilderContextProvider from "@/context/BuilderContext";
 import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
 import JSONDialog from "./JSONDialog";
 import ResetCanvas from "./RestCanvas";
-import useBuilder from "@/hooks/useBuilder";
 import SaveButton from "./SaveButton";
 function Page() {
-
-  const {elements} = useBuilder()
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
       distance: 10, //in px

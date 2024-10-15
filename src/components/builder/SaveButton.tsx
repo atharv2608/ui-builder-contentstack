@@ -30,7 +30,6 @@ function SaveButton() {
       if (entry) {
         try {
           const response = await updateEntry(
-            selectedContentType,
             generatedJson as UIJson,
             entry.uid
           );

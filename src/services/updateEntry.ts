@@ -3,7 +3,6 @@ import { EntryResponse, UIJson } from "./createEntry";
 import { publishEntry } from "./publishEntry";
 
 export const updateEntry = async (
-    content_type: string,
     ui_json: UIJson,
     uid: string
   ): Promise<AxiosResponse<EntryResponse>> => {
