@@ -10,6 +10,7 @@ import { fetchVisualEntries } from "@/services/fetchVisualsEntry";
 function Canvas() {
   const { setSelectedComponent, addElement, setElements, elements, selectedComponent, setSelectedSchema, setVisualEntries, visualEntries , selectedContentType} =
     useBuilder();
+    const [newElements, setNewElements] = useState<UIElementInstance[]>([]);
 
   const droppable = useDroppable({
     id: "canvas-drop-area",

@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { publishEntry } from "./publishEntry";
 
 export interface UIJson {
   page: string;
@@ -9,7 +10,7 @@ export interface UIJson {
   }>;
 }
 
-interface EntryResponse {
+export interface EntryResponse {
   notice: string;
   entry: {
     title: string;
@@ -49,7 +50,14 @@ export const createContentEntry = async (
         },
       }
     );
-    // Check for successful creation (201)
+    if(response.status === 201){
+      try {
+        await publishEntry(response.data.entry.uid);
+      } catch (error) {
+        console.error("Error publishing entry: ", error);
+      }
+
+    }
     return response;
   } catch (error) {
     console.error("Error creating entry:", error);
