@@ -18,8 +18,8 @@ export const updateEntry = async (
         },
         {
           headers: {
-            authorization: import.meta.env.VITE_MANAGEMENT_TOKEN,
-            api_key: import.meta.env.VITE_CONTENTSTACK_API_KEY,
+            authorization: import.meta.env.VITE_MANAGEMENT_TOKEN as string,
+            api_key: import.meta.env.VITE_CONTENTSTACK_API_KEY as string,
             "Content-Type": "application/json",
           },
         }
