@@ -142,7 +142,7 @@ function Canvas() {
       }
     
       fetchData();
-    }, [setVisualEntries]);
+    }, [selectedContentType]);
     
   
     // Populate elements when visual entries or selectedContentType changes
