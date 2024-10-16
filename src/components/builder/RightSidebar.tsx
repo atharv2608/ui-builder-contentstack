@@ -41,13 +41,17 @@ export default function RightSidebar() {
   } = useBuilder();
 
   const [entries, setEntries] = useState<EntryResponse | undefined>(undefined);
+
   useEffect(() => {
     const fetchEntries = async () => {
-      const fetchedEntries = await fetchEntry(
-        selectedContentType as ContentTypeNames
-      );
+      if(selectedContentType){
 
-      setEntries(fetchedEntries as EntryResponse);
+        const fetchedEntries = await fetchEntry(
+          selectedContentType as ContentTypeNames
+        );
+        
+        setEntries(fetchedEntries as EntryResponse);
+      }
     };
 
     fetchEntries();
@@ -57,6 +61,7 @@ export default function RightSidebar() {
     setSelectedComponent("");
     setSelectedSchema("")
   }, [selectedContentType]);
+
   const selectedCanvasComponent = elements.find(
     (element) => element.id === selectedComponent
   );
