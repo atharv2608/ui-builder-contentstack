@@ -1,3 +1,4 @@
+import { ContentTypeNames } from "@/services/fetchEntry";
 import { HeadingUIElement } from "./fields/Heading";
 import { ImageUIElement } from "./fields/Image";
 import { ParagraphUIElement } from "./fields/Paragraph";
@@ -35,5 +36,7 @@ export const UIElements: UIElementsTypes = {
 export type UIElementInstance = {
     id: string;
     type: ElementsType;
-    styles? : Record<string , any>
+    styles? : Record<string , any>;
+    linkedContentTypeUID?: ContentTypeNames;
+    linkedSchemaID?: string;
 }

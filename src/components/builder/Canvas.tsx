@@ -115,6 +115,8 @@ function Canvas() {
             (jsonElement: any) => ({
               id: jsonElement.id,
               type: jsonElement.type,
+              linkedContentTypeUID: jsonElement.linkedContentTypeUID,
+              linkedSchemaID: jsonElement.linkedSchemaID,
               styles: jsonElement.styles,
             })
           );
@@ -149,6 +151,16 @@ function Canvas() {
     useEffect(() => {
       loadElementsFromVisualEntries();
     }, [visualEntries, selectedContentType]);
+
+
+    const onElementClick = (element: UIElementInstance)=>{
+      setSelectedComponent(element.id);
+      if(element.linkedContentTypeUID && element.linkedSchemaID){
+        setSelectedSchema(element.linkedSchemaID);
+      } else{
+        setSelectedSchema("");
+      }
+    }
   return (
     <div className="flex w-full h-full">
 
@@ -171,7 +183,7 @@ function Canvas() {
                 <CanvasElementWrapper
                   key={element.id}
                   element={element}
-                  onClickEvent={() => setSelectedComponent(element.id)}
+                  onClickEvent={() => onElementClick(element)}
                   removeElement={removeElement}
                 />
               ))}

@@ -60,7 +60,9 @@ export default function BuilderContextProvider({
         id: element.id,
         type: element.type,
         styles: element.styles,
-      })),
+        linkedContentTypeUID: element.linkedContentTypeUID,
+        linkedSchemaID: element.linkedSchemaID,
+        })),
     };
     return json;
   };

@@ -129,6 +129,85 @@ export default function RightSidebar() {
   };
   
 
+  const onSchemaValueChange = async (value: any) => {
+    setSelectedSchema(value);
+
+    const entry = entries?.entries[0];
+    if (!entry) {
+      toast.warn("No entry found");
+      return;
+    }
+    if (selectedCanvasComponent && selectedCanvasComponent.styles) {
+      if (
+        selectedCanvasComponent?.type === "Image" &&
+        selectedCanvasComponent.styles
+      ) {
+        if (
+          typeof entry[value as keyof typeof entry] === "object" &&
+          entry[value as keyof typeof entry] !== null &&
+          "href" in (entry[value as keyof typeof entry] as any)
+        ) {
+          const newStyles = {
+            ...selectedCanvasComponent.styles,
+            src: (
+              entry[value as keyof typeof entry] as { href: string }
+            ).href, // Cast to ensure TypeScript knows it has 'href'
+          };
+          const newElement = {
+            ...selectedCanvasComponent,
+            linkedContentTypeUID: selectedContentType,
+            linkedSchemaID: value,
+            styles: newStyles,
+          };
+
+
+          console.log("New element: ", newElement);
+          const newElements = elements.map((element) =>
+            element.id === selectedCanvasComponent.id
+              ? newElement
+              : element
+          );
+          setElements(newElements as UIElementInstance[]);
+        } else {
+          toast.error("No image URL found in entry");
+          setSelectedSchema("");
+          return;
+        }
+      } else if (
+        selectedCanvasComponent &&
+        selectedCanvasComponent.styles
+      ) {
+        if (
+          typeof entry[value as keyof typeof entry] === "object" &&
+          entry[value as keyof typeof entry] !== null &&
+          "href" in (entry[value as keyof typeof entry] as any)
+        ) {
+          toast.error("Cannot link image to this component");
+          setSelectedSchema("");
+          return;
+        }
+        const newStyles = {
+          ...selectedCanvasComponent.styles,
+          label: entry[value as keyof typeof entry] || "",
+          
+        };
+        const newElement = {
+          ...selectedCanvasComponent,
+          linkedContentTypeUID: selectedContentType,
+          linkedSchemaID: value as string,
+          styles: newStyles,
+          
+        };
+        const newElements = elements.map((element) =>
+          element.id === selectedCanvasComponent.id
+            ? newElement
+            : element
+        );
+        setElements(newElements as UIElementInstance[]);
+      }
+    }
+  }
+
   return (
     <div className="w-full  flex flex-col flex-grow gap-2 border-l-2 border-muted p-4  overflow-y-auto h-full">
       <div className="">
@@ -172,75 +251,7 @@ export default function RightSidebar() {
                 elements.length === 0 ||
                 selectedCanvasComponent?.type === "Product"
               }
-              onValueChange={async (value) => {
-                setSelectedSchema(value);
-
-                const entry = entries?.entries[0];
-                if (!entry) {
-                  toast.warn("No entry found");
-                  return;
-                }
-                if (selectedCanvasComponent && selectedCanvasComponent.styles) {
-                  if (
-                    selectedCanvasComponent?.type === "Image" &&
-                    selectedCanvasComponent.styles
-                  ) {
-                    if (
-                      typeof entry[value as keyof typeof entry] === "object" &&
-                      entry[value as keyof typeof entry] !== null &&
-                      "href" in (entry[value as keyof typeof entry] as any)
-                    ) {
-                      const newStyles = {
-                        ...selectedCanvasComponent.styles,
-                        src: (
-                          entry[value as keyof typeof entry] as { href: string }
-                        ).href, // Cast to ensure TypeScript knows it has 'href'
-                      };
-                      const newElement = {
-                        ...selectedCanvasComponent,
-                        styles: newStyles,
-                      };
-                      const newElements = elements.map((element) =>
-                        element.id === selectedCanvasComponent.id
-                          ? newElement
-                          : element
-                      );
-                      setElements(newElements as UIElementInstance[]);
-                    } else {
-                      toast.error("No image URL found in entry");
-                      setSelectedSchema("");
-                      return;
-                    }
-                  } else if (
-                    selectedCanvasComponent &&
-                    selectedCanvasComponent.styles
-                  ) {
-                    if (
-                      typeof entry[value as keyof typeof entry] === "object" &&
-                      entry[value as keyof typeof entry] !== null &&
-                      "href" in (entry[value as keyof typeof entry] as any)
-                    ) {
-                      toast.error("Cannot link image to this component");
-                      setSelectedSchema("");
-                      return;
-                    }
-                    const newStyles = {
-                      ...selectedCanvasComponent.styles,
-                      label: entry[value as keyof typeof entry] || "",
-                    };
-                    const newElement = {
-                      ...selectedCanvasComponent,
-                      styles: newStyles,
-                    };
-                    const newElements = elements.map((element) =>
-                      element.id === selectedCanvasComponent.id
-                        ? newElement
-                        : element
-                    );
-                    setElements(newElements);
-                  }
-                }
-              }}
+              onValueChange={onSchemaValueChange}
             >
               <SelectTrigger className="border-black">
                 <SelectValue placeholder="Select a schema" />
