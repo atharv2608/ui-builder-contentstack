@@ -8,8 +8,17 @@ import useBuilder from "@/hooks/useBuilder";
 import { fetchVisualEntries } from "@/services/fetchVisualsEntry";
 
 function Canvas() {
-  const { setSelectedComponent, addElement, setElements, elements, selectedComponent, setSelectedSchema, setVisualEntries, visualEntries , selectedContentType} =
-    useBuilder();
+  const {
+    setSelectedComponent,
+    addElement,
+    setElements,
+    elements,
+    selectedComponent,
+    setSelectedSchema,
+    setVisualEntries,
+    visualEntries,
+    selectedContentType,
+  } = useBuilder();
 
   const droppable = useDroppable({
     id: "canvas-drop-area",
@@ -95,76 +104,78 @@ function Canvas() {
   });
 
   const removeElement = (id: string) => {
-    if(selectedComponent === id){
+    if (selectedComponent === id) {
       setSelectedComponent("");
       setSelectedSchema("");
     }
     setElements((prev) => prev.filter((element) => element.id !== id));
   };
 
-    // Function to load elements based on selected content type and visual entries
-    const loadElementsFromVisualEntries = () => {
-      if (visualEntries && selectedContentType) {
-        const entry = visualEntries.entries.find(
-          (e) => e.title === selectedContentType
-        );
-        
-        // Check if entry and its ui_json exist, and if components is an array
-        if (entry && entry.ui_json && Array.isArray(entry.ui_json.components)) {
-          const parsedElements: UIElementInstance[] = entry.ui_json.components.map(
-            (jsonElement: any) => ({
+  // Function to load elements based on selected content type and visual entries
+  const loadElementsFromVisualEntries = () => {
+    if (visualEntries && selectedContentType) {
+      const entry = visualEntries.entries.find(
+        (e) => e.title === selectedContentType
+      );
+
+      // Check if entry and its ui_json exist, and if components is an array
+      if (entry && entry.ui_json && Array.isArray(entry.ui_json.components)) {
+        const parsedElements: UIElementInstance[] =
+          entry.ui_json.components.map((jsonElement: any) => {
+            const element: UIElementInstance = {
               id: jsonElement.id,
               type: jsonElement.type,
               linkedContentTypeUID: jsonElement.linkedContentTypeUID,
               linkedSchemaID: jsonElement.linkedSchemaID,
               styles: jsonElement.styles,
-              elementCategory: jsonElement.elementCategory
-            })
-          );
-          setElements(parsedElements);
-        } else {
-          setElements([]); // No entry found or no UI JSON, set to empty
-        }
-      }
-    };
-    
-    
-  
-    // Fetch visual entries on load and when selectedContentType changes
-    useEffect(() => {
-      async function fetchData() {
-        try {
-          const fetchedResponse = await fetchVisualEntries(); // This returns the full Axios response
-          const fetchedEntries = fetchedResponse.data; // Extract the data from the response
-          setVisualEntries(fetchedEntries); // Now set the visual entries state
-        } catch (error) {
-          console.error("Error fetching visual entries:", error);
-          // Handle error accordingly
-          setVisualEntries(null); // Optionally set to null or handle as needed
-        }
-      }
-    
-      fetchData();
-    }, [selectedContentType]);
-    
-  
-    // Populate elements when visual entries or selectedContentType changes
-    useEffect(() => {
-      loadElementsFromVisualEntries();
-    }, [visualEntries, selectedContentType]);
+              elementCategory: jsonElement.elementCategory,
+            };
 
+            if (jsonElement.content) {
+              element.content = jsonElement.content;
+            }
 
-    const onElementClick = (element: UIElementInstance)=>{
-      setSelectedComponent(element.id);
-      if(element.linkedContentTypeUID && element.linkedSchemaID){
-        setSelectedSchema(element.linkedSchemaID);
-      } else{
-        setSelectedSchema("");
+            return element;
+          });
+        setElements(parsedElements);
+      } else {
+        setElements([]); // No entry found or no UI JSON, set to empty
       }
     }
+  };
+
+  // Fetch visual entries on load and when selectedContentType changes
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const fetchedResponse = await fetchVisualEntries(); // This returns the full Axios response
+        const fetchedEntries = fetchedResponse.data; // Extract the data from the response
+        setVisualEntries(fetchedEntries); // Now set the visual entries state
+      } catch (error) {
+        console.error("Error fetching visual entries:", error);
+        // Handle error accordingly
+        setVisualEntries(null); // Optionally set to null or handle as needed
+      }
+    }
+
+    fetchData();
+  }, [selectedContentType]);
+
+  // Populate elements when visual entries or selectedContentType changes
+  useEffect(() => {
+    loadElementsFromVisualEntries();
+  }, [visualEntries, selectedContentType]);
+
+  const onElementClick = (element: UIElementInstance) => {
+    setSelectedComponent(element.id);
+    if (element.linkedContentTypeUID && element.linkedSchemaID) {
+      setSelectedSchema(element.linkedSchemaID);
+    } else {
+      setSelectedSchema("");
+    }
+  };
   return (
     <div className="flex w-full h-full">
-
       <div className="p-4 w-full">
         <div
           ref={droppable.setNodeRef}
@@ -241,7 +252,7 @@ function CanvasElementWrapper({
 
   if (draggable.isDragging) return null;
   const CanvasElement = UIElements[element.type].canvasComponent;
-  
+
   return (
     <div
       ref={draggable.setNodeRef}
@@ -279,7 +290,9 @@ function CanvasElementWrapper({
             </Button>
           </div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse">
-            <p className="text-xl  font-bold text-indigo-500">Click to Select or Drag to move</p>
+            <p className="text-xl  font-bold text-indigo-500">
+              Click to Select or Drag to move
+            </p>
           </div>
         </div>
       )}
@@ -293,9 +306,9 @@ function CanvasElementWrapper({
           mouseIsOver && "opacity-30"
         )}
         style={{
-          backgroundColor: element?.styles?.backgroundColor || "#fff"
+          backgroundColor: element?.styles?.backgroundColor || "#fff",
         }}
-      > 
+      >
         <CanvasElement elementInstance={element} />
       </div>
       {bottomHalf.isOver && (

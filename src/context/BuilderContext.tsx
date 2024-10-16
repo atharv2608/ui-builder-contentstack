@@ -56,14 +56,23 @@ export default function BuilderContextProvider({
   const generateUIJson = () => {
     const json = {
       page: selectedContentType,
-      components: elements.map((element) => ({
-        id: element.id,
-        type: element.type,
-        styles: element.styles,
-        linkedContentTypeUID: element.linkedContentTypeUID,
-        linkedSchemaID: element.linkedSchemaID,
-        elementCategory: element.elementCategory
-        })),
+
+      components: elements.map((element)=> {
+        const component: UIElementInstance = {
+          id: element.id,
+          type: element.type,
+          styles: element.styles,
+          linkedContentTypeUID: element.linkedContentTypeUID,
+          linkedSchemaID: element.linkedSchemaID,
+          elementCategory: element.elementCategory
+        }
+
+        if(element.content){
+          component.content = element.content
+        }
+
+        return component;
+      }),
     };
     return json;
   };
