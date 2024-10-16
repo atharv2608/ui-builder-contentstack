@@ -11,6 +11,8 @@ import useBuilder from "@/hooks/useBuilder";
 import { fetchProducts, Product } from "@/services/fetchProducts";
 import { useEffect, useState, useCallback } from "react";
 import { UIElementInstance } from "../../UIElements";
+import { Label } from "@/components/ui/label";
+import { SourceTextModule } from "vm";
 
 function LinkToProduct({
   selectedCanvasComponent,
@@ -40,18 +42,28 @@ function LinkToProduct({
     getProducts();
   }, []);
 
-  // Reset selectedProductName when selectedCanvasComponent changes
-  useEffect(() => {
-    if (selectedElement && selectedElement.styles) {
-      // If the selected element has a product linked, show that product
-      setSelectedProductName(selectedElement.styles.productName);
-    } else {
-      // Otherwise, reset to show the placeholder
-      setSelectedProductName(undefined);
-    }
-  }, [selectedCanvasComponent, selectedElement]);
+  // // Reset selectedProductName when selectedCanvasComponent changes
+  // useEffect(() => {
+  //   if (selectedElement && selectedElement.styles) {
+  //     // If the selected element has a product linked, show that product
+  //     setSelectedProductName(selectedElement?.styles?.productName || undefined);
+  //   } else {
+  //     // Otherwise, reset to show the placeholder
+  //     setSelectedProductName(undefined);
+  //   }
+  // }, [selectedCanvasComponent]);
 
-  // Handle product selection
+  useEffect(()=>{
+    if (selectedCanvasComponent && selectedCanvasComponent.styles) {
+      if(selectedCanvasComponent.styles.productName) {
+        setSelectedProductName(selectedCanvasComponent.styles.productName);
+      } else{
+        setSelectedProductName(undefined);
+      }
+    } 
+  }, [selectedCanvasComponent])
+
+  // // Handle product selection
   const handleProductChange = useCallback((value: string) => {
     const product = products.find(product => product.product_name === value);
     setSelectedProductName(value); // Update local state
@@ -77,8 +89,15 @@ function LinkToProduct({
 
   return (
     <div>
-      <Select onValueChange={handleProductChange} value={selectedProductName}>
-        <SelectTrigger className="w-[180px]">
+       <Label
+              htmlFor="product-select"
+              className="text-sm font-medium text-gray-700 mb-2 block"
+            >
+              Select a product from the list
+            </Label>
+            <Select onValueChange={handleProductChange} value={selectedProductName}>
+
+        <SelectTrigger className="w-[180px] border-black">
           <SelectValue placeholder="Select a product" />
         </SelectTrigger>
         <SelectContent>

@@ -21,7 +21,6 @@ import FontColor from "./component-styles/text/FontColor";
 import BackgroundColor from "./component-styles/text/BackgroundColor";
 import FontWeight from "./component-styles/text/FontWeight";
 import Height from "./component-styles/image/Height";
-import { fetchProducts } from "@/services/fetchProducts";
 import LinkToProduct from "./component-styles/product/LinkToProduct";
 import Width from "./component-styles/image/Width";
 import { Button } from "../ui/button";
@@ -65,7 +64,6 @@ export default function RightSidebar() {
   const selectedCanvasComponent = elements.find(
     (element) => element.id === selectedComponent
   );
-  fetchProducts();
 
   const contentType: ContentType | undefined = useSelector(
     (state: RootState) => state.contentTypes.contentTypes
@@ -238,8 +236,9 @@ export default function RightSidebar() {
                 </SelectGroup>
               </SelectContent>
             </Select>
+            <div className={`${["Product", "Blog"].includes(selectedCanvasComponent?.type as string) ? "hidden" : ""}`}>
             <Label
-              htmlFor="component-select"
+              htmlFor="component-link"
               className="text-sm font-medium text-gray-700 mb-2 block"
             >
               Link To
@@ -271,6 +270,13 @@ export default function RightSidebar() {
                 </SelectGroup>
               </SelectContent>
             </Select>
+            </div>
+
+            {selectedCanvasComponent?.type === "Product" && (
+              <LinkToProduct
+                selectedCanvasComponent={selectedCanvasComponent}
+              />
+            )}
           </div>
         </div>
 
@@ -318,11 +324,7 @@ export default function RightSidebar() {
                 <Width selectedCanvasComponent={selectedCanvasComponent} />
               </>
             )}
-            {selectedCanvasComponent?.type === "Product" && (
-              <LinkToProduct
-                selectedCanvasComponent={selectedCanvasComponent}
-              />
-            )}
+            
           </div>
         </div>
       </div>
