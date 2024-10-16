@@ -27,6 +27,7 @@ import { Button } from "../ui/button";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { EntryResponse } from "@/services/fetchEntry";
+import LinkToBlog from "./component-styles/blog/LinkToBlog";
 
 export default function RightSidebar() {
   const {
@@ -274,6 +275,11 @@ export default function RightSidebar() {
 
             {selectedCanvasComponent?.type === "Product" && (
               <LinkToProduct
+                selectedCanvasComponent={selectedCanvasComponent}
+              />
+            )}
+            {selectedCanvasComponent?.type === "Blog" && (
+              <LinkToBlog
                 selectedCanvasComponent={selectedCanvasComponent}
               />
             )}

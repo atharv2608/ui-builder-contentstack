@@ -55,6 +55,7 @@ function LeftSidebar() {
         <SidebarButtonElement uiElement={UIElements.Heading} />
         <SidebarButtonElement uiElement={UIElements.Image} />
         <SidebarButtonElement uiElement={UIElements.Product} />
+        <SidebarButtonElement uiElement={UIElements.Blog} />
         
       </div>
     </div>

@@ -4,8 +4,9 @@ import { ImageUIElement } from "./fields/Image";
 import { ParagraphUIElement } from "./fields/Paragraph";
 import { ProductUIElement } from "./fields/Product";
 import { TextFieldUIElement } from "./fields/TextField";
+import { BlogUIElement } from "./fields/Blog";
 
-export type ElementsType = "TextField" | "Heading" | "Image" | "Product" | "Paragraph";
+export type ElementsType = "TextField" | "Heading" | "Image" | "Product" | "Paragraph" | "Blog";
 
 export type UIElement = {
     type: ElementsType,
@@ -30,7 +31,8 @@ export const UIElements: UIElementsTypes = {
     Heading: HeadingUIElement,
     Image: ImageUIElement,
     Product: ProductUIElement,
-    Paragraph: ParagraphUIElement
+    Paragraph: ParagraphUIElement,
+    Blog: BlogUIElement
 }
 
 export type UIElementInstance = {
@@ -39,4 +41,5 @@ export type UIElementInstance = {
     styles? : Record<string , any>;
     linkedContentTypeUID?: ContentTypeNames;
     linkedSchemaID?: string;
+    content?: Record<string , any>;
 }

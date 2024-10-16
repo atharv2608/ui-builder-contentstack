@@ -49,8 +49,8 @@ function CanvasComponent({
             <div>
               <h2 className="text-2xl font-bold mb-2">{element?.styles?.productName || "Product Name"}</h2>
               <p className="text-muted-foreground mb-4">{element?.styles?.productDescription || "Product Description"}</p>
+              <div className="text-xl font-semibold">Rs: {element?.styles?.productPrice || "Product Price"}</div>
             </div>
-            <div className="text-xl font-semibold">{element?.styles?.productPrice || "Product Price"}</div>
           </div>
         </div>
       </CardContent>
