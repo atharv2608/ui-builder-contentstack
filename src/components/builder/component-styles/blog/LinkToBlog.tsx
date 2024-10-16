@@ -22,9 +22,6 @@ import { Blog, fetchBlogs } from "@/services/fetchBlogs";
     const { elements, setElements } = useBuilder();
     const [selectedBlogTitle, setSelectedBlogTitle] = useState<string | undefined>(undefined); 
   
-    const selectedElement = elements.find(
-      (element) => element.id === selectedCanvasComponent.id
-    );
     // Fetch blogs from the API
     const getBlogs = async () => {
       try {
@@ -53,7 +50,6 @@ import { Blog, fetchBlogs } from "@/services/fetchBlogs";
     // // Handle blog selection
     const handleBlogChange = useCallback((value: string) => {
       const blog = blogs.find(blog => blog.title === value);
-      console.log("Blog selected", blog)
       setSelectedBlogTitle(value); // Update local state
       if (selectedCanvasComponent  && blog) {
         const newContent = {
@@ -65,7 +61,7 @@ import { Blog, fetchBlogs } from "@/services/fetchBlogs";
           published_date: blog.published_date
         };
         const newElement = {
-          ...selectedElement,
+          ...selectedCanvasComponent,
           content: newContent,
         };
         const newElements = elements.map((element) =>
@@ -74,7 +70,7 @@ import { Blog, fetchBlogs } from "@/services/fetchBlogs";
 
         setElements(newElements as UIElementInstance[]);
       }
-    }, [elements, selectedCanvasComponent.id, selectedElement, blogs, setElements]);
+    }, [elements, selectedCanvasComponent, blogs, setElements]);
   
     return (
       <div>
