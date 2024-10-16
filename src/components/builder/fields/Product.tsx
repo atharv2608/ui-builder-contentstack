@@ -41,16 +41,16 @@ function CanvasComponent({
         <div className="flex flex-col sm:flex-row">
           <div className="w-full sm:w-1/3">
             <img
-              src={element?.styles?.productImage || "https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg"}
+              src={element?.content?.productImage || "https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg"}
               alt={"name"}
               className="w-full h-48 sm:h-full object-cover"
             />
           </div>
           <div className="w-full sm:w-2/3 p-4 flex flex-col justify-between">
             <div>
-              <h2 className="text-2xl font-bold mb-2">{element?.styles?.productName || "Product Name"}</h2>
-              <p className="text-muted-foreground mb-4">{element?.styles?.productDescription || "Product Description"}</p>
-              <div className="text-xl font-semibold">Rs: {element?.styles?.productPrice || "Product Price"}</div>
+              <h2 className="text-2xl font-bold mb-2">{element?.content?.productName || "Product Name"}</h2>
+              <p className="text-muted-foreground mb-4">{element?.content?.productDescription || "Product Description"}</p>
+              <div className="text-xl font-semibold">Rs: {element?.content?.productPrice || "Product Price"}</div>
             </div>
           </div>
         </div>

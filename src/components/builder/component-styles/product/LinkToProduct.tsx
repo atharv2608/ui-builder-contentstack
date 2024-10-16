@@ -22,9 +22,7 @@ function LinkToProduct({
   const { elements, setElements } = useBuilder();
   const [selectedProductName, setSelectedProductName] = useState<string | undefined>(undefined); 
 
-  const selectedElement = elements.find(
-    (element) => element.id === selectedCanvasComponent.id
-  );
+
 
   // Fetch products from the API
   const getProducts = async () => {
@@ -41,21 +39,11 @@ function LinkToProduct({
     getProducts();
   }, []);
 
-  // // Reset selectedProductName when selectedCanvasComponent changes
-  // useEffect(() => {
-  //   if (selectedElement && selectedElement.styles) {
-  //     // If the selected element has a product linked, show that product
-  //     setSelectedProductName(selectedElement?.styles?.productName || undefined);
-  //   } else {
-  //     // Otherwise, reset to show the placeholder
-  //     setSelectedProductName(undefined);
-  //   }
-  // }, [selectedCanvasComponent]);
 
   useEffect(()=>{
-    if (selectedCanvasComponent && selectedCanvasComponent.styles) {
-      if(selectedCanvasComponent.styles.productName) {
-        setSelectedProductName(selectedCanvasComponent.styles.productName);
+    if (selectedCanvasComponent && selectedCanvasComponent.content) {
+      if(selectedCanvasComponent.content.productName) {
+        setSelectedProductName(selectedCanvasComponent.content.productName);
       } else{
         setSelectedProductName(undefined);
       }
@@ -67,24 +55,24 @@ function LinkToProduct({
     const product = products.find(product => product.product_name === value);
     setSelectedProductName(value); // Update local state
 
-    if (selectedElement && selectedElement.styles && product) {
-      const newStyles = {
-        ...selectedElement.styles,
+    if (selectedCanvasComponent && product) {
+      const newContent = {
+        ...selectedCanvasComponent.content,
         productName: product.product_name,
         productDescription: product.product_description,
         productImage: product.product_image.href,
         productPrice: product.product_price,
       };
       const newElement = {
-        ...selectedElement,
-        styles: newStyles,
+        ...selectedCanvasComponent,
+        content: newContent,
       };
       const newElements = elements.map((element) =>
         element.id === selectedCanvasComponent.id ? newElement : element
       );
-      setElements(newElements);
+      setElements(newElements as UIElementInstance[]);
     }
-  }, [elements, selectedCanvasComponent.id, selectedElement, products, setElements]);
+  }, [elements, selectedCanvasComponent, products, setElements]);
 
   return (
     <div>

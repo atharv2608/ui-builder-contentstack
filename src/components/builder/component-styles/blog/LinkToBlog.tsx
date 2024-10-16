@@ -72,7 +72,6 @@ import { Blog, fetchBlogs } from "@/services/fetchBlogs";
           element.id === selectedCanvasComponent.id ? newElement : element
         );
 
-        console.log("New element", newElement)
         setElements(newElements as UIElementInstance[]);
       }
     }, [elements, selectedCanvasComponent.id, selectedElement, blogs, setElements]);
