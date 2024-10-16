@@ -62,6 +62,7 @@ export default function BuilderContextProvider({
         styles: element.styles,
         linkedContentTypeUID: element.linkedContentTypeUID,
         linkedSchemaID: element.linkedSchemaID,
+        elementCategory: element.elementCategory
         })),
     };
     return json;

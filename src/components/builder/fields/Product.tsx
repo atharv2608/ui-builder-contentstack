@@ -11,6 +11,7 @@ export const ProductUIElement: UIElement = {
     id,
     type,
     styles,
+    elementCategory: "product"
   }),
   buttonElement: {
     icon: Box,

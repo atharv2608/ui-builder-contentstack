@@ -13,8 +13,7 @@ function FontSize({
 
   // Local state for font size
   const [fontSize, setFontSize] = useState<string>(
-    selectedCanvasComponent?.styles?.fontSize ||
-      (selectedCanvasComponent?.type === "Heading" ? "32" : "16")
+    selectedCanvasComponent?.styles?.fontSize 
   );
 
   // Sync the local state with the selected component's font size

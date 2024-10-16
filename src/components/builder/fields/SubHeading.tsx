@@ -1,12 +1,12 @@
-import { Heading1 } from "lucide-react";
+import { Heading2 } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
 let styles = {
-  tag: "h1",
-  fontSize: "32"
+  tag: "h2",
+  fontSize: "24"
 };
-const type: ElementsType = "Heading";
-export const HeadingUIElement: UIElement = {
-  type: "Heading",
+const type: ElementsType = "SubHeading";
+export const SubHeadingUIElement: UIElement = {
+  type: "SubHeading",
   construct: (id: string) => ({
     id,
     type,
@@ -14,8 +14,8 @@ export const HeadingUIElement: UIElement = {
     elementCategory: "text"
   }),
   buttonElement: {
-    icon: Heading1,
-    label: "Heading",
+    icon: Heading2,
+    label: "Sub-heading",
   },
   canvasComponent: CanvasComponent,
   UIComponent: () => <div>UI Component</div>,
@@ -38,14 +38,14 @@ function CanvasComponent({
         Component ID: {element.id}
       </span>
       <h1
-        className={`text-3xl ${element.styles?.className}`}
+        className={`text-2xl ${element.styles?.className}`}
         style={{
           color: element?.styles?.color || "black",
-          fontSize: `${element.styles?.fontSize}px` || "32px",
+          fontSize: `${element.styles?.fontSize}px` || "24px",
           fontWeight: element?.styles?.fontWeight || "400",
         }}
       >
-        {element?.styles?.label || "Heading"}
+        {element?.styles?.label || "Sub Heading"}
       </h1>
     </div>
   );

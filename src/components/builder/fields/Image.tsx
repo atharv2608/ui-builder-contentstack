@@ -15,6 +15,7 @@ export const ImageUIElement: UIElement = {
     id,
     type,
     styles,
+    elementCategory: "image"
   }),
   buttonElement: {
     icon: Image,

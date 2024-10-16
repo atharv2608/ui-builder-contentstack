@@ -5,8 +5,9 @@ import { ParagraphUIElement } from "./fields/Paragraph";
 import { ProductUIElement } from "./fields/Product";
 import { TextFieldUIElement } from "./fields/TextField";
 import { BlogUIElement } from "./fields/Blog";
+import { SubHeadingUIElement } from "./fields/SubHeading";
 
-export type ElementsType = "TextField" | "Heading" | "Image" | "Product" | "Paragraph" | "Blog";
+export type ElementsType = "TextField" | "Heading" | "SubHeading" | "Image" | "Product" | "Paragraph" | "Blog";
 
 export type UIElement = {
     type: ElementsType,
@@ -32,12 +33,14 @@ export const UIElements: UIElementsTypes = {
     Image: ImageUIElement,
     Product: ProductUIElement,
     Paragraph: ParagraphUIElement,
-    Blog: BlogUIElement
+    Blog: BlogUIElement,
+    SubHeading: SubHeadingUIElement,
 }
 
 export type UIElementInstance = {
     id: string;
     type: ElementsType;
+    elementCategory: string; 
     styles? : Record<string , any>;
     linkedContentTypeUID?: ContentTypeNames;
     linkedSchemaID?: string;

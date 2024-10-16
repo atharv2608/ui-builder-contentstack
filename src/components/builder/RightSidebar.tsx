@@ -295,9 +295,7 @@ export default function RightSidebar() {
           </p>
 
           <div className="space-y-4">
-            {["TextField", "Heading", "Paragraph"].includes(
-              selectedCanvasComponent?.type as string
-            ) && (
+            {selectedCanvasComponent?.elementCategory === "text" && (
               <div>
                 <FontSize
                   selectedCanvasComponent={

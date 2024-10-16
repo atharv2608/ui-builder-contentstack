@@ -4,7 +4,8 @@ import { Parser } from "html-to-react";
 
 // Default attributes for the paragraph
 const styles = {
-  tag: "p"
+  tag: "p",
+ fontSize: "16"
 };
 
 const type: ElementsType = "Paragraph";
@@ -15,6 +16,7 @@ export const ParagraphUIElement: UIElement = {
     id,
     type,
     styles,
+    elementCategory: "text"
   }),
   buttonElement: {
     icon: Pilcrow, // Use an appropriate icon for paragraph if available

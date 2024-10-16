@@ -2,7 +2,8 @@ import { Text } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
 import { Parser } from "html-to-react";
 const styles = {
- tag: "span"
+ tag: "span",
+ fontSize: "16"
 };
 const type: ElementsType = "TextField";
 export const TextFieldUIElement: UIElement = {
@@ -11,6 +12,7 @@ export const TextFieldUIElement: UIElement = {
     id,
     type,
     styles,
+    elementCategory: "text"
   }),
   buttonElement: {
     icon: Text,

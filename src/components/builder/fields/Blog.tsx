@@ -10,6 +10,7 @@ export const BlogUIElement: UIElement = {
     id,
     type,
     styles,
+    elementCategory: "blog"
   }),
   buttonElement: {
     icon: Newspaper,

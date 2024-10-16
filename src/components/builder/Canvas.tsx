@@ -118,6 +118,7 @@ function Canvas() {
               linkedContentTypeUID: jsonElement.linkedContentTypeUID,
               linkedSchemaID: jsonElement.linkedSchemaID,
               styles: jsonElement.styles,
+              elementCategory: jsonElement.elementCategory
             })
           );
           setElements(parsedElements);
