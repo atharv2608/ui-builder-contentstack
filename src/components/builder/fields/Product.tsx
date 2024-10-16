@@ -41,7 +41,7 @@ function CanvasComponent({
         <div className="flex flex-col sm:flex-row">
           <div className="w-full sm:w-1/3">
             <img
-              src={element?.content?.productImage || "https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg"}
+              src={element?.content?.productImage || "https://eu-images.contentstack.com/v3/assets/blta0fb2d378b73e901/bltdd5f470eea949f9f/670fd8311509f334c28c79e3/default-product.jpg"}
               alt={"name"}
               className="w-full h-48 sm:h-full object-cover"
             />

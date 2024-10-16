@@ -73,14 +73,15 @@ export default function RightSidebar() {
   const handleReset = () => {
     if (selectedCanvasComponent && selectedCanvasComponent.styles) {
       // Find the selected element
-      let newStyles = {};
+      let resetStyles = {};
+      let resetContent = {}
 
       // Reset styles based on the component type
       switch (selectedCanvasComponent.type) {
         case "Heading":
         case "TextField":
         case "Paragraph":
-          newStyles = {
+          resetStyles = {
             color: "#000000", // Default black color
             fontSize: selectedCanvasComponent.type === "Heading" ? "32" : "16", // Adjust font size based on type
             fontWeight: "400", // Default font weight
@@ -89,21 +90,31 @@ export default function RightSidebar() {
           break;
 
         case "Image":
-          newStyles = {
+          resetStyles = {
             height: "200px", // Reset height for image
             width: "300px", // Reset width for image
           };
           break;
 
         case "Product":
-          newStyles = {
+          resetContent = {
             productName: "Product Name",
             productDescription: "Product Description",
             productImage:
-              "https://cdn.leonardo.ai/users/fe39703b-08bb-495c-94db-eed1dda61cc4/generations/6ffbf7cd-8d07-4e03-aba7-eebd28ed086e/Leonardo_Phoenix_A_minimalist_composition_featuring_a_sleek_mo_1.jpg",
+              "https://eu-images.contentstack.com/v3/assets/blta0fb2d378b73e901/bltdd5f470eea949f9f/670fd8311509f334c28c79e3/default-product.jpg",
             productPrice: "Price",
           };
           break;
+
+        case "Blog":
+        resetContent = {
+          title: "Blog Title",
+          cover_image: "https://eu-images.contentstack.com/v3/assets/blta0fb2d378b73e901/blt6ddf1e7a6b41751b/670fad1a273b107659129d13/default-cover-image.jpg",
+          blog_content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora maiores possimus repudiandae asperiores eaque esse, facere officiis ratione suscipit iste doloribus sapiente laudantium facilis recusandae animi totam quas veniam itaque",
+          author: "author",
+          published_date: "1970-01-01T00:00:00.000Z"
+        };
+        break;
 
         default:
           // If no type matches, leave styles unchanged or add default reset behavior
@@ -115,8 +126,12 @@ export default function RightSidebar() {
         ...selectedCanvasComponent,
         styles: {
           ...selectedCanvasComponent.styles,
-          ...newStyles, // Merge with the existing attributes
+          ...resetStyles, // Merge with the existing attributes
         },
+        content: {
+          ...selectedCanvasComponent.content,
+          ...resetContent
+        }
       };
 
       // Update the elements array with the new element
@@ -332,11 +347,18 @@ export default function RightSidebar() {
           </div>
         </div>
       </div>
+      {
+        selectedCanvasComponent && 
+
       <div className="flex justify-between ">
         <Button onClick={handleReset} className="bg-indigo-500 text-white">
-          Reset styles
+          {
+            selectedCanvasComponent.elementCategory === "text" ? "Reset Styles" : selectedCanvasComponent.elementCategory === "blog" ? "Reset Blog" :
+            selectedCanvasComponent.elementCategory === "product"? "Reset Product" : "Reset"
+          }
         </Button>
       </div>
+      }
     </div>
   );
 }

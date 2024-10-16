@@ -68,14 +68,14 @@ function CanvasComponent({
               className="text-sm text-muted-foreground"
               dateTime={"publishDate"}
             >
-              {new Date("2024-10-15T09:57:15.000Z").toLocaleDateString(
+              {new Date(element?.content?.published_date || "1970-01-01T00:00:00.000Z").toLocaleDateString(
                 "en-GB",
                 {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
                 }
-              )}
+              )} 
             </time>
           </div>
         </div>
