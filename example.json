@@ -1,51 +1,66 @@
 {
-    "layout": {
-      "sections": [
-        {
-          "type": "header",
-          "content": {
-            "title": "Welcome to Our Website",
-            "navigation": ["Home", "About Us", "Services", "Blog"]
+  "page": {
+    "title": "Home Page",
+    "components": [
+      {
+        "type": "hero",
+        "props": {
+          "backgroundImage": "url('/images/hero-bg.jpg')",
+          "title": "Welcome to Our Website",
+          "subtitle": "Your success starts here",
+          "cta": {
+            "text": "Get Started",
+            "link": "/get-started"
           }
         },
-        {
-          "type": "main",
-          "columns": [
+        "style": {
+          "padding": "50px",
+          "textAlign": "center",
+          "color": "#fff"
+        }
+      },
+      {
+        "type": "services",
+        "props": {
+          "items": [
             {
-              "width": 8,
-              "content": [
-                {
-                  "type": "text",
-                  "text": "We offer a range of services to help you succeed."
-                },
-                {
-                  "type": "image",
-                  "src": "services.jpg",
-                  "alt": "Our Services"
-                }
-              ]
+              "title": "Web Development",
+              "description": "Build responsive and engaging websites.",
+              "icon": "url('/icons/web-development.png')"
             },
             {
-              "width": 4,
-              "content": [
-                {
-                  "type": "button",
-                  "text": "Get Started",
-                  "action": "link",
-                  "href": "/get-started"
-                }
-              ]
+              "title": "SEO Optimization",
+              "description": "Improve your site's visibility on search engines.",
+              "icon": "url('/icons/seo.png')"
             }
           ]
         },
-        {
-          "type": "footer",
-          "content": {
-            "text": "© 2024 Our Company. All rights reserved.",
-            "links": ["Privacy Policy", "Terms of Service"]
-          }
+        "style": {
+          "backgroundColor": "#f8f8f8",
+          "padding": "30px"
         }
-      ]
-    }
+      },
+      {
+        "type": "blogPreview",
+        "props": {
+          "posts": [
+            {
+              "title": "Latest Trends in Tech",
+              "excerpt": "Stay ahead with the latest technology trends.",
+              "link": "/blog/latest-trends-in-tech"
+            },
+            {
+              "title": "How to Start a Startup",
+              "excerpt": "Essential tips for budding entrepreneurs.",
+              "link": "/blog/startup-tips"
+            }
+          ]
+        },
+        "style": {
+          "margin": "20px 0",
+          "textAlign": "left"
+        }
+      }
+    ]
   }
-  
+}

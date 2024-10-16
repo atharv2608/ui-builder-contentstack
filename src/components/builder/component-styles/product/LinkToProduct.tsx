@@ -12,7 +12,6 @@ import { fetchProducts, Product } from "@/services/fetchProducts";
 import { useEffect, useState, useCallback } from "react";
 import { UIElementInstance } from "../../UIElements";
 import { Label } from "@/components/ui/label";
-import { SourceTextModule } from "vm";
 
 function LinkToProduct({
   selectedCanvasComponent,
