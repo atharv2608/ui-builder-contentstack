@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { useDndMonitor, useDraggable, useDroppable } from "@dnd-kit/core";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ElementsType, UIElementInstance, UIElements } from "./UIElements";
 import { Button } from "../ui/button";
 import { Trash } from "lucide-react";
@@ -112,7 +112,7 @@ function Canvas() {
   };
 
   // Function to load elements based on selected content type and visual entries
-  const loadElementsFromVisualEntries = () => {
+  const loadElementsFromVisualEntries = useCallback(() => {
     if (visualEntries && selectedContentType) {
       const entry = visualEntries.entries.find(
         (e) => e.title === selectedContentType
@@ -142,7 +142,7 @@ function Canvas() {
         setElements([]); // No entry found or no UI JSON, set to empty
       }
     }
-  };
+  }, [visualEntries, selectedContentType])
 
   // Fetch visual entries on load and when selectedContentType changes
   useEffect(() => {

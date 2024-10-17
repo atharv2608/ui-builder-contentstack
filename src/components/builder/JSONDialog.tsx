@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import useBuilder from "@/hooks/useBuilder"; // Adjust the import path as necessary
-import {  useState } from "react";
+import {  useCallback, useState } from "react";
 import { FileJson } from "lucide-react";
 import { toast } from "react-toastify";
 function JSONDialog() {
@@ -19,10 +19,10 @@ function JSONDialog() {
   // State to manage dialog open/close
   const [open, setOpen] = useState(false);
 
-  const onCopyClick = () =>{
+  const onCopyClick = useCallback(() =>{
     navigator.clipboard.writeText(JSON.stringify(generatedJson, null, 2));
     toast.success("JSON copied to clipboard!");
-  }
+  }, [generatedJson])
   return (
     <Dialog open={open} onOpenChange={setOpen}> {/* Manage open state */}
       <DialogTrigger asChild>

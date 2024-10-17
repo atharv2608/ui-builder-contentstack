@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {  useState } from "react";
+import {  useCallback, useState } from "react";
 import { ResetIcon } from "@radix-ui/react-icons";
 import useBuilder from "@/hooks/useBuilder";
 function ResetCanvas() {
@@ -17,14 +17,14 @@ function ResetCanvas() {
   const [open, setOpen] = useState(false);
   const {setElements, setSelectedComponent, setSelectedSchema} = useBuilder();
 
-  const resetCanvas = ()=>{
+  const resetCanvas = useCallback(()=>{
     // Reset elements array to empty
     setElements([]);
     setSelectedComponent("");
     setSelectedSchema("");
     // Close dialog
     setOpen(false);
-  }
+  }, [])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}> {/* Manage open state */}

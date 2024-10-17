@@ -25,7 +25,7 @@ import LinkToProduct from "./component-styles/product/LinkToProduct";
 import Width from "./component-styles/image/Width";
 import { Button } from "../ui/button";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import LinkToBlog from "./component-styles/blog/LinkToBlog";
 import GridColumns from "./component-styles/grid/GridColumns";
 
@@ -69,7 +69,7 @@ export default function RightSidebar() {
     (state: RootState) => state.contentTypes.contentTypes
   ).find((contentType: ContentType) => contentType.uid === selectedContentType);
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     if (selectedCanvasComponent && selectedCanvasComponent.styles) {
       // Find the selected element
       let resetStyles = {};
@@ -141,7 +141,7 @@ export default function RightSidebar() {
       );
       setElements(newElements);
     }
-  };
+  }, [selectedCanvasComponent]);
 
   const onSchemaValueChange = async (value: any) => {
     setSelectedSchema(value);
