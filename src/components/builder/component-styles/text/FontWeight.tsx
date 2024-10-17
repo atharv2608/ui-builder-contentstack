@@ -21,7 +21,7 @@ function FontWeight({
     if (selectedCanvasComponent?.styles?.fontWeight) {
       setFontWeight(selectedCanvasComponent.styles.fontWeight);
     } else {
-      setFontWeight("100"); // Default to font-weight 100
+      setFontWeight("400"); // Default to font-weight 100
     }
   }, [selectedCanvasComponent]);
 

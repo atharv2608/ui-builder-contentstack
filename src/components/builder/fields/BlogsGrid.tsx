@@ -1,4 +1,4 @@
-import { Grid2X2Icon } from "lucide-react";
+import { LayoutGrid } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
 import { useCallback, useEffect, useState } from "react";
 import { fetchEntry } from "@/services/fetchEntry";
@@ -30,7 +30,7 @@ export const BlogsGridUIElement: UIElement = {
     content,
   }),
   buttonElement: {
-    icon: Grid2X2Icon,
+    icon: LayoutGrid,
     label: "Blog Grid",
   },
   canvasComponent: CanvasComponent,

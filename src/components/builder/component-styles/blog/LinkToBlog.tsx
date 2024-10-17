@@ -11,7 +11,8 @@ import {
   import { useEffect, useState, useCallback } from "react";
   import { UIElementInstance } from "../../UIElements";
   import { Label } from "@/components/ui/label";
-import { Blog, fetchBlogs } from "@/services/fetchBlogs";
+import { Blog } from "@/types";
+import { fetchEntry } from "@/services/fetchEntry";
   
   function LinkToBlog({
     selectedCanvasComponent,
@@ -25,8 +26,8 @@ import { Blog, fetchBlogs } from "@/services/fetchBlogs";
     // Fetch blogs from the API
     const getBlogs = async () => {
       try {
-        const response = await fetchBlogs();
-        setBlogs(response || []); 
+        const response = await fetchEntry("blogs");
+        setBlogs(response?.entries[0].blogs as Blog[] || []); 
       } catch (error) {
         console.error("Failed to fetch blogs:", error);
       }

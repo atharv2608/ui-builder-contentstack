@@ -77,7 +77,7 @@ function CanvasComponent({
         className={`grid gap-8 mb-6 lg:mb-16 md:grid-cols-${element?.styles?.layout.gridTemplateColumns.cols}`}
       >
         {products.map((product) => (
-          <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg shadow-indigo-200">
+          <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg shadow-indigo-200" key={product._metadata.uid}>
             <a href="#">
               <img
                 className="p-8 rounded-t-lg"

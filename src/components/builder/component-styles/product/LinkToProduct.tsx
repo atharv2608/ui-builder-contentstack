@@ -8,10 +8,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import useBuilder from "@/hooks/useBuilder";
-import { fetchProducts, Product } from "@/services/fetchProducts";
 import { useEffect, useState, useCallback } from "react";
 import { UIElementInstance } from "../../UIElements";
 import { Label } from "@/components/ui/label";
+import { Product } from "@/types";
+import { fetchEntry } from "@/services/fetchEntry";
 
 function LinkToProduct({
   selectedCanvasComponent,
@@ -27,8 +28,8 @@ function LinkToProduct({
   // Fetch products from the API
   const getProducts = async () => {
     try {
-      const response = await fetchProducts();
-      setProducts(response || []); 
+      const response = await fetchEntry("product");
+      setProducts(response?.entries[0].products || []); 
     } catch (error) {
       console.error("Failed to fetch products:", error);
     }
