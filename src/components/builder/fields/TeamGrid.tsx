@@ -77,7 +77,6 @@ function CanvasComponent({
   useEffect(() => {
     fetchTeam();
   }, []);
-  console.log("col: ", element?.styles?.layout?.gridTemplateColumns?.cols)
   return (
     <div className={`flex flex-col gap-2 w-full items-center justify-center`}>
       <span className="absolute bottom-2 text-sm right-5 opacity-40">
@@ -111,12 +110,12 @@ function CanvasComponent({
   );
 }
 
-export function TeamCardDragOverlay() {
-    return (
-      
-        <div className="w-full h-[120px] bg-gray-400 opacity-80 rounded-md shadow-md flex justify-between p-2 items-center">
-          <h1 className="text-3xl font-bold text-black text-center w-full">Team Cards</h1>
-        </div>
-      
-    );
-  }
+export function TeamGridDragOverlay() {
+  return (
+    <div className="w-full h-[120px] bg-gray-400 opacity-80 rounded-md shadow-md flex justify-between p-2 items-center">
+      <h1 className="text-3xl font-bold text-black text-center w-full">
+        Team Grid
+      </h1>
+    </div>
+  );
+}
