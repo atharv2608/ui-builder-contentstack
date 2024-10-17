@@ -67,6 +67,7 @@ function CanvasComponent({
   useEffect(() => {
     fetchProducts();
   }, []);
+  let cols = element?.styles?.layout.gridTemplateColumns.cols 
   return (
     <div className={`flex flex-col gap-2 w-full items-center justify-center`}>
       <span className="absolute bottom-2 text-sm right-5 opacity-40">
@@ -74,7 +75,7 @@ function CanvasComponent({
       </span>
 
       <div
-        className={`grid gap-8 mb-6 lg:mb-16 md:grid-cols-${element?.styles?.layout.gridTemplateColumns.cols}`}
+        className={`grid gap-8 mb-6 lg:mb-16 ${cols == "1" ? "md:grid-cols-1" : cols == "2" ? "md:grid-cols-2" : "md:grid-cols-3" }`}
       >
         {products.map((product) => (
           <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg shadow-indigo-200" key={product._metadata.uid}>
