@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Copy } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -11,12 +12,17 @@ import {
 import useBuilder from "@/hooks/useBuilder"; // Adjust the import path as necessary
 import {  useState } from "react";
 import { FileJson } from "lucide-react";
+import { toast } from "react-toastify";
 function JSONDialog() {
   const { generatedJson } = useBuilder();
   
   // State to manage dialog open/close
   const [open, setOpen] = useState(false);
 
+  const onCopyClick = () =>{
+    navigator.clipboard.writeText(JSON.stringify(generatedJson, null, 2));
+    toast.success("JSON copied to clipboard!");
+  }
   return (
     <Dialog open={open} onOpenChange={setOpen}> {/* Manage open state */}
       <DialogTrigger asChild>
@@ -35,6 +41,10 @@ function JSONDialog() {
           </pre>
         </div>
         <DialogFooter>
+          <Button  className="bg-indigo-500 text-white" onClick={onCopyClick}> 
+            <Copy className="h-4 w-4 mr-2" />
+            Copy
+          </Button>
           <Button variant="outline" onClick={() => setOpen(false)}> {/* Close dialog on click */}
             Close
           </Button>

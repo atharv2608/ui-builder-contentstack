@@ -6,8 +6,9 @@ import { ProductUIElement } from "./fields/Product";
 import { TextFieldUIElement } from "./fields/TextField";
 import { BlogUIElement } from "./fields/Blog";
 import { SubHeadingUIElement } from "./fields/SubHeading";
+import { TeamGridUIElement } from "./fields/TeamCard";
 
-export type ElementsType = "TextField" | "Heading" | "SubHeading" | "Image" | "Product" | "Paragraph" | "Blog";
+export type ElementsType = "TextField" | "Heading" | "SubHeading" | "Image" | "Product" | "Paragraph" | "Blog" | "TeamGrid";
 
 export type UIElement = {
     type: ElementsType,
@@ -35,6 +36,7 @@ export const UIElements: UIElementsTypes = {
     Paragraph: ParagraphUIElement,
     Blog: BlogUIElement,
     SubHeading: SubHeadingUIElement,
+    TeamGrid: TeamGridUIElement
 }
 
 export type UIElementInstance = {
