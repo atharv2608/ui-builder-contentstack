@@ -82,30 +82,28 @@ function CanvasComponent({
         Component ID: {element.id}
       </span>
 
-      <div className={`grid gap-8 mb-6 lg:mb-16 md:grid-cols-${element.styles.layout.gridTemplateColumns?.cols}`}>
-        {team.map((member) => (
-          <div
-            className="items-center bg-gray-50 rounded-lg shadow sm:flex"
-            key={member._metadata.uid}
-          >
-            <div>
-              <img
-                className="w-full rounded-lg sm:rounded-none sm:rounded-l-lg"
-                src={member.image_url.href}
-                alt={member.image_url.title}
-              />
-            </div>
-            <div className="p-5">
-              <h3 className="text-xl font-bold tracking-tight text-gray-900 ">
-                <span>{member.member_name}</span>
-              </h3>
-              {/* <span className="text-gray-500 ">CEO & Web Developer</span> */}
-              <p className="mt-3 mb-4 font-light text-gray-500 ">
-                {member.member_description}
-              </p>
-            </div>
+      <div className={`grid gap-8 mb-6 lg:mb-16 md:grid-cols-${element?.styles?.layout.gridTemplateColumns.cols}`}>
+        {team.map(member => (
+          <div className="items-center bg-gray-50 rounded-lg shadow sm:flex" key={member._metadata.uid}>
+          <div>
+            <img
+              className="w-full rounded-lg sm:rounded-none sm:rounded-l-lg"
+              src={member.image_url.href}
+              alt={member.image_url.title}
+            />
           </div>
+          <div className="p-5">
+            <h3 className="text-xl font-bold tracking-tight text-gray-900 ">
+              <span >{member.member_name}</span>
+            </h3>
+            {/* <span className="text-gray-500 ">CEO & Web Developer</span> */}
+            <p className="mt-3 mb-4 font-light text-gray-500 ">
+              {member.member_description}
+            </p>
+          </div>
+        </div>
         ))}
+        
       </div>
     </div>
   );

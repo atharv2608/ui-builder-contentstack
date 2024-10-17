@@ -8,16 +8,21 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { UIElementInstance } from "../../UIElements";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useBuilder from "@/hooks/useBuilder";
 function GridColumns({
   selectedCanvasComponent,
 }: {
   selectedCanvasComponent: UIElementInstance;
 }) {
-  const [column, setColumn] = useState(selectedCanvasComponent?.styles?.gridTemplateColumns?.cols || "2");
+
+  const [column, setColumn] = useState(selectedCanvasComponent?.styles?.layout?.gridTemplateColumns?.cols);
   const {elements, setElements} = useBuilder()
 
+
+  useEffect(()=> {
+    setColumn(selectedCanvasComponent?.styles?.layout?.gridTemplateColumns?.cols)
+  }, [selectedCanvasComponent])
   const onSelectValueChange = (value: string) => {
     setColumn(value);
     if (selectedCanvasComponent && selectedCanvasComponent.styles) {
