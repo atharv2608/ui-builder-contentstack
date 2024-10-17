@@ -1,0 +1,64 @@
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { UIElementInstance } from "../../UIElements";
+import { useState } from "react";
+import useBuilder from "@/hooks/useBuilder";
+function GridColumns({
+  selectedCanvasComponent,
+}: {
+  selectedCanvasComponent: UIElementInstance;
+}) {
+  const [column, setColumn] = useState(selectedCanvasComponent?.styles?.gridTemplateColumns?.cols || "2");
+  const {elements, setElements} = useBuilder()
+
+  const onSelectValueChange = (value: string) => {
+    setColumn(value);
+    if (selectedCanvasComponent && selectedCanvasComponent.styles) {
+      selectedCanvasComponent.styles.layout.gridTemplateColumns.cols = value
+
+      const updatedElement = elements.map(element =>
+        element.id === selectedCanvasComponent.id ? 
+        {
+          ...element,
+          styles:{
+            ...element.styles,
+            layout: {
+              ...element?.styles?.layout,
+              gridTemplateColumns: {
+                cols: value
+              },
+            },
+          }
+        } : element
+      );
+
+      setElements(updatedElement);
+    }
+  };
+  return (
+    <div>
+      <Select value={column} onValueChange={onSelectValueChange}>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Number of columns" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Columns</SelectLabel>
+            <SelectItem value="1">1</SelectItem>
+            <SelectItem value="2">2</SelectItem>
+            <SelectItem value="3">3</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
+  );
+}
+
+export default GridColumns;

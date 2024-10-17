@@ -5,6 +5,7 @@ import { ElementsType, UIElementInstance, UIElements } from "./UIElements";
 import useBuilder from "@/hooks/useBuilder";
 import { ImageDragOverlay } from "./fields/Image";
 import { BlogDragOverlay } from "./fields/Blog";
+import { TeamCardDragOverlay } from "./fields/TeamCard";
 
 function DragOverlayWrapper() {
   const {elements} = useBuilder();
@@ -40,6 +41,9 @@ function DragOverlayWrapper() {
     const elementId = draggedItem.data?.current?.elementId;
     const element = elements.find((el) =>el.id === elementId) as UIElementInstance;
     node = <BlogDragOverlay elementInstance={element} />
+  }
+  if (isCanvasElement && type === "TeamGrid") {
+    node = <TeamCardDragOverlay />
   }
   else if(isCanvasElement){
     const elementId = draggedItem.data?.current?.elementId;

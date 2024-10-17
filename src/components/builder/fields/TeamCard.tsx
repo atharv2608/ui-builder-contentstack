@@ -6,8 +6,7 @@ let styles = {
   type: "teamGrid",
   layout: {
     gridTemplateColumns: {
-      default: "1fr",
-      md: "1fr 1fr",
+      cols: "2"
     },
     gap: "8px",
     padding: "16px",
@@ -26,7 +25,7 @@ export const TeamGridUIElement: UIElement = {
     id,
     type,
     styles,
-    elementCategory: "teamGrid",
+    elementCategory: "grid",
     content,
   }),
   buttonElement: {
@@ -83,7 +82,7 @@ function CanvasComponent({
         Component ID: {element.id}
       </span>
 
-      <div className="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
+      <div className={`grid gap-8 mb-6 lg:mb-16 md:grid-cols-${element.styles.layout.gridTemplateColumns?.cols}`}>
         {team.map((member) => (
           <div
             className="items-center bg-gray-50 rounded-lg shadow sm:flex"
@@ -111,3 +110,13 @@ function CanvasComponent({
     </div>
   );
 }
+
+export function TeamCardDragOverlay() {
+    return (
+      
+        <div className="w-full h-[120px] bg-gray-400 opacity-80 rounded-md shadow-md flex justify-between p-2 items-center">
+          <h1 className="text-3xl font-bold text-black text-center w-full">Team Cards</h1>
+        </div>
+      
+    );
+  }

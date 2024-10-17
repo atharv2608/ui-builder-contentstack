@@ -26,8 +26,8 @@ import Width from "./component-styles/image/Width";
 import { Button } from "../ui/button";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import { EntryResponse } from "@/services/fetchEntry";
 import LinkToBlog from "./component-styles/blog/LinkToBlog";
+import GridColumns from "./component-styles/grid/GridColumns";
 
 export default function RightSidebar() {
   const {
@@ -40,26 +40,25 @@ export default function RightSidebar() {
     setSelectedSchema,
   } = useBuilder();
 
-  const [entries, setEntries] = useState<EntryResponse | undefined>(undefined);
+  const [entries, setEntries] = useState<any>(undefined);
 
   useEffect(() => {
     const fetchEntries = async () => {
-      if(selectedContentType){
-
+      if (selectedContentType) {
         const fetchedEntries = await fetchEntry(
           selectedContentType as ContentTypeNames
         );
-        
-        setEntries(fetchedEntries as EntryResponse);
+
+        setEntries(fetchedEntries as any);
       }
     };
 
     fetchEntries();
   }, [selectedContentType]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setSelectedComponent("");
-    setSelectedSchema("")
+    setSelectedSchema("");
   }, [selectedContentType]);
 
   const selectedCanvasComponent = elements.find(
@@ -74,7 +73,7 @@ export default function RightSidebar() {
     if (selectedCanvasComponent && selectedCanvasComponent.styles) {
       // Find the selected element
       let resetStyles = {};
-      let resetContent = {}
+      let resetContent = {};
 
       // Reset styles based on the component type
       switch (selectedCanvasComponent.type) {
@@ -107,14 +106,16 @@ export default function RightSidebar() {
           break;
 
         case "Blog":
-        resetContent = {
-          title: "Blog Title",
-          cover_image: "https://eu-images.contentstack.com/v3/assets/blta0fb2d378b73e901/blt6ddf1e7a6b41751b/670fad1a273b107659129d13/default-cover-image.jpg",
-          blog_content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora maiores possimus repudiandae asperiores eaque esse, facere officiis ratione suscipit iste doloribus sapiente laudantium facilis recusandae animi totam quas veniam itaque",
-          author: "author",
-          published_date: "1970-01-01T00:00:00.000Z"
-        };
-        break;
+          resetContent = {
+            title: "Blog Title",
+            cover_image:
+              "https://eu-images.contentstack.com/v3/assets/blta0fb2d378b73e901/blt6ddf1e7a6b41751b/670fad1a273b107659129d13/default-cover-image.jpg",
+            blog_content:
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora maiores possimus repudiandae asperiores eaque esse, facere officiis ratione suscipit iste doloribus sapiente laudantium facilis recusandae animi totam quas veniam itaque",
+            author: "author",
+            published_date: "1970-01-01T00:00:00.000Z",
+          };
+          break;
 
         default:
           // If no type matches, leave styles unchanged or add default reset behavior
@@ -130,8 +131,8 @@ export default function RightSidebar() {
         },
         content: {
           ...selectedCanvasComponent.content,
-          ...resetContent
-        }
+          ...resetContent,
+        },
       };
 
       // Update the elements array with the new element
@@ -141,7 +142,6 @@ export default function RightSidebar() {
       setElements(newElements);
     }
   };
-  
 
   const onSchemaValueChange = async (value: any) => {
     setSelectedSchema(value);
@@ -163,9 +163,7 @@ export default function RightSidebar() {
         ) {
           const newStyles = {
             ...selectedCanvasComponent.styles,
-            src: (
-              entry[value as keyof typeof entry] as { href: string }
-            ).href, // Cast to ensure TypeScript knows it has 'href'
+            src: (entry[value as keyof typeof entry] as { href: string }).href, // Cast to ensure TypeScript knows it has 'href'
           };
           const newElement = {
             ...selectedCanvasComponent,
@@ -174,12 +172,9 @@ export default function RightSidebar() {
             styles: newStyles,
           };
 
-
           console.log("New element: ", newElement);
           const newElements = elements.map((element) =>
-            element.id === selectedCanvasComponent.id
-              ? newElement
-              : element
+            element.id === selectedCanvasComponent.id ? newElement : element
           );
           setElements(newElements as UIElementInstance[]);
         } else {
@@ -187,10 +182,7 @@ export default function RightSidebar() {
           setSelectedSchema("");
           return;
         }
-      } else if (
-        selectedCanvasComponent &&
-        selectedCanvasComponent.styles
-      ) {
+      } else if (selectedCanvasComponent && selectedCanvasComponent.styles) {
         if (
           typeof entry[value as keyof typeof entry] === "object" &&
           entry[value as keyof typeof entry] !== null &&
@@ -203,24 +195,20 @@ export default function RightSidebar() {
         const newStyles = {
           ...selectedCanvasComponent.styles,
           label: entry[value as keyof typeof entry] || "",
-          
         };
         const newElement = {
           ...selectedCanvasComponent,
           linkedContentTypeUID: selectedContentType,
           linkedSchemaID: value as string,
           styles: newStyles,
-          
         };
         const newElements = elements.map((element) =>
-          element.id === selectedCanvasComponent.id
-            ? newElement
-            : element
+          element.id === selectedCanvasComponent.id ? newElement : element
         );
         setElements(newElements as UIElementInstance[]);
       }
     }
-  }
+  };
 
   return (
     <div className="w-full  flex flex-col flex-grow gap-2 border-l-2 border-muted p-4  overflow-y-auto h-full">
@@ -252,40 +240,52 @@ export default function RightSidebar() {
                 </SelectGroup>
               </SelectContent>
             </Select>
-            <div className={`${["Product", "Blog"].includes(selectedCanvasComponent?.type as string) ? "hidden" : ""}`}>
-            <Label
-              htmlFor="component-link"
-              className="text-sm font-medium text-gray-700 mb-2 block"
+            <div
+              className={`${
+                ["Product", "Blog"].includes(
+                  selectedCanvasComponent?.type as string
+                )
+                  ? "hidden"
+                  : ""
+              }`}
             >
-              Link To
-            </Label>
-            <Select
-              value={selectedSchema}
-              disabled={
-                !selectedContentType ||
-                elements.length === 0 ||
-                selectedCanvasComponent?.type === "Product"
-              }
-              onValueChange={onSchemaValueChange}
-            >
-              <SelectTrigger className="border-black">
-                <SelectValue placeholder="Select a schema" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Schemas</SelectLabel>
-                  {contentType?.schema?.map((s) => (
-                    <SelectItem
-                      value={s.uid}
-                      key={s.uid}
-                      disabled={s.uid === "products" || s.uid === "blogs"}
-                    >
-                      {s.uid}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+              <Label
+                htmlFor="component-link"
+                className="text-sm font-medium text-gray-700 mb-2 block"
+              >
+                Link To
+              </Label>
+              <Select
+                value={selectedSchema}
+                disabled={
+                  !selectedContentType ||
+                  elements.length === 0 ||
+                  selectedCanvasComponent?.type === "Product"
+                }
+                onValueChange={onSchemaValueChange}
+              >
+                <SelectTrigger className="border-black">
+                  <SelectValue placeholder="Select a schema" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Schemas</SelectLabel>
+                    {contentType?.schema?.map((s) => (
+                      <SelectItem
+                        value={s.uid}
+                        key={s.uid}
+                        disabled={
+                          s.uid === "products" ||
+                          s.uid === "blogs" ||
+                          s.uid === "team_members"
+                        }
+                      >
+                        {s.uid}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
 
             {selectedCanvasComponent?.type === "Product" && (
@@ -294,9 +294,7 @@ export default function RightSidebar() {
               />
             )}
             {selectedCanvasComponent?.type === "Blog" && (
-              <LinkToBlog
-                selectedCanvasComponent={selectedCanvasComponent}
-              />
+              <LinkToBlog selectedCanvasComponent={selectedCanvasComponent} />
             )}
           </div>
         </div>
@@ -343,22 +341,26 @@ export default function RightSidebar() {
                 <Width selectedCanvasComponent={selectedCanvasComponent} />
               </>
             )}
-            
+
+            {selectedCanvasComponent?.elementCategory === "grid" && (
+              <GridColumns selectedCanvasComponent={selectedCanvasComponent} />
+            )}
           </div>
         </div>
       </div>
-      {
-        selectedCanvasComponent && 
-
-      <div className="flex justify-between ">
-        <Button onClick={handleReset} className="bg-indigo-500 text-white">
-          {
-            selectedCanvasComponent.elementCategory === "text" ? "Reset Styles" : selectedCanvasComponent.elementCategory === "blog" ? "Reset Blog" :
-            selectedCanvasComponent.elementCategory === "product"? "Reset Product" : "Reset"
-          }
-        </Button>
-      </div>
-      }
+      {selectedCanvasComponent && (
+        <div className="flex justify-between ">
+          <Button onClick={handleReset} className="bg-indigo-500 text-white">
+            {selectedCanvasComponent.elementCategory === "text"
+              ? "Reset Styles"
+              : selectedCanvasComponent.elementCategory === "blog"
+              ? "Reset Blog"
+              : selectedCanvasComponent.elementCategory === "product"
+              ? "Reset Product"
+              : "Reset"}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
