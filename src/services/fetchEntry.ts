@@ -1,7 +1,8 @@
-import { Team } from "@/components/builder/fields/TeamCard";
+import { Team } from "@/components/builder/fields/TeamGrid";
 import axios from "axios";
+import { Blog } from "./fetchBlogs";
 
-export type ContentTypeNames = "home_page" | "product" | "about_us" | "blog_entry" | "visuals";
+export type ContentTypeNames = "home_page" | "product" | "about_us" | "blogs" | "visuals";
 
 export type HomePageEntry = {
     uid: string;
@@ -37,11 +38,19 @@ export type AboutUsEntry = {
 
 }
 
+export type BlogEntry = {
+    uid: string;
+    title: string;
+    sub_title: string;
+    blogs_description: string;
+    blogs: Blog[];
+}
+
 export type EntryMap = {
     home_page: HomePageEntry;
     product: ProductEntry;
     about_us: AboutUsEntry; // You can add specific types for other content types
-    blog_entry: unknown;
+    blogs: BlogEntry;
     visuals: unknown;
 };
 export type Entry = HomePageEntry | ProductEntry;

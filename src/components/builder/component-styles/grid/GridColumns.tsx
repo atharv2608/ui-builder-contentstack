@@ -10,6 +10,7 @@ import {
 import { UIElementInstance } from "../../UIElements";
 import { useEffect, useState } from "react";
 import useBuilder from "@/hooks/useBuilder";
+import { Label } from "@/components/ui/label";
 function GridColumns({
   selectedCanvasComponent,
 }: {
@@ -49,6 +50,12 @@ function GridColumns({
   };
   return (
     <div>
+      <Label
+                htmlFor="grid-columns"
+                className="text-sm font-medium text-gray-700 mb-2 block"
+              >
+                Number of Grid Columns
+              </Label>
       <Select value={column} onValueChange={onSelectValueChange}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Number of columns" />

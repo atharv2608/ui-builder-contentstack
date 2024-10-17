@@ -85,17 +85,14 @@ function CanvasComponent({
 }
 
 
-export function BlogDragOverlay({elementInstance} : {elementInstance:  UIElementInstance}) {
-  const element = elementInstance as CustomeInstance;
+export function BlogDragOverlay() {
     return (
       
-        <div className="w-full h-[120px] bg-gray-400 opacity-80 rounded-md shadow-md flex justify-between p-2">
-      
-  
-          <img src={"https://eu-images.contentstack.com/v3/assets/blta0fb2d378b73e901/blt6ddf1e7a6b41751b/670fad1a273b107659129d13/default-cover-image.jpg"} alt={element?.styles?.altText}  className="h-[100px]"/> 
-
-          <h2>Leave to drop</h2>
-        </div>
+      <div className="w-full h-[120px] bg-gray-400 opacity-80 rounded-md shadow-md flex justify-between p-2 items-center">
+      <h1 className="text-3xl font-bold text-black text-center w-full">
+        Blogs Overlay
+      </h1>
+    </div>
       
     );
   }

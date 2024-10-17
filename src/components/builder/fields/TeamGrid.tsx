@@ -6,6 +6,7 @@ let styles = {
   type: "teamGrid",
   layout: {
     gridTemplateColumns: {
+      default: "2fr",
       cols: "2"
     },
     gap: "8px",
@@ -76,6 +77,7 @@ function CanvasComponent({
   useEffect(() => {
     fetchTeam();
   }, []);
+  console.log("col: ", element?.styles?.layout?.gridTemplateColumns?.cols)
   return (
     <div className={`flex flex-col gap-2 w-full items-center justify-center`}>
       <span className="absolute bottom-2 text-sm right-5 opacity-40">
