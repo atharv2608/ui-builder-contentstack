@@ -59,6 +59,7 @@ function LeftSidebar() {
         <SidebarButtonElement uiElement={UIElements.Blog} />
         <SidebarButtonElement uiElement={UIElements.TeamGrid} />
         <SidebarButtonElement uiElement={UIElements.BlogsGrid} />
+        <SidebarButtonElement uiElement={UIElements.ProductsGrid} />
         
       </div>
     </div>

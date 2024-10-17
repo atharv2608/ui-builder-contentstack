@@ -1,59 +1,16 @@
-import { Team } from "@/components/builder/fields/TeamGrid";
 import axios from "axios";
-import { Blog } from "./fetchBlogs";
+import { AboutUsEntry, BlogEntry, HomePageEntry, ProductEntry } from "@/types";
 
-export type ContentTypeNames = "home_page" | "product" | "about_us" | "blogs" | "visuals";
+export type ContentTypeNames = "home_page" | "product" | "about_us" | "blogs";
 
-export type HomePageEntry = {
-    uid: string;
-    heading: string;
-    hero_image: {
-        title: string,
-        href:   string,
-    };
-    highlights: string;
-    overview: string;
-    sub_heading: string;
-    title: string;
-    [key: string]: unknown;
-};
-
-export type ProductEntry = {
-    uid: string;
-    title: string;
-    product_name: string;
-    product_description: string;
-    product_price: string;
-    product_image: string | null;
-};
-
-export type AboutUsEntry = {
-    uid: string;
-    about_subtitle: string;
-    company_information: string;
-    history: string;
-    mission: string;
-    team_members: Team[]
-
-
-}
-
-export type BlogEntry = {
-    uid: string;
-    title: string;
-    sub_title: string;
-    blogs_description: string;
-    blogs: Blog[];
-}
 
 export type EntryMap = {
     home_page: HomePageEntry;
     product: ProductEntry;
     about_us: AboutUsEntry; // You can add specific types for other content types
     blogs: BlogEntry;
-    visuals: unknown;
 };
-export type Entry = HomePageEntry | ProductEntry;
+
 
 export type EntryResponse<T> = {
     entries: T[];

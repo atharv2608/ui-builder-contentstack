@@ -7,6 +7,7 @@ import { ImageDragOverlay } from "./fields/Image";
 import { BlogDragOverlay } from "./fields/Blog";
 import { TeamGridDragOverlay } from "./fields/TeamGrid";
 import { BlogsGridDragOverlay } from "./fields/BlogsGrid";
+import { ProductsGridDragOverlay } from "./fields/ProductsGrid";
 
 function DragOverlayWrapper() {
   const { elements } = useBuilder();
@@ -45,6 +46,8 @@ function DragOverlayWrapper() {
     node = <TeamGridDragOverlay />;
   } else if (isCanvasElement && type === "BlogsGrid") {
     node = <BlogsGridDragOverlay />;
+  } else if (isCanvasElement && type === "ProductsGrid") {
+    node = <ProductsGridDragOverlay />;
   } else if (isCanvasElement) {
     const elementId = draggedItem.data?.current?.elementId;
     const element = elements.find((el) => el.id === elementId);

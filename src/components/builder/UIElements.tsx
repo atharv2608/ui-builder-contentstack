@@ -8,8 +8,9 @@ import { BlogUIElement } from "./fields/Blog";
 import { SubHeadingUIElement } from "./fields/SubHeading";
 import { TeamGridUIElement } from "./fields/TeamGrid";
 import { BlogsGridUIElement } from "./fields/BlogsGrid";
+import { ProductsGridUIElement } from "./fields/ProductsGrid";
 
-export type ElementsType = "TextField" | "Heading" | "SubHeading" | "Image" | "Product" | "Paragraph" | "Blog" | "TeamGrid" | "BlogsGrid";
+export type ElementsType = "TextField" | "Heading" | "SubHeading" | "Image" | "Product" | "Paragraph" | "Blog" | "TeamGrid" | "BlogsGrid" |"ProductsGrid";
 
 export type UIElement = {
     type: ElementsType,
@@ -38,7 +39,8 @@ export const UIElements: UIElementsTypes = {
     Blog: BlogUIElement,
     SubHeading: SubHeadingUIElement,
     TeamGrid: TeamGridUIElement,
-    BlogsGrid : BlogsGridUIElement
+    BlogsGrid : BlogsGridUIElement,
+    ProductsGrid: ProductsGridUIElement
 }
 
 export type UIElementInstance = {
