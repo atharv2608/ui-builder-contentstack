@@ -99,3 +99,41 @@ export type BlogEntry = {
   blogs_description: string;
   blogs: Blog[];
 }
+
+
+/*--------------------Visuals ------------------------------*/
+export type StyleObject = {
+    [key: string]: string | number | undefined | StyleObject;
+};
+
+export type Content = 
+  | { blogs: Blog[] }
+  | { products: Product[] }
+  | { team_members: Team[] }
+  | { [key: string]: any }
+
+export type UI_JSON = {
+    page: string,
+    components: [
+        {
+            id: string,
+            type: string,
+            styles: StyleObject,
+            elementCategory: string,
+            content?: Content,
+            linkedContentTypeUID?: string,
+            linkedSchemaID?: string
+        }
+    ]
+}
+export type Visuals = {
+    uid: string;
+    title: string,
+    ui_json: UI_JSON
+}
+
+export type VisualsEntryResponse = {
+    entries: Visuals[]
+}
+
+

@@ -13,19 +13,21 @@ import useBuilder from "@/hooks/useBuilder";
 import { createContentEntry, UIJson } from "@/services/createEntry";
 import { useState } from "react";
 import { updateEntry } from "@/services/updateEntry";
-import {  toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
 
 function SaveButton() {
-  const { elements, generatedJson, selectedContentType, visualEntries } =
-    useBuilder();
+  const { elements, generatedJson, selectedContentType } = useBuilder();
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const visualEntries = useSelector(
+    (state: RootState) => state.visuals.visuals
+  );
   const onSaveClick = async () => {
     setIsLoading(true);
     if (visualEntries && selectedContentType) {
-      const entry = visualEntries.entries.find(
-        (e) => e.title === selectedContentType
-      );
+      const entry = visualEntries.find((e) => e.title === selectedContentType);
 
       if (entry) {
         try {
@@ -50,11 +52,11 @@ function SaveButton() {
             generatedJson as UIJson
           );
           if (response.status === 201) {
-            toast.success("Entry created successfully")
+            toast.success("Entry created successfully");
             setOpen(false);
           }
         } catch (error) {
-         toast.error("Error creating entry");
+          toast.error("Error creating entry");
           console.error("Error creating entry", error);
         } finally {
           setIsLoading(false);

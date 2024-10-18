@@ -1,13 +1,21 @@
 import { cn } from "@/lib/utils";
 import { useDndMonitor, useDraggable, useDroppable } from "@dnd-kit/core";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ElementsType, UIElementInstance, UIElements } from "./UIElements";
 import { Button } from "../ui/button";
 import { Trash } from "lucide-react";
 import useBuilder from "@/hooks/useBuilder";
-import { fetchVisualEntries } from "@/services/fetchVisualsEntry";
-
+import { AppDispatch, RootState } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchVisuals } from "@/redux/slices/visualsSlice";
 function Canvas() {
+  const dispatch: AppDispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchVisuals());
+  }, [dispatch]);
+
+  const visualsArray = useSelector((state: RootState) => state.visuals.visuals);
+
   const {
     setSelectedComponent,
     addElement,
@@ -15,8 +23,6 @@ function Canvas() {
     elements,
     selectedComponent,
     setSelectedSchema,
-    setVisualEntries,
-    visualEntries,
     selectedContentType,
   } = useBuilder();
 
@@ -111,28 +117,32 @@ function Canvas() {
     setElements((prev) => prev.filter((element) => element.id !== id));
   };
 
-  // Function to load elements based on selected content type and visual entries
-  const loadElementsFromVisualEntries = useCallback(() => {
-    if (visualEntries && selectedContentType) {
-      const entry = visualEntries.entries.find(
-        (e) => e.title === selectedContentType
+  const loadElementsFromVisualEntriesList = () => {
+    if (visualsArray && selectedContentType) {
+      const entry = visualsArray.find(
+        (visual) => visual.title === selectedContentType
       );
 
-      // Check if entry and its ui_json exist, and if components is an array
       if (entry && entry.ui_json && Array.isArray(entry.ui_json.components)) {
         const parsedElements: UIElementInstance[] =
           entry.ui_json.components.map((jsonElement: any) => {
             const element: UIElementInstance = {
               id: jsonElement.id,
               type: jsonElement.type,
-              linkedContentTypeUID: jsonElement.linkedContentTypeUID,
-              linkedSchemaID: jsonElement.linkedSchemaID,
-              styles: jsonElement.styles,
               elementCategory: jsonElement.elementCategory,
+              styles: jsonElement.styles,
             };
 
             if (jsonElement.content) {
               element.content = jsonElement.content;
+            }
+
+            if (jsonElement.linkedContentTypeUID) {
+              element.linkedContentTypeUID = jsonElement.linkedContentTypeUID;
+            }
+
+            if (jsonElement.linkedSchemaID) {
+              element.linkedSchemaID = jsonElement.linkedSchemaID;
             }
 
             return element;
@@ -142,29 +152,11 @@ function Canvas() {
         setElements([]); // No entry found or no UI JSON, set to empty
       }
     }
-  }, [visualEntries, selectedContentType])
+  };
 
-  // Fetch visual entries on load and when selectedContentType changes
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const fetchedResponse = await fetchVisualEntries(); // This returns the full Axios response
-        const fetchedEntries = fetchedResponse.data; // Extract the data from the response
-        setVisualEntries(fetchedEntries); // Now set the visual entries state
-      } catch (error) {
-        console.error("Error fetching visual entries:", error);
-        // Handle error accordingly
-        setVisualEntries(null); // Optionally set to null or handle as needed
-      }
-    }
-
-    fetchData();
+    loadElementsFromVisualEntriesList();
   }, [selectedContentType]);
-
-  // Populate elements when visual entries or selectedContentType changes
-  useEffect(() => {
-    loadElementsFromVisualEntries();
-  }, [visualEntries, selectedContentType]);
 
   const onElementClick = (element: UIElementInstance) => {
     setSelectedComponent(element.id);

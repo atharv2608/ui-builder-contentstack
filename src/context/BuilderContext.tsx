@@ -1,5 +1,4 @@
 import { UIElementInstance } from "@/components/builder/UIElements";
-import { VisualsEntryResponse } from "@/services/fetchVisualsEntry";
 import { Blog } from "@/types";
 import {
   createContext,
@@ -22,8 +21,6 @@ type BuilderContextType = {
   blogsInGrid: Blog[];
   setBlogsInGrid: Dispatch<SetStateAction<Blog[]>>;
   // Make visualEntries nullable
-  visualEntries: VisualsEntryResponse | null;
-  setVisualEntries: Dispatch<SetStateAction<VisualsEntryResponse | null>>;
   
   generatedJson: Record<string, any>;
   addElement: (id: number, element: UIElementInstance) => void;
@@ -44,7 +41,6 @@ export default function BuilderContextProvider({
   
   const [blogsInGrid, setBlogsInGrid] = useState<Blog[]>([]);
   // Initialize visualEntries as null, and make it nullable in state
-  const [visualEntries, setVisualEntries] = useState<VisualsEntryResponse | null>(null);
 
   // Function to add element at a specified index
   const addElement = (index: number, element: UIElementInstance) => {
@@ -103,8 +99,7 @@ export default function BuilderContextProvider({
         setBlogsInGrid,
         
         // Ensure visualEntries can be null
-        visualEntries,
-        setVisualEntries,
+        
       }}
     >
       {children}
