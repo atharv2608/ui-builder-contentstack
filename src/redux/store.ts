@@ -1,9 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import contentTypeSlice from "@/redux/slices/contentTypesSlice";
 import { combineReducers } from "@reduxjs/toolkit";
-
+import productSlice from "@/redux/slices/productSlice";
+import blogSlice from "@/redux/slices/blogSlice";
+import teamSlice from "@/redux/slices/teamSlice";
 const reducers = combineReducers({
   contentTypes: contentTypeSlice,
+  products: productSlice,
+  blogs: blogSlice,
+  team: teamSlice,
 });
 const store = configureStore({
   reducer: reducers,

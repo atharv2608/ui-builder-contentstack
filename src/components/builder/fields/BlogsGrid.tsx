@@ -1,7 +1,11 @@
-import { LayoutGrid } from "lucide-react";
+import { Ban, LayoutGrid, Newspaper } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
-import { useCallback, useEffect, useState } from "react";
-import { fetchEntry } from "@/services/fetchEntry";
+import { useEffect } from "react";
+import { AppDispatch, RootState } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBlogs } from "@/redux/slices/blogSlice";
+import { Blog } from "@/types";
+import useBuilder from "@/hooks/useBuilder";
 let styles = {
   type: "blogsGrid",
   layout: {
@@ -43,20 +47,6 @@ type CustomeInstance = UIElementInstance & {
   content: typeof content;
 };
 
-export type Blog = {
-  _metadata: {
-    uid: string;
-  };
-  title: string;
-  cover_image: {
-    title: string;
-    href: string;
-  };
-  blog_content: string;
-  author: string;
-  published_date: string;
-};
-
 function CanvasComponent({
   elementInstance,
 }: {
@@ -64,65 +54,63 @@ function CanvasComponent({
 }) {
   const element = elementInstance as CustomeInstance;
 
-  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const { blogsInGrid } = useBuilder();
 
-  const fetchBlogs = useCallback(async () => {
-    const response = await fetchEntry("blogs");
-
-    const blogsData = response?.entries[0].blogs as Blog[];
-
-    // Set the fetched blog data to the state
-    setBlogs(blogsData);
-
-    // Directly update the elementInstance content with the fetched blog data
-    element.content.blogs = blogsData;
-  }, []);
-  useEffect(() => {
-    fetchBlogs();
-  }, []);
-  let cols = element?.styles?.layout.gridTemplateColumns.cols 
-
+  if (blogsInGrid) element.content.blogs = blogsInGrid;
+  let cols = element?.styles?.layout.gridTemplateColumns.cols;
   return (
     <div className={`flex flex-col gap-2 w-full items-center justify-center`}>
       <span className="absolute bottom-2 text-sm right-5 opacity-40">
         Component ID: {element.id}
       </span>
-
-      <div
-        className={`grid gap-8 mb-6 lg:mb-16 ${cols == "1" ? "md:grid-cols-1" : cols == "2" ? "md:grid-cols-2" : "md:grid-cols-3" }`}
-      >
-        {blogs.map((blog) => (
-  <div
-    className="max-w-sm bg-white border border-gray-200 rounded-lg shadow flex flex-col"
-    key={blog._metadata.uid}
-  >
-    <a href="#">
-      <img
-        className="rounded-t-lg"
-        src={blog.cover_image.href}
-        alt=""
-      />
-    </a>
-    <div className="p-5 flex flex-col flex-grow">
-      <a href="#">
-        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-          {blog.title}
-        </h5>
-      </a>
-      <p className="mb-3 font-normal text-gray-700">
-        Author: {blog.author}
-      </p>
-      <a
-        href="#"
-        className="mt-auto  items-center px-3 py-2 text-sm font-medium  text-white bg-indigo-500 text-center rounded-lg flex justify-center"
-      >
-        Read more
-      </a>
-    </div>
-  </div>
-))}
-
-      </div>
+      {blogsInGrid.length === 0 ? (
+        <div className="flex w-full items-center justify-center p-2">
+          <h1 className="text-3xl text-center text-indigo-500 font-bold">
+            Please select blogs
+          </h1>
+        </div>
+      ) : (
+        <div
+          className={`grid gap-8 mb-6 lg:mb-16 ${
+            cols == "1"
+              ? "md:grid-cols-1"
+              : cols == "2"
+              ? "md:grid-cols-2"
+              : "md:grid-cols-3"
+          }`}
+        >
+          {blogsInGrid.map((blog) => (
+            <div
+              className="max-w-sm bg-white border border-gray-200 rounded-lg shadow flex flex-col"
+              key={blog._metadata.uid}
+            >
+              <a href="#">
+                <img
+                  className="rounded-t-lg"
+                  src={blog.cover_image.href}
+                  alt=""
+                />
+              </a>
+              <div className="p-5 flex flex-col flex-grow">
+                <a href="#">
+                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+                    {blog.title}
+                  </h5>
+                </a>
+                <p className="mb-3 font-normal text-gray-700">
+                  Author: {blog.author}
+                </p>
+                <a
+                  href="#"
+                  className="mt-auto  items-center px-3 py-2 text-sm font-medium  text-white bg-indigo-500 text-center rounded-lg flex justify-center"
+                >
+                  Read more
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

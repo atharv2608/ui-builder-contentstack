@@ -28,6 +28,7 @@ import { toast } from "react-toastify";
 import { useCallback, useEffect, useState } from "react";
 import LinkToBlog from "./component-styles/blog/LinkToBlog";
 import GridColumns from "./component-styles/grid/GridColumns";
+import SelectBogs from "./component-styles/blog/SelectBogs";
 
 export default function RightSidebar() {
   const {
@@ -296,6 +297,12 @@ export default function RightSidebar() {
             {selectedCanvasComponent?.type === "Blog" && (
               <LinkToBlog selectedCanvasComponent={selectedCanvasComponent} />
             )}
+
+            {
+              selectedCanvasComponent?.type === "BlogsGrid" && (
+                <SelectBogs />
+              )
+            }
           </div>
         </div>
 

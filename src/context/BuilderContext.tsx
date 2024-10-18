@@ -1,5 +1,6 @@
 import { UIElementInstance } from "@/components/builder/UIElements";
 import { VisualsEntryResponse } from "@/services/fetchVisualsEntry";
+import { Blog } from "@/types";
 import {
   createContext,
   Dispatch,
@@ -18,7 +19,8 @@ type BuilderContextType = {
   setSelectedComponent: Dispatch<SetStateAction<string>>;
   selectedSchema: string;
   setSelectedSchema: Dispatch<SetStateAction<string>>;
-  
+  blogsInGrid: Blog[];
+  setBlogsInGrid: Dispatch<SetStateAction<Blog[]>>;
   // Make visualEntries nullable
   visualEntries: VisualsEntryResponse | null;
   setVisualEntries: Dispatch<SetStateAction<VisualsEntryResponse | null>>;
@@ -40,6 +42,7 @@ export default function BuilderContextProvider({
   const [selectedSchema, setSelectedSchema] = useState<string>("");
   const [generatedJson, setGeneratedJson] = useState<Record<string, any>>({});
   
+  const [blogsInGrid, setBlogsInGrid] = useState<Blog[]>([]);
   // Initialize visualEntries as null, and make it nullable in state
   const [visualEntries, setVisualEntries] = useState<VisualsEntryResponse | null>(null);
 
@@ -96,6 +99,8 @@ export default function BuilderContextProvider({
         addElement,
         selectedSchema,
         setSelectedSchema,
+        blogsInGrid,
+        setBlogsInGrid,
         
         // Ensure visualEntries can be null
         visualEntries,
