@@ -19,7 +19,7 @@ function SelectBogs() {
   const isLoading = useSelector((state: RootState) => state.blogs.isLoading);
   const error = useSelector((state: RootState) => state.blogs.error);
 
-  const { setBlogsInGrid , visualEntries} = useBuilder();
+  const { setBlogsInGrid, blogsInGrid } = useBuilder();
   useEffect(() => {
     if (error) {
       toast.error("Error fetching blogs");
@@ -53,7 +53,9 @@ function SelectBogs() {
             <>
             {blogs.map(blog => 
                 <div className="flex items-center space-x-2" key={blog._metadata.uid}>
-                <Checkbox id={blog._metadata.uid} onCheckedChange={(checked: boolean) => onCheckedChange(checked, blog)}/>
+                <Checkbox 
+                checked={blogsInGrid.some(selectedBlog => selectedBlog._metadata.uid === blog._metadata.uid)}
+                id={blog._metadata.uid} onCheckedChange={(checked: boolean) => onCheckedChange(checked, blog)}/>
                 <label
                   htmlFor={blog.title}
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"

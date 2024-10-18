@@ -1,9 +1,5 @@
-import { Ban, LayoutGrid, Newspaper } from "lucide-react";
+import { LayoutGrid } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
-import { useEffect } from "react";
-import { AppDispatch, RootState } from "@/redux/store";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchBlogs } from "@/redux/slices/blogSlice";
 import { Blog } from "@/types";
 import useBuilder from "@/hooks/useBuilder";
 let styles = {
