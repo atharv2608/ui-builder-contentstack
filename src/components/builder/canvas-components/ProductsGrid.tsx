@@ -8,6 +8,7 @@ import { fetchProducts } from "@/redux/slices/productSlice";
 let styles = {
   type: "productsGrid",
   layout: {
+    display: "grid",
     gridTemplateColumns: {
       default: "2fr",
       cols: "2",

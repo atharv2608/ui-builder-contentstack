@@ -29,6 +29,7 @@ import { useCallback, useEffect, useState } from "react";
 import LinkToBlog from "./component-styles/blog/LinkToBlog";
 import GridColumns from "./component-styles/grid/GridColumns";
 import AlignText from "./component-styles/text/AlignText";
+import LinkToHeroSection from "./link-to-components/Hero/LinkToHeroSection";
 
 export default function RightSidebar() {
   const {
@@ -81,6 +82,7 @@ export default function RightSidebar() {
         case "Heading":
         case "TextField":
         case "Paragraph":
+        case "SubHeading":
           resetStyles = {
             color: "#000000", // Default black color
             fontSize: selectedCanvasComponent.type === "Heading" ? "32" : "16", // Adjust font size based on type
@@ -173,7 +175,6 @@ export default function RightSidebar() {
             styles: newStyles,
           };
 
-          console.log("New element: ", newElement);
           const newElements = elements.map((element) =>
             element.id === selectedCanvasComponent.id ? newElement : element
           );
@@ -243,7 +244,7 @@ export default function RightSidebar() {
             </Select>
             <div
               className={`${
-                ["Product", "Blog"].includes(
+                ["Product", "Blog", "HeroSection"].includes(
                   selectedCanvasComponent?.type as string
                 )
                   ? "hidden"
@@ -288,7 +289,11 @@ export default function RightSidebar() {
                 </SelectContent>
               </Select>
             </div>
-
+            {
+              selectedCanvasComponent?.type === "HeroSection" && (
+                <LinkToHeroSection contentType={contentType as ContentType} selectedCanvasComponent={selectedCanvasComponent as UIElementInstance} />
+              )
+            }
             {selectedCanvasComponent?.type === "Product" && (
               <LinkToProduct
                 selectedCanvasComponent={selectedCanvasComponent}

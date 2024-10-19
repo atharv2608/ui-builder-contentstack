@@ -3,11 +3,12 @@ import { useState } from "react";
 import { SidebarButtonElementDragOverlay } from "./SidebarButtonElement";
 import { ElementsType, UIElementInstance, UIElements } from "./UIElements";
 import useBuilder from "@/hooks/useBuilder";
-import { ImageDragOverlay } from "./fields/Image";
-import { BlogDragOverlay } from "./fields/Blog";
-import { TeamGridDragOverlay } from "./fields/TeamGrid";
-import { BlogsGridDragOverlay } from "./fields/BlogsGrid";
-import { ProductsGridDragOverlay } from "./fields/ProductsGrid";
+import { ImageDragOverlay } from "./canvas-components/Image";
+import { BlogDragOverlay } from "./canvas-components/Blog";
+import { TeamGridDragOverlay } from "./canvas-components/TeamGrid";
+import { BlogsGridDragOverlay } from "./canvas-components/BlogsGrid";
+import { ProductsGridDragOverlay } from "./canvas-components/ProductsGrid";
+import { HeroSectionDragOverlay } from "./canvas-components/HeroSection";
 
 function DragOverlayWrapper() {
   const { elements } = useBuilder();
@@ -48,6 +49,8 @@ function DragOverlayWrapper() {
     node = <BlogsGridDragOverlay />;
   } else if (isCanvasElement && type === "ProductsGrid") {
     node = <ProductsGridDragOverlay />;
+  } else if (isCanvasElement && type === "HeroSection") {
+    node = <HeroSectionDragOverlay />;
   } else if (isCanvasElement) {
     const elementId = draggedItem.data?.current?.elementId;
     const element = elements.find((el) => el.id === elementId);

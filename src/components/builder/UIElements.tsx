@@ -1,16 +1,17 @@
 import { ContentTypeNames } from "@/services/fetchEntry";
-import { HeadingUIElement } from "./fields/Heading";
-import { ImageUIElement } from "./fields/Image";
-import { ParagraphUIElement } from "./fields/Paragraph";
-import { ProductUIElement } from "./fields/Product";
-import { TextFieldUIElement } from "./fields/TextField";
-import { BlogUIElement } from "./fields/Blog";
-import { SubHeadingUIElement } from "./fields/SubHeading";
-import { TeamGridUIElement } from "./fields/TeamGrid";
-import { BlogsGridUIElement } from "./fields/BlogsGrid";
-import { ProductsGridUIElement } from "./fields/ProductsGrid";
+import { HeadingUIElement } from "./canvas-components/Heading";
+import { ImageUIElement } from "./canvas-components/Image";
+import { ParagraphUIElement } from "./canvas-components/Paragraph";
+import { ProductUIElement } from "./canvas-components/Product";
+import { TextFieldUIElement } from "./canvas-components/TextField";
+import { BlogUIElement } from "./canvas-components/Blog";
+import { SubHeadingUIElement } from "./canvas-components/SubHeading";
+import { TeamGridUIElement } from "./canvas-components/TeamGrid";
+import { BlogsGridUIElement } from "./canvas-components/BlogsGrid";
+import { ProductsGridUIElement } from "./canvas-components/ProductsGrid";
+import { HeroSectionUIElement } from "./canvas-components/HeroSection";
 
-export type ElementsType = "TextField" | "Heading" | "SubHeading" | "Image" | "Product" | "Paragraph" | "Blog" | "TeamGrid" | "BlogsGrid" |"ProductsGrid";
+export type ElementsType = "TextField" | "Heading" | "SubHeading" | "Image" | "Product" | "Paragraph" | "Blog" | "TeamGrid" | "BlogsGrid" |"ProductsGrid" | "HeroSection";
 
 export type UIElement = {
     type: ElementsType,
@@ -40,7 +41,8 @@ export const UIElements: UIElementsTypes = {
     SubHeading: SubHeadingUIElement,
     TeamGrid: TeamGridUIElement,
     BlogsGrid : BlogsGridUIElement,
-    ProductsGrid: ProductsGridUIElement
+    ProductsGrid: ProductsGridUIElement,
+    HeroSection: HeroSectionUIElement
 }
 
 export type UIElementInstance = {
