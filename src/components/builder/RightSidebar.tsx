@@ -28,6 +28,7 @@ import { toast } from "react-toastify";
 import { useCallback, useEffect, useState } from "react";
 import LinkToBlog from "./component-styles/blog/LinkToBlog";
 import GridColumns from "./component-styles/grid/GridColumns";
+import AlignText from "./component-styles/text/AlignText";
 
 export default function RightSidebar() {
   const {
@@ -322,6 +323,12 @@ export default function RightSidebar() {
                   }
                 />
 
+                <AlignText
+                selectedCanvasComponent={
+                  selectedCanvasComponent as UIElementInstance
+                }
+                />
+                
                 <FontColor
                   selectedCanvasComponent={
                     selectedCanvasComponent as UIElementInstance
@@ -333,6 +340,7 @@ export default function RightSidebar() {
                     selectedCanvasComponent as UIElementInstance
                   }
                 />
+
               </div>
             )}
             {selectedCanvasComponent?.type === "Image" && (

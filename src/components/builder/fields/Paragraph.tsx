@@ -49,6 +49,7 @@ function CanvasComponent({
           color: element?.styles?.color || "black",
           fontSize: `${element.styles?.fontSize}px` || "16px",
           fontWeight: element?.styles?.fontWeight || "400",
+          textAlign: element?.styles?.textAlign || "left"
         }}
       >
         {htmlParser.parse(element?.styles?.label) || "Default paragraph text goes here."}

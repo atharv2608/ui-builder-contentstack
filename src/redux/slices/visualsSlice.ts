@@ -22,6 +22,9 @@ export const fetchVisuals = createAsyncThunk(
             .VITE_CONTENTSTACK_DELIVERY_TOKEN as string,
         },
       });
+
+
+      console.log("Visuals: ", response.data.entries)
       return response.data.entries;
     } catch (error) {
       console.error("Failed to fetch visuals:", error);

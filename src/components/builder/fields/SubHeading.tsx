@@ -43,6 +43,7 @@ function CanvasComponent({
           color: element?.styles?.color || "black",
           fontSize: `${element.styles?.fontSize}px` || "24px",
           fontWeight: element?.styles?.fontWeight || "400",
+          textAlign: element?.styles?.textAlign || "left"
         }}
       >
         {element?.styles?.label || "Sub Heading"}
