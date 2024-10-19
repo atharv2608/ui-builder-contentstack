@@ -58,12 +58,14 @@ function CanvasComponent({
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  const products = useSelector((state: RootState) => state.products.products);
-  const isLoading = useSelector((state: RootState) => state.products.isLoading);
-  const error = useSelector((state: RootState) => state.products.error);
+  const {products, isLoading, error} = useSelector((state: RootState) => state.products);
 
-  if(products){
-    element.content.products = products;
+  
+
+  if(element.content.products.length === 0){
+    if(products){
+      element.content.products = products || [];
+    }
   }
 
   if (error) {

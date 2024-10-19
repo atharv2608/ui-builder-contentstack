@@ -1,7 +1,10 @@
-import { SquareUser } from "lucide-react";
+import { Ban, SquareUser } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
-import { useCallback, useEffect, useState } from "react";
-import { fetchEntry } from "@/services/fetchEntry";
+import { useEffect } from "react";
+import { AppDispatch, RootState } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTeam } from "@/redux/slices/teamSlice";
+import { Team } from "@/types";
 let styles = {
   type: "teamGrid",
   layout: {
@@ -43,17 +46,6 @@ type CustomeInstance = UIElementInstance & {
   content: typeof content;
 };
 
-export type Team = {
-  member_name: string;
-  _metadata: {
-    uid: string;
-  };
-  member_description: string;
-  image_url: {
-    title: string;
-    href: string;
-  };
-};
 function CanvasComponent({
   elementInstance,
 }: {
@@ -61,22 +53,32 @@ function CanvasComponent({
 }) {
   const element = elementInstance as CustomeInstance;
 
-  const [team, setTeam] = useState<Team[]>([]);
-
-  const fetchTeam = useCallback(async () => {
-    const response = await fetchEntry("about_us");
-
-    const teamData = response?.entries[0].team_members as Team[];
-
-    // Set the fetched team data to the state
-    setTeam(teamData);
-
-    // Directly update the elementInstance content with the fetched team data
-    element.content.team_members = teamData;
-  }, []);
+  const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
-    fetchTeam();
-  }, []);
+    dispatch(fetchTeam());
+  }, [dispatch]);
+
+  const {team, isLoading, error} = useSelector((state: RootState) => state.team);
+  if(element.content.team_members.length === 0){
+    if(team){
+      element.content.team_members = team || [];
+    }
+  }
+  if (error) {
+    return (
+      <div className={`flex flex-col gap-2 w-full items-center justify-center`}>
+        <div className="flex w-full items-center justify-center p-2">
+          <h1 className="text-3xl text-center text-red-500 font-bold">
+            Error Loading Team Members
+          </h1>
+          <Ban className="text-red-500 h-8 w-8 animate-spin ml-4" />
+        </div>
+      </div>
+    );
+  }
+
+
+
   let cols = element?.styles?.layout.gridTemplateColumns.cols 
 
   return (
@@ -85,31 +87,38 @@ function CanvasComponent({
         Component ID: {element.id}
       </span>
 
-      <div
-        className={`grid gap-8 mb-6 lg:mb-16 ${cols == "1" ? "md:grid-cols-1" : cols == "2" ? "md:grid-cols-2" : "md:grid-cols-3" }`}
-      >
-        {team.map(member => (
-          <div className="items-center bg-gray-50 rounded-lg shadow sm:flex" key={member._metadata.uid}>
-          <div>
-            <img
-              className="w-full rounded-lg sm:rounded-none sm:rounded-l-lg"
-              src={member.image_url.href}
-              alt={member.image_url.title}
-            />
-          </div>
-          <div className="p-5">
-            <h3 className="text-xl font-bold tracking-tight text-gray-900 ">
-              <span >{member.member_name}</span>
-            </h3>
-            {/* <span className="text-gray-500 ">CEO & Web Developer</span> */}
-            <p className="mt-3 mb-4 font-light text-gray-500 ">
-              {member.member_description}
-            </p>
-          </div>
-        </div>
-        ))}
-        
-      </div>
+     {isLoading ? (<div className="flex w-full items-center justify-center p-2">
+          <h1 className="text-3xl text-center text-indigo-500 font-bold">
+            Loading Team
+          </h1>
+          <SquareUser className="animate-spin text-indigo-500 h-8 w-8 ml-4" />
+        </div>): (
+           <div
+           className={`grid gap-8 mb-6 lg:mb-16 ${cols == "1" ? "md:grid-cols-1" : cols == "2" ? "md:grid-cols-2" : "md:grid-cols-3" }`}
+         >
+           {team.map(member => (
+             <div className="items-center bg-gray-50 rounded-lg shadow sm:flex" key={member._metadata.uid}>
+             <div>
+               <img
+                 className="w-full rounded-lg sm:rounded-none sm:rounded-l-lg"
+                 src={member.image_url.href}
+                 alt={member.image_url.title}
+               />
+             </div>
+             <div className="p-5">
+               <h3 className="text-xl font-bold tracking-tight text-gray-900 ">
+                 <span >{member.member_name}</span>
+               </h3>
+               {/* <span className="text-gray-500 ">CEO & Web Developer</span> */}
+               <p className="mt-3 mb-4 font-light text-gray-500 ">
+                 {member.member_description}
+               </p>
+             </div>
+           </div>
+           ))}
+           
+         </div>
+        )}
     </div>
   );
 }

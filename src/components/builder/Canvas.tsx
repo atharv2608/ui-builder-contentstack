@@ -10,10 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchVisuals } from "@/redux/slices/visualsSlice";
 function Canvas() {
   const dispatch: AppDispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchVisuals());
-  }, [dispatch]);
-
+  
   const visualsArray = useSelector((state: RootState) => state.visuals.visuals);
 
   const {
@@ -25,6 +22,10 @@ function Canvas() {
     setSelectedSchema,
     selectedContentType,
   } = useBuilder();
+
+  useEffect(() => {
+    dispatch(fetchVisuals());
+  }, [dispatch, selectedContentType]);
 
   const droppable = useDroppable({
     id: "canvas-drop-area",

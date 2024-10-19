@@ -1,7 +1,10 @@
-import { LayoutGrid } from "lucide-react";
+import { Ban, LayoutGrid, Newspaper } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
 import { Blog } from "@/types";
-import useBuilder from "@/hooks/useBuilder";
+import { useEffect } from "react";
+import { AppDispatch, RootState } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBlogs } from "@/redux/slices/blogSlice";
 let styles = {
   type: "blogsGrid",
   layout: {
@@ -50,20 +53,43 @@ function CanvasComponent({
 }) {
   const element = elementInstance as CustomeInstance;
 
-  const { blogsInGrid } = useBuilder();
-
-  if (blogsInGrid) element.content.blogs = blogsInGrid;
+  const dispatch: AppDispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchBlogs());
+  }, [dispatch]);
+  const { blogs, isLoading, error } = useSelector(
+    (state: RootState) => state.blogs
+  );
+  if(element.content.blogs.length === 0){
+    if(blogs){
+      element.content.blogs = blogs || [];
+    }
+  }
+  if (error) {
+    return (
+      <div className={`flex flex-col gap-2 w-full items-center justify-center`}>
+        <div className="flex w-full items-center justify-center p-2">
+          <h1 className="text-3xl text-center text-red-500 font-bold">
+            Error Loading Blogs
+          </h1>
+          <Ban className="text-red-500 h-8 w-8 animate-spin ml-4" />
+        </div>
+      </div>
+    );
+  }
   let cols = element?.styles?.layout.gridTemplateColumns.cols;
+
   return (
     <div className={`flex flex-col gap-2 w-full items-center justify-center`}>
       <span className="absolute bottom-2 text-sm right-5 opacity-40">
         Component ID: {element.id}
       </span>
-      {blogsInGrid.length === 0 ? (
+      {isLoading ? (
         <div className="flex w-full items-center justify-center p-2">
           <h1 className="text-3xl text-center text-indigo-500 font-bold">
-            Please select blogs
+            Loading Products
           </h1>
+          <Newspaper className="animate-spin text-indigo-500 h-8 w-8 ml-4" />
         </div>
       ) : (
         <div
@@ -75,7 +101,7 @@ function CanvasComponent({
               : "md:grid-cols-3"
           }`}
         >
-          {blogsInGrid.map((blog) => (
+          {blogs.map((blog) => (
             <div
               className="max-w-sm bg-white border border-gray-200 rounded-lg shadow flex flex-col"
               key={blog._metadata.uid}
