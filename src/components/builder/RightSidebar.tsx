@@ -11,10 +11,8 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { ContentTypeNames } from "@/services/fetchEntry";
 import { ContentType } from "@/types";
 import useBuilder from "@/hooks/useBuilder";
-import { fetchEntry } from "@/services/fetchEntry";
 import FontSize from "./component-styles/text/FontSize";
 import { UIElementInstance } from "./UIElements";
 import FontColor from "./component-styles/text/FontColor";
@@ -24,12 +22,12 @@ import Height from "./component-styles/image/Height";
 import LinkToProduct from "./component-styles/product/LinkToProduct";
 import Width from "./component-styles/image/Width";
 import { Button } from "../ui/button";
-import { toast } from "react-toastify";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import LinkToBlog from "./component-styles/blog/LinkToBlog";
 import GridColumns from "./component-styles/grid/GridColumns";
 import AlignText from "./component-styles/text/AlignText";
 import LinkToHeroSection from "./link-to-components/Hero/LinkToHeroSection";
+import LinkComponent from "./link-to-components/LinkComponent";
 
 export default function RightSidebar() {
   const {
@@ -38,25 +36,8 @@ export default function RightSidebar() {
     selectedComponent,
     setSelectedComponent,
     setElements,
-    selectedSchema,
     setSelectedSchema,
   } = useBuilder();
-
-  const [entries, setEntries] = useState<any>(undefined);
-
-  useEffect(() => {
-    const fetchEntries = async () => {
-      if (selectedContentType) {
-        const fetchedEntries = await fetchEntry(
-          selectedContentType as ContentTypeNames
-        );
-
-        setEntries(fetchedEntries as any);
-      }
-    };
-
-    fetchEntries();
-  }, [selectedContentType]);
 
   useEffect(() => {
     setSelectedComponent("");
@@ -93,8 +74,8 @@ export default function RightSidebar() {
 
         case "Image":
           resetStyles = {
-            height: "200px", // Reset height for image
-            width: "300px", // Reset width for image
+            height: "400", // Reset height for image
+            width: "600", // Reset width for image
           };
           break;
 
@@ -146,71 +127,7 @@ export default function RightSidebar() {
     }
   }, [selectedCanvasComponent]);
 
-  const onSchemaValueChange = async (value: any) => {
-    setSelectedSchema(value);
-
-    const entry = entries?.entries[0];
-    if (!entry) {
-      toast.warn("No entry found");
-      return;
-    }
-    if (selectedCanvasComponent && selectedCanvasComponent.styles) {
-      if (
-        selectedCanvasComponent?.type === "Image" &&
-        selectedCanvasComponent.styles
-      ) {
-        if (
-          typeof entry[value as keyof typeof entry] === "object" &&
-          entry[value as keyof typeof entry] !== null &&
-          "href" in (entry[value as keyof typeof entry] as any)
-        ) {
-          const newStyles = {
-            ...selectedCanvasComponent.styles,
-            src: (entry[value as keyof typeof entry] as { href: string }).href, // Cast to ensure TypeScript knows it has 'href'
-          };
-          const newElement = {
-            ...selectedCanvasComponent,
-            linkedContentTypeUID: selectedContentType,
-            linkedSchemaID: value,
-            styles: newStyles,
-          };
-
-          const newElements = elements.map((element) =>
-            element.id === selectedCanvasComponent.id ? newElement : element
-          );
-          setElements(newElements as UIElementInstance[]);
-        } else {
-          toast.error("No image URL found in entry");
-          setSelectedSchema("");
-          return;
-        }
-      } else if (selectedCanvasComponent && selectedCanvasComponent.styles) {
-        if (
-          typeof entry[value as keyof typeof entry] === "object" &&
-          entry[value as keyof typeof entry] !== null &&
-          "href" in (entry[value as keyof typeof entry] as any)
-        ) {
-          toast.error("Cannot link image to this component");
-          setSelectedSchema("");
-          return;
-        }
-        const newStyles = {
-          ...selectedCanvasComponent.styles,
-          label: entry[value as keyof typeof entry] || "",
-        };
-        const newElement = {
-          ...selectedCanvasComponent,
-          linkedContentTypeUID: selectedContentType,
-          linkedSchemaID: value as string,
-          styles: newStyles,
-        };
-        const newElements = elements.map((element) =>
-          element.id === selectedCanvasComponent.id ? newElement : element
-        );
-        setElements(newElements as UIElementInstance[]);
-      }
-    }
-  };
+ 
 
   return (
     <div className="w-full  flex flex-col flex-grow gap-2 border-l-2 border-muted p-4  overflow-y-auto h-full">
@@ -251,43 +168,7 @@ export default function RightSidebar() {
                   : ""
               }`}
             >
-              <Label
-                htmlFor="component-link"
-                className="text-sm font-medium text-gray-700 mb-2 block"
-              >
-                Link To
-              </Label>
-              <Select
-                value={selectedSchema}
-                disabled={
-                  !selectedContentType ||
-                  elements.length === 0 ||
-                  selectedCanvasComponent?.type === "Product"
-                }
-                onValueChange={onSchemaValueChange}
-              >
-                <SelectTrigger className="border-black">
-                  <SelectValue placeholder="Select a schema" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Schemas</SelectLabel>
-                    {contentType?.schema?.map((s) => (
-                      <SelectItem
-                        value={s.uid}
-                        key={s.uid}
-                        disabled={
-                          s.uid === "products" ||
-                          s.uid === "blogs" ||
-                          s.uid === "team_members"
-                        }
-                      >
-                        {s.uid}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <LinkComponent selectedCanvasComponent={selectedCanvasComponent as UIElementInstance} contentType={contentType as ContentType} />
             </div>
             {
               selectedCanvasComponent?.type === "HeroSection" && (

@@ -18,7 +18,7 @@ import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
 
 function SaveButton() {
-  const { elements, generatedJson, selectedContentType } = useBuilder();
+  const {  generatedJson, selectedContentType } = useBuilder();
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const visualEntries = useSelector(
@@ -74,7 +74,7 @@ function SaveButton() {
         <Button
           variant={"outline"}
           className="gap-2 bg-white text-indigo-500"
-          disabled={!selectedContentType || elements.length === 0}
+          disabled={!selectedContentType }
         >
           <Save className="h-4 w-4" /> Save
         </Button>
@@ -91,7 +91,7 @@ function SaveButton() {
           <Button
             variant={"outline"}
             className="gap-2 bg-white text-indigo-500"
-            disabled={!selectedContentType || elements.length === 0}
+            disabled={!selectedContentType || isLoading}
             onClick={onSaveClick}
           >
             {isLoading ? (

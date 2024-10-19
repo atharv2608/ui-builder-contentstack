@@ -10,9 +10,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import useBuilder from "@/hooks/useBuilder";
-import { ContentTypeNames, fetchEntry } from "@/services/fetchEntry";
 import { ContentType } from "@/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 
 function LinkToHeroSection({
@@ -22,23 +21,12 @@ function LinkToHeroSection({
   selectedCanvasComponent: UIElementInstance;
   contentType: ContentType;
 }) {
-  const { elements, setElements, selectedContentType } = useBuilder();
-  const [entries, setEntries] = useState<any>(undefined);
+  const { elements, setElements, entries } = useBuilder();
   const [selectedFields, setSelectedFields] = useState({
     title: "",
     subtitle: "",
     image: "",
   });
-
-  useEffect(() => {
-    const fetchEntries = async () => {
-      if (selectedContentType) {
-        const fetchedEntries = await fetchEntry(selectedContentType as ContentTypeNames);
-        setEntries(fetchedEntries as any);
-      }
-    };
-    fetchEntries();
-  }, [selectedContentType]);
 
   const handleValueChange = (field: "title" | "subtitle" | "image", value: string) => {
     setSelectedFields((prev) => ({ ...prev, [field]: value }));

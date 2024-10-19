@@ -1,4 +1,5 @@
 import { UIElementInstance } from "@/components/builder/UIElements";
+import { ContentTypeNames, fetchEntry } from "@/services/fetchEntry";
 import {
   createContext,
   Dispatch,
@@ -18,7 +19,7 @@ type BuilderContextType = {
   selectedSchema: string;
   setSelectedSchema: Dispatch<SetStateAction<string>>;
   // Make visualEntries nullable
-  
+  entries: any,
   generatedJson: Record<string, any>;
   addElement: (id: number, element: UIElementInstance) => void;
 };
@@ -35,9 +36,17 @@ export default function BuilderContextProvider({
   const [selectedComponent, setSelectedComponent] = useState<string>("");
   const [selectedSchema, setSelectedSchema] = useState<string>("");
   const [generatedJson, setGeneratedJson] = useState<Record<string, any>>({});
-  
+  const [entries, setEntries] = useState<any>(undefined);
   // Initialize visualEntries as null, and make it nullable in state
-
+  useEffect(() => {
+    const fetchEntries = async () => {
+      if (selectedContentType) {
+        const fetchedEntries = await fetchEntry(selectedContentType as ContentTypeNames);
+        setEntries(fetchedEntries as any);
+      }
+    };
+    fetchEntries();
+  }, [selectedContentType]);
   // Function to add element at a specified index
   const addElement = (index: number, element: UIElementInstance) => {
     setElements((prev) => {
@@ -91,6 +100,7 @@ export default function BuilderContextProvider({
         addElement,
         selectedSchema,
         setSelectedSchema,
+        entries
         
         // Ensure visualEntries can be null
         

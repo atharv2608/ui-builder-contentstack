@@ -31,9 +31,6 @@ function AlignText({
           }
         : element
     );
-
-    // Update the elements in the global state
-    console.log("Aligh updated elements:", updatedElements)
     setElements(updatedElements);
   };
 

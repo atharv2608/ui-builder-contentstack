@@ -24,7 +24,6 @@ export const updateEntry = async (
           },
         }
       );
-      console.log("Update status: ", response.data.entry.uid);
       if(response.status === 200){
         try {
           await publishEntry(response.data.entry.uid);

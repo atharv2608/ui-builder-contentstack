@@ -23,7 +23,6 @@ export const publishEntry = async(uid: string): Promise<number> => {
                 },
             }
         )
-        console.log("Publish entry status: ",response.status)
         return response.status;
     } catch (error) {
         console.error("Error publishing entry:", error);
