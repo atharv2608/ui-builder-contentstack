@@ -28,6 +28,7 @@ import GridColumns from "./component-styles/grid/GridColumns";
 import AlignText from "./component-styles/text/AlignText";
 import LinkToHeroSection from "./link-to-components/Hero/LinkToHeroSection";
 import LinkComponent from "./link-to-components/LinkComponent";
+import { defaultHeroSectionContent } from "./canvas-components/HeroSection";
 
 export default function RightSidebar() {
   const {
@@ -100,7 +101,12 @@ export default function RightSidebar() {
             published_date: "1970-01-01T00:00:00.000Z",
           };
           break;
-
+        
+        case "HeroSection": 
+          resetContent = {
+            ...defaultHeroSectionContent
+          }
+        break;
         default:
           // If no type matches, leave styles unchanged or add default reset behavior
           break;

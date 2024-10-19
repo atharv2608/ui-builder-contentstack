@@ -1,5 +1,6 @@
 import { Heading2 } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
+import { Parser } from "html-to-react";
 let styles = {
   tag: "h2",
   fontSize: "24"
@@ -32,6 +33,7 @@ function CanvasComponent({
   elementInstance: UIElementInstance;
 }) {
   const element = elementInstance as CustomeInstance;
+  const htmlParser = Parser();
   return (
     <div className={`flex flex-col gap-2 w-full`}>
       <span className="absolute bottom-0 text-sm right-5 opacity-40">
@@ -46,7 +48,7 @@ function CanvasComponent({
           textAlign: element?.styles?.textAlign || "left"
         }}
       >
-        {element?.styles?.label || "Sub Heading"}
+        {htmlParser.parse(element?.styles?.label) || "Subheading"}
       </h1>
     </div>
   );

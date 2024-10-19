@@ -47,7 +47,7 @@ let styles = {
     height: "auto",
   },
 };
-let content = {
+export let defaultHeroSectionContent = {
   title: "Your Title Here",
   subtitle:
     "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste, dicta!",
@@ -62,7 +62,7 @@ export const HeroSectionUIElement: UIElement = {
     id,
     type,
     styles,
-    content,
+    content: defaultHeroSectionContent,
     elementCategory: "heroSection",
   }),
   buttonElement: {
@@ -76,7 +76,7 @@ export const HeroSectionUIElement: UIElement = {
 
 type CustomeInstance = UIElementInstance & {
   styles: typeof styles;
-  content: typeof content;
+  content: typeof defaultHeroSectionContent;
 };
 
 function CanvasComponent({
