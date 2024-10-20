@@ -22,8 +22,8 @@ function LinkToProduct({
 }) {
   
   const { elements, setElements } = useBuilder();
-  const [selectedProductName, setSelectedProductName] = useState<string | undefined>(undefined); 
-  
+  const [selectedProductName, setSelectedProductName] = useState<string>(""); 
+
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchProducts());
@@ -35,10 +35,11 @@ function LinkToProduct({
     if (selectedCanvasComponent && selectedCanvasComponent.content) {
       if(selectedCanvasComponent.content.productName) {
         setSelectedProductName(selectedCanvasComponent.content.productName);
-      } else{
-        setSelectedProductName(undefined);
-      }
+      } 
     } 
+    else{
+      setSelectedProductName("");
+    }
   }, [selectedCanvasComponent])
 
   // // Handle product selection

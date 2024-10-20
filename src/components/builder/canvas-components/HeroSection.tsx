@@ -87,6 +87,9 @@ function CanvasComponent({
   const element = elementInstance as CustomeInstance;
   return (
     <section className="bg-white">
+       <span className="absolute bottom-2 text-sm right-5 opacity-40">
+        Component ID: {element.id}
+      </span>
       <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-16 xl:gap-0 lg:py-16 lg:grid-cols-12">
         <div className="mr-auto place-self-center lg:col-span-7">
           <h1 className="max-w-2xl mb-4 text-3xl font-extrabold tracking-tight leading-none">

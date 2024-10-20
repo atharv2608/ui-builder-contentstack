@@ -21,7 +21,7 @@ import { fetchBlogs } from "@/redux/slices/blogSlice";
     selectedCanvasComponent: UIElementInstance;
   }) {
     const { elements, setElements } = useBuilder();
-    const [selectedBlogTitle, setSelectedBlogTitle] = useState<string | undefined>(undefined); 
+    const [selectedBlogTitle, setSelectedBlogTitle] = useState<string>(""); 
     const dispatch: AppDispatch = useDispatch();
 
     useEffect(() => {
@@ -36,10 +36,10 @@ import { fetchBlogs } from "@/redux/slices/blogSlice";
       if (selectedCanvasComponent && selectedCanvasComponent.content) {
         if(selectedCanvasComponent.content.title) {
           setSelectedBlogTitle(selectedCanvasComponent.content.title);
-        } else{
-          setSelectedBlogTitle(undefined);
         }
-      } 
+      } else{
+        setSelectedBlogTitle("");
+      }
     }, [selectedCanvasComponent])
   
     // // Handle blog selection

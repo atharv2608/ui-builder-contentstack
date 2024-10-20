@@ -47,7 +47,6 @@ function Page() {
     };
   }, []);
 
-  console.log("Width: ", screenWidth)
   return (
     <Layout>
       <SmallScreenWarning isHeightSmall={screenHeight < 400 || screenWidth < 800}/>
