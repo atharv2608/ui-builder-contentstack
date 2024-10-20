@@ -105,7 +105,7 @@ const onCopyClick = useCallback(() => {
           </pre> */}
         </div>
         <DialogFooter>
-          <Button onClick={onCopyClick}>
+          <Button className="bg-indigo-500 text-white hover:bg-indigo-500 hover:text-white" onClick={onCopyClick}>
             <Copy className="mr-2" /> Copy Code
           </Button>
         </DialogFooter>
