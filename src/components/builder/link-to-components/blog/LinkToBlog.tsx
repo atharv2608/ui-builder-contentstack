@@ -11,33 +11,27 @@ import {
   import { useEffect, useState, useCallback } from "react";
   import { UIElementInstance } from "../../UIElements";
   import { Label } from "@/components/ui/label";
-import { Blog } from "@/types";
-import { fetchEntry } from "@/services/fetchEntry";
+import { AppDispatch, RootState } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBlogs } from "@/redux/slices/blogSlice";
   
   function LinkToBlog({
     selectedCanvasComponent,
   }: {
     selectedCanvasComponent: UIElementInstance;
   }) {
-    const [blogs, setBlogs] = useState<Blog[]>([]);
     const { elements, setElements } = useBuilder();
     const [selectedBlogTitle, setSelectedBlogTitle] = useState<string | undefined>(undefined); 
-  
-    // Fetch blogs from the API
-    const getBlogs = async () => {
-      try {
-        const response = await fetchEntry("blogs");
-        setBlogs(response?.entries[0].blogs as Blog[] || []); 
-      } catch (error) {
-        console.error("Failed to fetch blogs:", error);
-      }
-    };
-  
-    // Fetch blogs when the component mounts
+    const dispatch: AppDispatch = useDispatch();
+
     useEffect(() => {
-      getBlogs();
-    }, []);
+      dispatch(fetchBlogs());
+    }, [dispatch]);
+    const { blogs } = useSelector(
+      (state: RootState) => state.blogs
+    );
   
+
     useEffect(()=>{
       if (selectedCanvasComponent && selectedCanvasComponent.content) {
         if(selectedCanvasComponent.content.title) {

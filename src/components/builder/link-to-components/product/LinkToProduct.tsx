@@ -11,35 +11,25 @@ import useBuilder from "@/hooks/useBuilder";
 import { useEffect, useState, useCallback } from "react";
 import { UIElementInstance } from "../../UIElements";
 import { Label } from "@/components/ui/label";
-import { Product } from "@/types";
-import { fetchEntry } from "@/services/fetchEntry";
+import { AppDispatch, RootState } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "@/redux/slices/productSlice";
 
 function LinkToProduct({
   selectedCanvasComponent,
 }: {
   selectedCanvasComponent: UIElementInstance;
 }) {
-  const [products, setProducts] = useState<Product[]>([]);
+  
   const { elements, setElements } = useBuilder();
   const [selectedProductName, setSelectedProductName] = useState<string | undefined>(undefined); 
-
-
-
-  // Fetch products from the API
-  const getProducts = async () => {
-    try {
-      const response = await fetchEntry("product");
-      setProducts(response?.entries[0].products || []); 
-    } catch (error) {
-      console.error("Failed to fetch products:", error);
-    }
-  };
-
-  // Fetch products when the component mounts
+  
+  const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
-    getProducts();
+    dispatch(fetchProducts());
   }, []);
 
+  const {products} = useSelector((state: RootState) => state.products);
 
   useEffect(()=>{
     if (selectedCanvasComponent && selectedCanvasComponent.content) {
