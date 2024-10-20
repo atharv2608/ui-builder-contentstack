@@ -76,7 +76,7 @@ function LinkToProduct({
             </Label>
             <Select onValueChange={handleProductChange} value={selectedProductName}>
 
-        <SelectTrigger className="w-[180px] border-black">
+        <SelectTrigger className="border-black">
           <SelectValue placeholder="Select a product" />
         </SelectTrigger>
         <SelectContent>

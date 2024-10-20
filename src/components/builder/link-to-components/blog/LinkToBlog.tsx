@@ -77,7 +77,7 @@ import { fetchBlogs } from "@/redux/slices/blogSlice";
               </Label>
               <Select onValueChange={handleBlogChange} value={selectedBlogTitle}>
   
-          <SelectTrigger className="w-[180px] border-black">
+          <SelectTrigger className="border-black">
             <SelectValue placeholder="Select a blog" />
           </SelectTrigger>
           <SelectContent>

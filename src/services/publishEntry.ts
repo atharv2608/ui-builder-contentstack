@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 interface PublishEntryResponse {
     notice: string;
@@ -25,6 +26,7 @@ export const publishEntry = async(uid: string): Promise<number> => {
         )
         return response.status;
     } catch (error) {
+        toast.error("Error publishing entry");
         console.error("Error publishing entry:", error);
         throw error;
     }
