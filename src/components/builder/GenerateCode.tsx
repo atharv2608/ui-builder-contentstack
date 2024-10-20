@@ -9,14 +9,28 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import useBuilder from "@/hooks/useBuilder"; // Adjust the import path as necessary
-import { SetStateAction, useCallback, Dispatch, useEffect, useState } from "react";
+import {
+  SetStateAction,
+  useCallback,
+  Dispatch,
+  useEffect,
+  useState,
+} from "react";
 import { toast } from "react-toastify";
-
+import { CodeBlock, dracula } from "react-code-blocks";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY as string);
+const genAI = new GoogleGenerativeAI(
+  import.meta.env.VITE_GEMINI_API_KEY as string
+);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-function GenerateCode({ open, setOpen }: { open: boolean; setOpen: Dispatch<SetStateAction<boolean>> }) {
+function GenerateCode({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+}) {
   const { generatedJson } = useBuilder(); // This should have your UI JSON
   const [generatedCode, setGeneratedCode] = useState<string>("");
 
@@ -32,7 +46,7 @@ function GenerateCode({ open, setOpen }: { open: boolean; setOpen: Dispatch<SetS
             const jsonString = JSON.stringify(generatedJson, null, 2);
 
             const prompt = `Treat the given JSON as a server-driven UI JSON and based on the component content in it, generate a beautiful page in React. Make a component render function to render different components Generate only the React code ,No explanations, just pure React component code: \n\n ${jsonString}`;
-            
+
             // Call the AI model with the prompt
             const result = await model.generateContentStream(prompt);
 
@@ -53,24 +67,42 @@ function GenerateCode({ open, setOpen }: { open: boolean; setOpen: Dispatch<SetS
     }
   }, [open, generatedJson]);
 
-  const onCopyClick = useCallback(() => {
-    navigator.clipboard.writeText(generatedCode);
+ 
+  let lines = generatedCode.split('\n');
+
+// Remove the first and last line since it contains the backtick character and the language
+lines.shift(); // Removes the first line
+lines.pop();   // Removes the last line
+
+// Join the lines back together
+let modifiedCode = lines.join('\n');
+
+const onCopyClick = useCallback(() => {
+    navigator.clipboard.writeText(modifiedCode);
     toast.success("Code copied to clipboard!");
   }, [generatedCode]);
-
+  
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[900px] bg-white text-black">
         <DialogHeader>
           <DialogTitle>AI Generated Code</DialogTitle>
           <DialogDescription>
-            This is the AI-generated React code for the JSON structure of your UI.
+            This is the AI-generated React code for the JSON structure of your
+            UI. <span className="text-red-500 font-bold">Use it with caution</span>
           </DialogDescription>
         </DialogHeader>
         <div className="overflow-y-auto max-h-96">
-          <pre className="whitespace-pre-wrap break-words p-4 bg-gray-100 rounded">
+            
+          <CodeBlock
+            text={modifiedCode}
+            language={"jsx"}
+            showLineNumbers={true}
+            theme={dracula}
+          />
+          {/* <pre className="whitespace-pre-wrap break-words p-4 bg-gray-100 rounded">
             {generatedCode || "// Waiting for AI to generate code..."}
-          </pre>
+          </pre> */}
         </div>
         <DialogFooter>
           <Button onClick={onCopyClick}>

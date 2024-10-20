@@ -39,7 +39,7 @@ function JSONDialog() {
           <DialogHeader>
             <DialogTitle>JSON Preview</DialogTitle>
             <DialogDescription>
-              This is the generated JSON structure for your UI.
+              This is the generated JSON structure for your UI. 
             </DialogDescription>
           </DialogHeader>
           <div className="overflow-y-auto max-h-96">
@@ -55,7 +55,10 @@ function JSONDialog() {
             <Button variant="outline" onClick={() => setOpen(false)}> {/* Close dialog on click */}
               Close
             </Button>
-            <Button variant="outline" onClick={() => setCodeDialogOpen(true)}> {/* Open code dialog */}
+            <Button variant="outline" onClick={() =>{
+              setOpen(false);
+              setCodeDialogOpen(true); 
+            }}> {/* Open code dialog */}
               Generate Code
             </Button>
           </DialogFooter>
