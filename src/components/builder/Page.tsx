@@ -15,6 +15,8 @@ import RightSidebar from "./RightSidebar";
 import JSONDialog from "./JSONDialog";
 import ResetCanvas from "./ResetCanvas";
 import SaveButton from "./SaveButton";
+import { useEffect, useState } from "react";
+import { SmallScreenWarning } from "../SmallScreenWarning";
 function Page() {
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
@@ -29,8 +31,26 @@ function Page() {
     },
   });
   const sensors = useSensors(mouseSensor, touchSensor);
+
+  const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenHeight(window.innerHeight);
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  console.log("Width: ", screenWidth)
   return (
     <Layout>
+      <SmallScreenWarning isHeightSmall={screenHeight < 400 || screenWidth < 800}/>
         <DndContext sensors={sensors}>
           <main className="flex flex-col w-full " >
             <nav className="flex justify-between border-b-2 p-4 gap-3 items-center bg-indigo-500">
