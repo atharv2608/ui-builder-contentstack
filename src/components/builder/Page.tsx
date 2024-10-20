@@ -45,7 +45,7 @@ function Page() {
               </div>
             </nav>
             <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto min-h-screen bg-accent">
-              <div className="w-64 overflow-y-auto h-screen">
+              <div className="w-[270px] overflow-y-auto h-screen">
                 <LeftSidebar />
               </div>
               <div className="flex-grow overflow-y-auto h-screen">

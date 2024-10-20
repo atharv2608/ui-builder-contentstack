@@ -18,7 +18,7 @@ function LeftSidebar() {
     (state: RootState) => state.contentTypes.contentTypes
   );
 
-  const {setSelectedContentType} = useBuilder();
+  const { setSelectedContentType } = useBuilder();
   return (
     <div className="flex flex-col flex-grow gap-2 border-l-2 border-muted p-4 bg-white overflow-y-auto h-full">
       <div className="mb-6">
@@ -37,7 +37,11 @@ function LeftSidebar() {
               <SelectGroup>
                 <SelectLabel>Content Type</SelectLabel>
                 {contentTypesArray.map((contentType: any) => (
-                  <SelectItem disabled={contentType.uid === "visuals"} key={contentType.uid} value={contentType.uid}>
+                  <SelectItem
+                    disabled={contentType.uid === "visuals"}
+                    key={contentType.uid}
+                    value={contentType.uid}
+                  >
                     {contentType.title}
                   </SelectItem>
                 ))}
@@ -49,19 +53,18 @@ function LeftSidebar() {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-2 justify-center">
+      <div className="flex flex-wrap gap-y-3 gap-x-2 justify-center">
         <SidebarButtonElement uiElement={UIElements.Heading} />
-        <SidebarButtonElement uiElement={UIElements.HeroSection} />
         <SidebarButtonElement uiElement={UIElements.SubHeading} />
-      <SidebarButtonElement uiElement={UIElements.TextField} />
-      <SidebarButtonElement uiElement={UIElements.Paragraph} />
+        <SidebarButtonElement uiElement={UIElements.TextField} />
         <SidebarButtonElement uiElement={UIElements.Image} />
+        <SidebarButtonElement uiElement={UIElements.Paragraph} />
         <SidebarButtonElement uiElement={UIElements.Product} />
         <SidebarButtonElement uiElement={UIElements.Blog} />
+        <SidebarButtonElement uiElement={UIElements.HeroSection} />
         <SidebarButtonElement uiElement={UIElements.TeamGrid} />
-        <SidebarButtonElement uiElement={UIElements.BlogsGrid} />
         <SidebarButtonElement uiElement={UIElements.ProductsGrid} />
-        
+        <SidebarButtonElement uiElement={UIElements.BlogsGrid} />
       </div>
     </div>
   );
