@@ -87,7 +87,7 @@ function CanvasComponent({
       {isLoading ? (
         <div className="flex w-full items-center justify-center p-2">
           <h1 className="text-3xl text-center text-indigo-500 font-bold">
-            Loading Products
+            Loading Blogs
           </h1>
           <Newspaper className="animate-spin text-indigo-500 h-8 w-8 ml-4" />
         </div>
