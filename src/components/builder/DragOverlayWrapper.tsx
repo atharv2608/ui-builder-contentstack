@@ -3,12 +3,14 @@ import { useState } from "react";
 import { SidebarButtonElementDragOverlay } from "./SidebarButtonElement";
 import { ElementsType, UIElementInstance, UIElements } from "./UIElements";
 import useBuilder from "@/hooks/useBuilder";
-import { ImageDragOverlay } from "./canvas-components/Image";
-import { BlogDragOverlay } from "./canvas-components/Blog";
-import { TeamGridDragOverlay } from "./canvas-components/TeamGrid";
-import { BlogsGridDragOverlay } from "./canvas-components/BlogsGrid";
-import { ProductsGridDragOverlay } from "./canvas-components/ProductsGrid";
-import { HeroSectionDragOverlay } from "./canvas-components/HeroSection";
+import {
+  ImageDragOverlay,
+  BlogDragOverlay,
+  TeamGridDragOverlay,
+  BlogsGridDragOverlay,
+  ProductsGridDragOverlay,
+  HeroSectionDragOverlay
+} from "./canvas-components"
 
 function DragOverlayWrapper() {
   const { elements } = useBuilder();
