@@ -5,6 +5,9 @@ let styles = {
   tag: "h2",
   fontSize: "24"
 };
+let content = {
+  text: "Subheading"
+}
 const type: ElementsType = "SubHeading";
 export const SubHeadingUIElement: UIElement = {
   type: "SubHeading",
@@ -12,6 +15,7 @@ export const SubHeadingUIElement: UIElement = {
     id,
     type,
     styles,
+    content,
     elementCategory: "text"
   }),
   buttonElement: {
@@ -25,6 +29,8 @@ export const SubHeadingUIElement: UIElement = {
 
 type CustomeInstance = UIElementInstance & {
   styles: typeof styles;
+  content: typeof content;
+
 };
 
 function CanvasComponent({
@@ -48,7 +54,7 @@ function CanvasComponent({
           textAlign: element?.styles?.textAlign || "left"
         }}
       >
-        {htmlParser.parse(element?.styles?.label) || "Subheading"}
+        {htmlParser.parse(element.content.text)}
       </h1>
     </div>
   );

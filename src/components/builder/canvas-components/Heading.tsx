@@ -8,6 +8,10 @@ export let defaultHeadingStyles = {
   fontWeight: "400",
   textAlign: "left" as "left" | "right" | "center" | "justify",
 };
+
+let content = {
+  text: "Heading"
+}
 const type: ElementsType = "Heading";
 export const HeadingUIElement: UIElement = {
   type: "Heading",
@@ -15,6 +19,7 @@ export const HeadingUIElement: UIElement = {
     id,
     type,
     styles: defaultHeadingStyles,
+    content,
     elementCategory: "text",
   }),
   buttonElement: {
@@ -28,6 +33,7 @@ export const HeadingUIElement: UIElement = {
 
 type CustomeInstance = UIElementInstance & {
   styles: typeof defaultHeadingStyles;
+  content: typeof content;
 };
 
 function CanvasComponent({
@@ -51,7 +57,7 @@ function CanvasComponent({
           textAlign: element.styles.textAlign,
         }}
       >
-        {htmlParser.parse(element?.styles?.label) || "Heading"}
+        {htmlParser.parse(element.content.text)}
       </h1>
     </div>
   );

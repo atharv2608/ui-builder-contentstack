@@ -5,6 +5,9 @@ const styles = {
  tag: "span",
  fontSize: "16"
 };
+let content = {
+  text: "Textfield"
+}
 const type: ElementsType = "TextField";
 export const TextFieldUIElement: UIElement = {
   type: "TextField",
@@ -12,6 +15,7 @@ export const TextFieldUIElement: UIElement = {
     id,
     type,
     styles,
+    content,
     elementCategory: "text"
   }),
   buttonElement: {
@@ -25,6 +29,8 @@ export const TextFieldUIElement: UIElement = {
 
 type CustomeInstance = UIElementInstance & {
   styles: typeof styles;
+  content: typeof content;
+
 };
 
 function CanvasComponent({
@@ -45,7 +51,7 @@ function CanvasComponent({
           textAlign: element?.styles?.textAlign || "left"
         }}
       >
-        {htmlParser.parse(element?.styles?.label) || "Text Goes here"}
+        {htmlParser.parse(element.content.text)}
       </span>
     </div>
   );

@@ -9,13 +9,16 @@ const styles = {
 };
 
 const type: ElementsType = "Paragraph";
-
+let content = {
+  text: "Paragraph",
+}
 export const ParagraphUIElement: UIElement = {
   type: "Paragraph",
   construct: (id: string) => ({
     id,
     type,
     styles,
+    content,
     elementCategory: "text"
   }),
   buttonElement: {
@@ -29,6 +32,7 @@ export const ParagraphUIElement: UIElement = {
 
 type CustomInstance = UIElementInstance & {
   styles: typeof styles;
+  content: typeof content;
 };
 
 function CanvasComponent({
@@ -52,7 +56,7 @@ function CanvasComponent({
           textAlign: element?.styles?.textAlign || "left"
         }}
       >
-        {htmlParser.parse(element?.styles?.label) || "Default paragraph text goes here."}
+        {htmlParser.parse(element.content.text)}
       </p>
     </div>
   );

@@ -49,16 +49,17 @@ function LinkComponent({
             entry[value as keyof typeof entry] !== null &&
             "href" in (entry[value as keyof typeof entry] as any)
           ) {
-            const newStyles = {
-              ...selectedCanvasComponent.styles,
-              src: (entry[value as keyof typeof entry] as { href: string })
-                .href, // Cast to ensure TypeScript knows it has 'href'
+            const newContent = {
+              ...selectedCanvasComponent.content,
+              src: (entry[value as keyof typeof entry] as { href: string }).href,
+              altText: (entry[value as keyof typeof entry] as { title: string }).title
+              
             };
             const newElement = {
               ...selectedCanvasComponent,
               linkedContentTypeUID: selectedContentType,
               linkedSchemaID: value,
-              styles: newStyles,
+              content: newContent
             };
 
             const newElements = elements.map((element) =>
@@ -80,15 +81,15 @@ function LinkComponent({
             setSelectedSchema("");
             return;
           }
-          const newStyles = {
-            ...selectedCanvasComponent.styles,
-            label: entry[value as keyof typeof entry] || "",
+          const newContent = {
+            ...selectedCanvasComponent.content,
+            text: entry[value as keyof typeof entry] || "",
           };
           const newElement = {
             ...selectedCanvasComponent,
             linkedContentTypeUID: selectedContentType,
             linkedSchemaID: value as string,
-            styles: newStyles,
+            content: newContent
           };
           const newElements = elements.map((element) =>
             element.id === selectedCanvasComponent.id ? newElement : element

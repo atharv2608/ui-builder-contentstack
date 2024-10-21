@@ -24,15 +24,14 @@ export type CanvasComponent = {
 
 export type HomePageEntry = {
   uid: string;
-  heading: string;
+  title: string;
+  subtitle: string;
   hero_image: {
       title: string,
       href:   string,
   };
   highlights: string;
   overview: string;
-  sub_heading: string;
-  title: string;
   [key: string]: unknown;
 };
 
