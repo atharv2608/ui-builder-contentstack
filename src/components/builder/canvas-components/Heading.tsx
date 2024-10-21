@@ -1,6 +1,9 @@
 import { Heading1 } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
 import { Parser } from "html-to-react";
+import useBuilder from "@/hooks/useBuilder";
+import { useEffect } from "react";
+import { fetchFreshEntries } from "@/services/fetchAndUpdateFreshTextContent";
 
 export let defaultHeadingStyles = {
   tag: "h1",
@@ -10,8 +13,8 @@ export let defaultHeadingStyles = {
 };
 
 let content = {
-  text: "Heading"
-}
+  text: "Heading",
+};
 const type: ElementsType = "Heading";
 export const HeadingUIElement: UIElement = {
   type: "Heading",
@@ -31,7 +34,7 @@ export const HeadingUIElement: UIElement = {
   propertiesComponent: () => <div>Properties Component</div>,
 };
 
-type CustomeInstance = UIElementInstance & {
+export type CustomeInstance = UIElementInstance & {
   styles: typeof defaultHeadingStyles;
   content: typeof content;
 };
@@ -43,6 +46,13 @@ function CanvasComponent({
 }) {
   const element = elementInstance as CustomeInstance;
   const htmlParser = Parser();
+  const {elements, setElements}= useBuilder()
+  useEffect(() => {
+    if (element.linkedContentTypeUID && element.linkedSchemaID) {
+      
+      fetchFreshEntries(element, elements, setElements);
+    }
+  }, []);
   return (
     <div className={`flex flex-col gap-2 w-full`}>
       <span className="absolute bottom-0 text-sm right-5 opacity-40">

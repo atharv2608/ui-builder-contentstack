@@ -57,8 +57,8 @@ function LeftSidebar() {
         <SidebarButtonElement uiElement={UIElements.Heading} />
         <SidebarButtonElement uiElement={UIElements.SubHeading} />
         <SidebarButtonElement uiElement={UIElements.TextField} />
-        <SidebarButtonElement uiElement={UIElements.Image} />
         <SidebarButtonElement uiElement={UIElements.Paragraph} />
+        <SidebarButtonElement uiElement={UIElements.Image} />
         <SidebarButtonElement uiElement={UIElements.Product} />
         <SidebarButtonElement uiElement={UIElements.Blog} />
         <SidebarButtonElement uiElement={UIElements.HeroSection} />

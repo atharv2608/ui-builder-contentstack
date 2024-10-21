@@ -1,6 +1,9 @@
 import { Pilcrow } from "lucide-react"; // If you have an icon for paragraph
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
 import { Parser } from "html-to-react";
+import useBuilder from "@/hooks/useBuilder";
+import { useEffect } from "react";
+import { fetchFreshEntries } from "@/services/fetchAndUpdateFreshTextContent";
 
 // Default attributes for the paragraph
 const styles = {
@@ -42,7 +45,13 @@ function CanvasComponent({
 }) {
   const element = elementInstance as CustomInstance;
   const htmlParser = Parser();
-  
+  const {elements, setElements}= useBuilder()
+  useEffect(() => {
+    if (element.linkedContentTypeUID && element.linkedSchemaID) {
+      
+      fetchFreshEntries(element, elements, setElements);
+    }
+  }, []);
   return (
     <div className="flex flex-col gap-2 w-full">
       <span className="absolute bottom-0 text-sm right-5 opacity-40">

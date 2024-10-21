@@ -1,6 +1,9 @@
 import { Heading2 } from "lucide-react";
 import { ElementsType, UIElement, UIElementInstance } from "../UIElements";
 import { Parser } from "html-to-react";
+import useBuilder from "@/hooks/useBuilder";
+import { useEffect } from "react";
+import { fetchFreshEntries } from "@/services/fetchAndUpdateFreshTextContent";
 let styles = {
   tag: "h2",
   fontSize: "24"
@@ -40,6 +43,13 @@ function CanvasComponent({
 }) {
   const element = elementInstance as CustomeInstance;
   const htmlParser = Parser();
+  const {elements, setElements}= useBuilder()
+  useEffect(() => {
+    if (element.linkedContentTypeUID && element.linkedSchemaID) {
+      
+      fetchFreshEntries(element, elements, setElements);
+    }
+  }, []);
   return (
     <div className={`flex flex-col gap-2 w-full`}>
       <span className="absolute bottom-0 text-sm right-5 opacity-40">
