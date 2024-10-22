@@ -7,7 +7,7 @@ export type ContentTypeNames = "home_page" | "product" | "about_us" | "blogs";
 export type EntryMap = {
     home_page: HomePageEntry;
     product: ProductEntry;
-    about_us: AboutUsEntry; // You can add specific types for other content types
+    about_us: AboutUsEntry; 
     blogs: BlogEntry;
 };
 

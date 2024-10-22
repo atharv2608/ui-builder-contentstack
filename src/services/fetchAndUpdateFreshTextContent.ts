@@ -1,3 +1,6 @@
+/*
+This code is responsible for fetching fresh text content from contentstack (Whenever any text content is updated, the content is fetched dynamically)
+*/
 
 import { UIElementInstance } from "@/components/builder/UIElements";
 import { Dispatch, SetStateAction } from "react";

@@ -1,3 +1,8 @@
+/*
+  This code represents the drag overlay wrapper, basically it shows overlay when the user is dragging
+  the components while reordering.
+*/
+
 import { Active, DragOverlay, useDndMonitor } from "@dnd-kit/core";
 import { useState } from "react";
 import { SidebarButtonElementDragOverlay } from "./SidebarButtonElement";

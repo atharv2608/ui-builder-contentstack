@@ -18,7 +18,6 @@ type BuilderContextType = {
   setSelectedComponent: Dispatch<SetStateAction<string>>;
   selectedSchema: string;
   setSelectedSchema: Dispatch<SetStateAction<string>>;
-  // Make visualEntries nullable
   entries: any,
   generatedJson: Record<string, any>;
   addElement: (id: number, element: UIElementInstance) => void;
@@ -37,7 +36,8 @@ export default function BuilderContextProvider({
   const [selectedSchema, setSelectedSchema] = useState<string>("");
   const [generatedJson, setGeneratedJson] = useState<Record<string, any>>({});
   const [entries, setEntries] = useState<any>(undefined);
-  // Initialize visualEntries as null, and make it nullable in state
+
+  // Fetching entries (content) on content type change
   useEffect(() => {
     const fetchEntries = async () => {
       if (selectedContentType) {
@@ -47,7 +47,8 @@ export default function BuilderContextProvider({
     };
     fetchEntries();
   }, [selectedContentType]);
-  // Function to add element at a specified index
+
+  // Function to add element at a specified index (adds element to the canvas)
   const addElement = (index: number, element: UIElementInstance) => {
     setElements((prev) => {
       const newElements = [...prev];
@@ -100,10 +101,7 @@ export default function BuilderContextProvider({
         addElement,
         selectedSchema,
         setSelectedSchema,
-        entries
-        
-        // Ensure visualEntries can be null
-        
+        entries  
       }}
     >
       {children}

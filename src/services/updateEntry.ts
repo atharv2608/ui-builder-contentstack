@@ -1,3 +1,5 @@
+// This code is responsible for updating existing entries in the contentstack
+
 import axios, { AxiosResponse } from "axios";
 import { EntryResponse, UIJson } from "./createEntry";
 import { publishEntry } from "./publishEntry";

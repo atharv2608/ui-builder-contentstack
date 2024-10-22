@@ -33,7 +33,7 @@ function Canvas() {
       isCanvasDropArea: true,
     },
   });
-
+  //useDndMonitor hook to manage the drag and drop of the components.
   useDndMonitor({
     onDragEnd(event) {
       const { active, over } = event;
@@ -110,6 +110,7 @@ function Canvas() {
     },
   });
 
+  //Function to remove element from canvas
   const removeElement = (id: string) => {
     if (selectedComponent === id) {
       setSelectedComponent("");
@@ -118,6 +119,7 @@ function Canvas() {
     setElements((prev) => prev.filter((element) => element.id !== id));
   };
 
+  // Function that converts UI JSON from visuals content type into canvas loadable components. (Only works when UI json is already present for a content type)
   const loadElementsFromVisualEntriesList = () => {
     if (visualsArray && selectedContentType) {
       const entry = visualsArray.find(
@@ -159,6 +161,7 @@ function Canvas() {
     loadElementsFromVisualEntriesList();
   }, [selectedContentType]);
 
+  //Function to select component/element on click
   const onElementClick = (element: UIElementInstance) => {
     setSelectedComponent(element.id);
     if (element.linkedContentTypeUID && element.linkedSchemaID) {

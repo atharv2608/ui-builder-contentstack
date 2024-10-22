@@ -1,3 +1,5 @@
+//This code creates an entry in contentstack.
+
 import axios, { AxiosResponse } from "axios";
 import { publishEntry } from "./publishEntry";
 

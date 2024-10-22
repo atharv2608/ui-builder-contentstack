@@ -17,7 +17,7 @@ export function SmallScreenWarning({
 }) {
   const [open, setOpen] = useState(isHeightSmall);
 
-  // Update the `open` state whenever `isHeightSmall` changes
+  // Update the open state whenever isHeightSmall changes
   useEffect(() => {
     setOpen(isHeightSmall);
   }, [isHeightSmall]);

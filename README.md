@@ -56,7 +56,7 @@ This repository contains the implementation of a dynamic **UI Builder** using **
 1. Clone this repository:
 
     ```bash
-    git clone https://github.com/atharv2608/ui-builder.git
+    git clone https://github.com/atharv2608/ui-builder-contentstack.git
     ```
 
 2. Navigate to the project directory:
